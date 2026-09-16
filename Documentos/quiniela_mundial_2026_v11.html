@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiniela Mundial 2026 v9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --g:#10b981;--g2:#059669;--g3:#065f46;--gL:#d1fae5;--gL2:#a7f3d0;
+  --accent:#6366f1;--acL:#e0e7ff;
+  --ink:#111827;--ink2:#374151;--ink3:#6b7280;--ink4:#9ca3af;
+  --bg:#f3f4f6;--s0:#ffffff;--s1:#f9fafb;--s2:#f3f4f6;
+  --red:#ef4444;--rL:#fee2e2;--gold:#d97706;--gld:#fef3c7;
+  --amber:#f59e0b;--amL:#fef3c7;
+  --line:rgba(0,0,0,0.06);--line2:rgba(0,0,0,0.1);
+  --r:14px;--r2:10px;--r3:7px;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.05);
+  --sh2:0 0 0 2px rgba(16,185,129,.2),0 4px 20px rgba(16,185,129,.12);
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;min-height:100vh;}
+h2{font-size:20px;font-weight:800;letter-spacing:-.4px;}
+
+header{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#fff;position:sticky;top:0;z-index:60;box-shadow:0 4px 24px rgba(0,0,0,.35);}
+.hbar{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.brand{display:flex;flex-direction:column;}
+.brand-t{font-size:17px;font-weight:800;letter-spacing:-.3px;display:flex;align-items:center;gap:8px;}
+.brand-s{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;opacity:.5;margin-top:2px;}
+.hsp{flex:1;}
+.chip{font-size:11px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);}
+.dot{width:6px;height:6px;border-radius:50%;background:#34d399;flex:none;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+.resetbtn{font-size:11px;font-weight:700;color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:7px;cursor:pointer;transition:.15s;}
+.resetbtn:hover{background:rgba(255,255,255,.18);color:#fff;}
+nav{background:rgba(0,0,0,.3);border-top:1px solid rgba(255,255,255,.06);}
+.navbar{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.navbar::-webkit-scrollbar{display:none;}
+.tab{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);padding:10px 16px 9px;border:none;background:none;cursor:pointer;position:relative;white-space:nowrap;letter-spacing:.8px;text-transform:uppercase;transition:.15s;}
+.tab:hover{color:rgba(255,255,255,.85);}
+.tab.on{color:#34d399;}
+.tab.on::after{content:'';position:absolute;left:8px;right:8px;bottom:0;height:2px;border-radius:2px 2px 0 0;background:#34d399;}
+
+.wrap{max-width:1200px;margin:0 auto;padding:24px 20px 80px;}
+.view{animation:fadeUp .25s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.lead{margin:0 0 20px;}
+.lead h2{font-size:28px;font-weight:900;letter-spacing:-.7px;}
+.lead p{color:var(--ink3);font-size:13px;margin-top:6px;max-width:680px;line-height:1.65;}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:12px;}
+.tag-g{background:var(--gL);color:var(--g3);}
+.tag-p{background:var(--acL);color:var(--accent);}
+.tag-a{background:var(--amL);color:var(--gold);}
+
+/* MATCH CARDS */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:740px){.mgrid{grid-template-columns:1fr;}}
+.mc{background:var(--s0);border:1px solid var(--line2);border-radius:10px;padding:16px 18px;box-shadow:var(--sh);transition:box-shadow .15s,border-color .15s,transform .1s;}
+.mc:hover{box-shadow:var(--sh2);border-color:rgba(16,185,129,.3);transform:translateY(-1px);}
+.mc.played{border-left:3px solid var(--g);background:linear-gradient(135deg,rgba(209,250,229,.4) 0%,var(--s0) 60%);}
+.gtag{font-size:9px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.mc.played .gtag{color:var(--g2);}
+.played-badge{background:var(--gL);color:var(--g3);font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px;}
+.mteams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-bottom:12px;}
+.mt{display:flex;flex-direction:column;gap:3px;}
+.mt.away{align-items:flex-end;}
+.mname{font-weight:800;font-size:13px;display:flex;align-items:center;gap:5px;}
+.mt.away .mname{flex-direction:row-reverse;}
+.melo{font-size:9px;font-weight:600;color:var(--ink4);letter-spacing:.5px;font-family:'JetBrains Mono',monospace;}
+.sbadge{background:var(--s2);border:1.5px solid var(--line2);border-radius:7px;text-align:center;padding:8px 12px;min-width:68px;}
+.mc.played .sbadge{background:var(--gL);border-color:rgba(16,185,129,.35);}
+.sc{font-size:24px;font-weight:900;color:var(--ink3);line-height:1;font-family:'JetBrains Mono',monospace;letter-spacing:-.5px;}
+.mc.played .sc{color:var(--g3);}
+.slbl{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink4);margin-top:2px;}
+.mc.played .slbl{color:var(--g2);}
+.pbar{height:8px;border-radius:5px;overflow:hidden;display:flex;background:var(--s2);}
+.pw{background:var(--g);transition:width .4s ease;}
+.pd{background:#d1d5db;}
+.pl{background:#fca5a5;}
+.plbs{display:flex;justify-content:space-between;font-size:10px;font-weight:700;margin-top:5px;color:var(--ink3);}
+.plbs b{color:var(--ink);font-weight:800;}
+.ptrace{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.ptrace span{font-size:9px;font-weight:800;color:var(--ink3);background:var(--s1);border:1px solid var(--line);border-radius:5px;padding:3px 6px;}
+.ptrace .adj{color:var(--accent);background:var(--acL);border-color:rgba(99,102,241,.18);}
+.mact{display:flex;gap:6px;margin-top:12px;align-items:center;}
+.sin{width:46px;background:var(--s1);border:1.5px solid var(--line2);border-radius:7px;color:var(--ink);font-size:20px;font-weight:800;text-align:center;padding:7px 0;outline:none;transition:.15s;font-family:'JetBrains Mono',monospace;-moz-appearance:textfield;}
+.sin::-webkit-inner-spin-button,.sin::-webkit-outer-spin-button{-webkit-appearance:none;}
+.sin:focus{border-color:var(--g);background:var(--s0);box-shadow:0 0 0 3px rgba(16,185,129,.15);}
+.vs{color:var(--ink3);font-weight:800;font-size:13px;}
+.msp{flex:1;}
+.cbtn{font-size:11px;font-weight:700;color:var(--ink3);background:none;border:1.5px solid var(--line2);cursor:pointer;padding:7px 11px;border-radius:7px;transition:.15s;}
+.cbtn:hover{border-color:var(--red);color:var(--red);}
+.gbtn{font-size:12px;font-weight:800;color:#fff;background:var(--g);border:none;cursor:pointer;padding:8px 16px;border-radius:7px;transition:.15s;}
+.gbtn:hover{background:var(--g2);}
+.gbtn:active{transform:scale(.96);}
+
+/* GROUPS */
+.ggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:900px){.ggrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:540px){.ggrid{grid-template-columns:1fr;}}
+.gcard{background:var(--s0);border:1px solid var(--line2);border-radius:10px;padding:14px 16px;box-shadow:var(--sh);}
+.gcardh{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--g2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.gcardh-right{font-weight:600;color:var(--ink4);font-size:9px;letter-spacing:.5px;}
+.gheader{display:grid;grid-template-columns:20px 1fr 36px 56px;gap:6px;padding:0 6px 7px;margin-bottom:2px;border-bottom:2px solid var(--s2);}
+.gheader span{font-size:8px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--ink4);}
+.gheader span:nth-child(3),.gheader span:nth-child(4){text-align:right;}
+.grow{display:grid;grid-template-columns:20px 1fr 36px 56px;gap:6px;align-items:center;padding:7px 6px;border-radius:8px;transition:background .1s;}
+.grow:hover{background:var(--s1);}
+.grow+.grow{border-top:1px solid var(--line);}
+.gpos{font-weight:800;font-size:11px;color:var(--ink4);text-align:center;}
+.grow.q1 .gpos{color:var(--g);}
+.grow.q2 .gpos{color:var(--g2);}
+.grow.q3 .gpos{color:var(--accent);}
+.gnm{font-weight:700;font-size:12px;display:flex;align-items:center;gap:5px;overflow:hidden;}
+.gnmt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.gpts{font-weight:800;font-size:13px;text-align:right;font-family:'JetBrains Mono',monospace;color:var(--ink);}
+.gadv{font-size:10px;font-weight:800;color:var(--ink4);text-align:right;font-family:'JetBrains Mono',monospace;}
+.grow.q1 .gadv,.grow.q2 .gadv{color:var(--g2);}
+.grow.q3 .gadv{color:var(--accent);}
+.gnote{font-size:9px;color:var(--ink4);font-weight:600;margin-top:10px;padding-top:8px;border-top:1px solid var(--line);}
+
+/* BRACKET */
+.bracket-scroll{overflow-x:auto;padding:4px 0 14px;scrollbar-width:thin;}
+.bracket{display:flex;gap:10px;min-width:max-content;align-items:stretch;}
+.bcol{display:flex;flex-direction:column;min-width:190px;max-width:200px;}
+.bcol.sfcol{justify-content:space-around;}
+.bcol.champcol{min-width:170px;justify-content:center;align-items:center;}
+.brh{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-align:center;padding:6px 0 10px;}
+.bspacer{flex:1;}
+.tie{background:var(--s0);border:1px solid var(--line2);border-radius:7px;overflow:hidden;margin-bottom:7px;box-shadow:var(--sh);transition:border-color .15s;}
+.tie:hover{border-color:rgba(16,185,129,.3);}
+.bslot{display:flex;align-items:center;gap:6px;padding:8px 10px;cursor:pointer;transition:background .12s;border:1.5px solid transparent;border-radius:5px;font-size:12px;margin:2px;}
+.bslot:hover{background:var(--s1);}
+.bslot.win{background:var(--gL);border-color:rgba(16,185,129,.4);}
+.bslot.real{background:var(--gL);border-color:var(--g);}
+.bslot .bnm{font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bslot .bwp{font-size:10px;font-weight:800;color:var(--ink4);font-family:'JetBrains Mono',monospace;}
+.bslot.win .bwp,.bslot.real .bwp{color:var(--g2);}
+.bslot .btbd{color:var(--ink4);font-style:italic;font-weight:600;font-size:11px;}
+.bsc{text-align:center;font-size:9px;font-weight:800;color:var(--ink4);padding:4px 0 3px;border-top:1px solid var(--line);letter-spacing:.5px;font-family:'JetBrains Mono',monospace;}
+.bsc.has{color:var(--g2);}
+.trophy{background:linear-gradient(135deg,#fefce8,#fef3c7,#fde68a);border:1.5px solid rgba(217,119,6,.3);border-radius:14px;padding:24px 20px;text-align:center;min-width:155px;box-shadow:0 4px 20px rgba(217,119,6,.15);}
+.trophy .tk{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:800;}
+.trophy .tfl{font-size:40px;margin:10px 0 6px;line-height:1;}
+.trophy .tnm{font-size:16px;font-weight:900;color:var(--ink);letter-spacing:-.3px;}
+.trophy .tpc{font-size:12px;color:var(--gold);font-weight:800;margin-top:5px;font-family:'JetBrains Mono',monospace;}
+
+/* FAVORITES */
+.fhero{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:700px){.fhero{grid-template-columns:1fr;}}
+.champ-c{background:linear-gradient(135deg,var(--s0) 0%,var(--gL) 100%);border:1px solid rgba(16,185,129,.25);border-radius:14px;padding:26px;box-shadow:var(--sh);}
+.champ-c .ck{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:800;}
+.champ-nm{font-size:30px;font-weight:900;margin:8px 0 4px;display:flex;align-items:center;gap:10px;letter-spacing:-.6px;}
+.champ-p{color:var(--ink3);font-size:13px;margin-top:5px;}
+.champ-p b{color:var(--g3);font-size:20px;font-family:'JetBrains Mono',monospace;}
+.champ-sub{color:var(--ink4);font-size:11px;margin-top:6px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+.flist,.fulllist{background:var(--s0);border:1px solid var(--line2);border-radius:14px;padding:8px 10px 12px;box-shadow:var(--sh);}
+.frow{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 8px;border-radius:9px;transition:.1s;}
+.frow:hover{background:var(--s1);}
+.frank{font-weight:800;font-size:12px;color:var(--ink4);text-align:center;font-family:'JetBrains Mono',monospace;}
+.frow.t1 .frank{color:var(--gold);}
+.frow.t2 .frank,.frow.t3 .frank{color:var(--ink2);}
+.fnm{font-weight:700;font-size:13px;display:flex;align-items:center;gap:7px;}
+.fbar-bg{height:4px;border-radius:3px;background:var(--s2);overflow:hidden;margin-top:4px;}
+.fbar-fill{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--g),var(--g2));}
+.fmini{font-size:10px;color:var(--ink4);font-weight:600;margin-top:3px;font-family:'JetBrains Mono',monospace;}
+.fval{font-weight:900;font-size:16px;text-align:right;font-family:'JetBrains Mono',monospace;}
+.fval2{font-size:9px;color:var(--ink4);font-weight:600;text-align:right;text-transform:uppercase;letter-spacing:.5px;}
+
+/* ACCURACY */
+.acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
+@media(max-width:800px){.acc-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.acc-grid{grid-template-columns:1fr 1fr;}}
+.acc-stat{background:var(--s0);border:1px solid var(--line2);border-radius:12px;padding:18px 20px;box-shadow:var(--sh);}
+.acc-stat .as-lbl{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--ink4);margin-bottom:6px;}
+.acc-stat .as-val{font-size:32px;font-weight:900;font-family:'JetBrains Mono',monospace;color:var(--ink);line-height:1;}
+.acc-stat .as-sub{font-size:11px;color:var(--ink3);margin-top:5px;font-weight:600;}
+.acc-stat.hi .as-val{color:var(--g2);}
+.acc-stat.med .as-val{color:var(--gold);}
+
+.cal-section{background:var(--s0);border:1px solid var(--line2);border-radius:12px;padding:16px 18px;box-shadow:var(--sh);margin-bottom:16px;}
+.cal-title{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.cal-title span{font-size:10px;font-weight:600;color:var(--ink4);font-family:'JetBrains Mono',monospace;background:var(--s2);padding:2px 8px;border-radius:5px;}
+.cal-bar-wrap{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.cal-lbl{font-size:11px;font-weight:700;color:var(--ink3);width:40px;text-align:right;font-family:'JetBrains Mono',monospace;}
+.cal-bar{flex:1;height:22px;border-radius:6px;background:var(--s2);position:relative;overflow:visible;}
+.cal-fill{height:100%;border-radius:6px;transition:width .5s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;}
+.cal-fill-g{background:linear-gradient(90deg,var(--g),var(--g2));}
+.cal-fill-a{background:linear-gradient(90deg,var(--gold),#f59e0b);}
+.cal-fill-r{background:linear-gradient(90deg,#f87171,var(--red));}
+.cal-cnt{font-size:10px;font-weight:800;color:#fff;white-space:nowrap;}
+.cal-pct{font-size:10px;font-weight:700;color:var(--ink3);width:36px;font-family:'JetBrains Mono',monospace;}
+
+.match-list{display:flex;flex-direction:column;gap:4px;}
+.ml-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:7px 10px;border-radius:8px;font-size:12px;transition:background .1s;}
+.ml-row:hover{background:var(--s1);}
+.ml-row.correct{border-left:3px solid var(--g);}
+.ml-row.wrong{border-left:3px solid var(--red);}
+.ml-teams{font-weight:700;color:var(--ink);}
+.ml-score{font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--ink3);text-align:center;}
+.ml-prob{font-size:10px;color:var(--ink4);font-weight:600;text-align:right;font-family:'JetBrains Mono',monospace;}
+.ml-badge{font-size:9px;font-weight:800;padding:2px 7px;border-radius:5px;text-align:center;}
+.ml-badge.ok{background:var(--gL);color:var(--g3);}
+.ml-badge.err{background:var(--rL);color:var(--red);}
+.cal-legend{display:flex;gap:14px;font-size:11px;color:var(--ink3);font-weight:600;margin-top:8px;flex-wrap:wrap;}
+.cal-legend span{display:inline-flex;align-items:center;gap:5px;}
+.leg-dot{width:8px;height:8px;border-radius:50%;}
+
+/* HOW */
+.howcard{background:var(--s0);border:1px solid var(--line2);border-radius:14px;padding:20px 24px;box-shadow:var(--sh);}
+.step{display:flex;gap:16px;align-items:flex-start;padding:14px 0;}
+.step+.step{border-top:1px solid var(--line);}
+.sn{font-weight:900;font-size:12px;width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;background:var(--gL);color:var(--g2);}
+.step-t{font-weight:800;font-size:13px;color:var(--ink);margin-bottom:4px;}
+.step-d{color:var(--ink3);font-size:12px;line-height:1.65;}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);background:#111827;color:#fff;font-weight:700;font-size:12px;padding:11px 20px;border-radius:14px;opacity:0;transition:.22s;z-index:99;pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.35);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.legend{display:flex;gap:16px;font-size:11px;color:var(--ink3);font-weight:600;margin-top:10px;flex-wrap:wrap;}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.lsw{width:11px;height:11px;border-radius:3px;}
+.grp-header{margin-bottom:6px;margin-top:20px;display:flex;align-items:center;gap:10px;}
+.grp-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);}
+.grp-line{flex:1;height:1px;background:var(--line2);}
+.flag{height:1em;width:1.5em;object-fit:cover;border-radius:2px;vertical-align:-0.16em;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.18);background:var(--s1);}
+</style>
+
+<header>
+  <div class="hbar">
+    <div class="brand">
+      <div class="brand-t">&#x26BD; Quiniela Mundial 2026</div>
+      <div class="brand-s">v9 &middot; Modelo propio &middot; Monte Carlo &middot; Bracket FIFA</div>
+    </div>
+    <div class="hsp"></div>
+    <div class="chip"><span class="dot"></span><span id="saveTxt">Guardado</span></div>
+    <button class="resetbtn" id="resetBtn">&#8635; Reiniciar</button>
+  </div>
+  <nav><div class="navbar" id="nav"></div></nav>
+</header>
+<div class="wrap"><div id="app"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+const GROUPS={
+  "A":["Mexico","South Africa","Korea Republic","Czechia"],
+  "B":["Canada","Bosnia and Herzegovina","Qatar","Switzerland"],
+  "C":["Haiti","Scotland","Brazil","Morocco"],
+  "D":["USA","Paraguay","Australia","T\u00fcrkiye"],
+  "E":["C\u00f4te d'Ivoire","Ecuador","Germany","Cura\u00e7ao"],
+  "F":["Netherlands","Japan","Sweden","Tunisia"],
+  "G":["IR Iran","New Zealand","Belgium","Egypt"],
+  "H":["Saudi Arabia","Uruguay","Spain","Cabo Verde"],
+  "I":["France","Senegal","Iraq","Norway"],
+  "J":["Argentina","Algeria","Austria","Jordan"],
+  "K":["Portugal","Congo DR","Uzbekistan","Colombia"],
+  "L":["Ghana","Panama","England","Croatia"]
+};
+
+const TG={};Object.entries(GROUPS).forEach(([g,ts])=>ts.forEach(t=>TG[t]=g));
+
+const ELO={
+  "Spain":2089,"Argentina":2060,"France":2003,"Brazil":1966,"England":1969,
+  "Portugal":1976,"Germany":1923,"Colombia":1964,"Netherlands":1944,
+  "Croatia":1907,"Japan":1907,"Belgium":1871,"Uruguay":1890,"Switzerland":1880,
+  "Morocco":1861,"Ecuador":1896,"Mexico":1854,"Norway":1840,"Senegal":1832,
+  "Austria":1830,"Canada":1817,"Paraguay":1804,"Australia":1816,"Uzbekistan":1805,
+  "Algeria":1777,"Scotland":1772,"Egypt":1719,"Panama":1733,"Saudi Arabia":1712,
+  "Tunisia":1708,"Qatar":1672,"New Zealand":1667,"Jordan":1651,"South Africa":1629,
+  "IR Iran":1720,"Iraq":1722,"Bosnia and Herzegovina":1616,"Ghana":1587,
+  "Korea Republic":1650,"Cura\u00e7ao":1510,"Haiti":1601,"Czechia":1580,
+  "T\u00fcrkiye":1820,"C\u00f4te d'Ivoire":1780,"USA":1850,"Cabo Verde":1530,
+  "Congo DR":1500,"Sweden":1747
+};
+const ALL_TEAMS=Object.keys(ELO);
+
+const MC_CACHE={"Algeria|Jordan":[0.4147,0.2882,0.2971],"Jordan|Algeria":[0.2971,0.2882,0.4147],"Algeria|Saudi Arabia":[0.4022,0.2679,0.3299],"Saudi Arabia|Algeria":[0.3299,0.2679,0.4022],"Algeria|Mexico":[0.328,0.2786,0.3933],"Mexico|Algeria":[0.3933,0.2786,0.328],"Algeria|Germany":[0.2563,0.3236,0.4201],"Germany|Algeria":[0.4201,0.3236,0.2563],"Algeria|Uzbekistan":[0.3944,0.2616,0.344],"Uzbekistan|Algeria":[0.344,0.2616,0.3944],"Algeria|Croatia":[0.3127,0.2836,0.4036],"Croatia|Algeria":[0.4036,0.2836,0.3127],"Algeria|Haiti":[0.4491,0.3221,0.2288],"Haiti|Algeria":[0.2288,0.3221,0.4491],"Algeria|Congo DR":[0.4518,0.3266,0.2216],"Congo DR|Algeria":[0.2216,0.3266,0.4518],"Algeria|Colombia":[0.2961,0.3004,0.4035],"Colombia|Algeria":[0.4035,0.3004,0.2961],"Algeria|Sweden":[0.3725,0.2714,0.3562],"Sweden|Algeria":[0.3562,0.2714,0.3725],"Algeria|Bosnia and Herzegovina":[0.4112,0.2741,0.3147],"Bosnia and Herzegovina|Algeria":[0.3147,0.2741,0.4112],"Algeria|Senegal":[0.3266,0.2919,0.3815],"Senegal|Algeria":[0.3815,0.2919,0.3266],"Algeria|Iraq":[0.4361,0.292,0.2719],"Iraq|Algeria":[0.2719,0.292,0.4361],"Algeria|Ecuador":[0.3225,0.2795,0.398],"Ecuador|Algeria":[0.398,0.2795,0.3225],"Algeria|Japan":[0.3211,0.267,0.4119],"Japan|Algeria":[0.4119,0.267,0.3211],"Algeria|Australia":[0.3553,0.2683,0.3764],"Australia|Algeria":[0.3764,0.2683,0.3553],"Algeria|IR Iran":[0.4518,0.3266,0.2216],"IR Iran|Algeria":[0.2216,0.3266,0.4518],"Algeria|Belgium":[0.3064,0.29,0.4036],"Belgium|Algeria":[0.4036,0.29,0.3064],"Algeria|Paraguay":[0.3644,0.2748,0.3608],"Paraguay|Algeria":[0.3608,0.2748,0.3644],"Algeria|Morocco":[0.315,0.2957,0.3893],"Morocco|Algeria":[0.3893,0.2957,0.315],"Algeria|England":[0.2451,0.3311,0.4238],"England|Algeria":[0.4238,0.3311,0.2451],"Algeria|Tunisia":[0.3984,0.2719,0.3297],"Tunisia|Algeria":[0.3297,0.2719,0.3984],"Algeria|Uruguay":[0.3174,0.2763,0.4063],"Uruguay|Algeria":[0.4063,0.2763,0.3174],"Algeria|Korea Republic":[0.4518,0.3266,0.2216],"Korea Republic|Algeria":[0.2216,0.3266,0.4518],"Algeria|USA":[0.4518,0.3266,0.2216],"USA|Algeria":[0.2216,0.3266,0.4518],"Algeria|Brazil":[0.2484,0.3285,0.4231],"Brazil|Algeria":[0.4231,0.3285,0.2484],"Algeria|Portugal":[0.2495,0.3312,0.4194],"Portugal|Algeria":[0.4194,0.3312,0.2495],"Algeria|Netherlands":[0.2858,0.3046,0.4096],"Netherlands|Algeria":[0.4096,0.3046,0.2858],"Algeria|Egypt":[0.3938,0.3017,0.3045],"Egypt|Algeria":[0.3045,0.3017,0.3938],"Algeria|Norway":[0.345,0.2559,0.399],"Norway|Algeria":[0.399,0.2559,0.345],"Algeria|New Zealand":[0.4277,0.3085,0.2638],"New Zealand|Algeria":[0.2638,0.3085,0.4277],"Algeria|Ghana":[0.419,0.2873,0.2937],"Ghana|Algeria":[0.2937,0.2873,0.419],"Algeria|Cabo Verde":[0.4518,0.3266,0.2216],"Cabo Verde|Algeria":[0.2216,0.3266,0.4518],"Algeria|Austria":[0.3249,0.2924,0.3827],"Austria|Algeria":[0.3827,0.2924,0.3249],"Algeria|Scotland":[0.3721,0.2795,0.3484],"Scotland|Algeria":[0.3484,0.2795,0.3721],"Algeria|France":[0.242,0.3228,0.4352],"France|Algeria":[0.4352,0.3228,0.242],"Algeria|Argentina":[0.2429,0.3231,0.434],"Argentina|Algeria":[0.434,0.3231,0.2429],"Algeria|Czechia":[0.4518,0.3266,0.2216],"Czechia|Algeria":[0.2216,0.3266,0.4518],"Algeria|Cura\u00e7ao":[0.4518,0.3266,0.2216],"Cura\u00e7ao|Algeria":[0.2216,0.3266,0.4518],"Algeria|Canada":[0.351,0.2682,0.3809],"Canada|Algeria":[0.3809,0.2682,0.351],"Algeria|T\u00fcrkiye":[0.4518,0.3266,0.2216],"T\u00fcrkiye|Algeria":[0.2216,0.3266,0.4518],"Algeria|South Africa":[0.4335,0.3431,0.2234],"South Africa|Algeria":[0.2234,0.3431,0.4335],"Algeria|C\u00f4te d'Ivoire":[0.4518,0.3266,0.2216],"C\u00f4te d'Ivoire|Algeria":[0.2216,0.3266,0.4518],"Algeria|Qatar":[0.4299,0.2946,0.2755],"Qatar|Algeria":[0.2755,0.2946,0.4299],"Algeria|Spain":[0.2171,0.3315,0.4514],"Spain|Algeria":[0.4514,0.3315,0.2171],"Algeria|Switzerland":[0.3188,0.2863,0.3949],"Switzerland|Algeria":[0.3949,0.2863,0.3188],"Algeria|Panama":[0.4239,0.2829,0.2932],"Panama|Algeria":[0.2932,0.2829,0.4239],"Jordan|Saudi Arabia":[0.3295,0.2913,0.3792],"Saudi Arabia|Jordan":[0.3792,0.2913,0.3295],"Jordan|Mexico":[0.2394,0.3304,0.4302],"Mexico|Jordan":[0.4302,0.3304,0.2394],"Jordan|Germany":[0.1842,0.3114,0.5044],"Germany|Jordan":[0.5044,0.3114,0.1842],"Jordan|Uzbekistan":[0.3101,0.2945,0.3954],"Uzbekistan|Jordan":[0.3954,0.2945,0.3101],"Jordan|Croatia":[0.2372,0.3192,0.4436],"Croatia|Jordan":[0.4436,0.3192,0.2372],"Jordan|Haiti":[0.395,0.2708,0.3341],"Haiti|Jordan":[0.3341,0.2708,0.395],"Jordan|Congo DR":[0.4021,0.2921,0.3058],"Congo DR|Jordan":[0.3058,0.2921,0.4021],"Jordan|Colombia":[0.225,0.321,0.454],"Colombia|Jordan":[0.454,0.321,0.225],"Jordan|Sweden":[0.3065,0.2864,0.4072],"Sweden|Jordan":[0.4072,0.2864,0.3065],"Jordan|Bosnia and Herzegovina":[0.3695,0.2773,0.3531],"Bosnia and Herzegovina|Jordan":[0.3531,0.2773,0.3695],"Jordan|Senegal":[0.247,0.3249,0.4281],"Senegal|Jordan":[0.4281,0.3249,0.247],"Jordan|Iraq":[0.3465,0.265,0.3885],"Iraq|Jordan":[0.3885,0.265,0.3465],"Jordan|Ecuador":[0.276,0.2996,0.4244],"Ecuador|Jordan":[0.4244,0.2996,0.276],"Jordan|Japan":[0.2668,0.2834,0.4499],"Japan|Jordan":[0.4499,0.2834,0.2668],"Jordan|Australia":[0.2942,0.3014,0.4044],"Australia|Jordan":[0.4044,0.3014,0.2942],"Jordan|IR Iran":[0.4021,0.2921,0.3058],"IR Iran|Jordan":[0.3058,0.2921,0.4021],"Jordan|Belgium":[0.2042,0.3353,0.4605],"Belgium|Jordan":[0.4605,0.3353,0.2042],"Jordan|Paraguay":[0.303,0.2986,0.3985],"Paraguay|Jordan":[0.3985,0.2986,0.303],"Jordan|Morocco":[0.2327,0.3306,0.4367],"Morocco|Jordan":[0.4367,0.3306,0.2327],"Jordan|England":[0.1727,0.3212,0.5061],"England|Jordan":[0.5061,0.3212,0.1727],"Jordan|Tunisia":[0.3233,0.2969,0.3798],"Tunisia|Jordan":[0.3798,0.2969,0.3233],"Jordan|Uruguay":[0.2218,0.3323,0.4459],"Uruguay|Jordan":[0.4459,0.3323,0.2218],"Jordan|Korea Republic":[0.4021,0.2921,0.3058],"Korea Republic|Jordan":[0.3058,0.2921,0.4021],"Jordan|USA":[0.4021,0.2921,0.3058],"USA|Jordan":[0.3058,0.2921,0.4021],"Jordan|Brazil":[0.1735,0.3162,0.5103],"Brazil|Jordan":[0.5103,0.3162,0.1735],"Jordan|Portugal":[0.1821,0.3196,0.4983],"Portugal|Jordan":[0.4983,0.3196,0.1821],"Jordan|Netherlands":[0.2001,0.3246,0.4753],"Netherlands|Jordan":[0.4753,0.3246,0.2001],"Jordan|Egypt":[0.3191,0.297,0.3839],"Egypt|Jordan":[0.3839,0.297,0.3191],"Jordan|Norway":[0.2839,0.2761,0.44],"Norway|Jordan":[0.44,0.2761,0.2839],"Jordan|New Zealand":[0.3603,0.2865,0.3532],"New Zealand|Jordan":[0.3532,0.2865,0.3603],"Jordan|Ghana":[0.3732,0.2791,0.3477],"Ghana|Jordan":[0.3477,0.2791,0.3732],"Jordan|Cabo Verde":[0.4021,0.2921,0.3058],"Cabo Verde|Jordan":[0.3058,0.2921,0.4021],"Jordan|Austria":[0.2483,0.3213,0.4304],"Austria|Jordan":[0.4304,0.3213,0.2483],"Jordan|Scotland":[0.3065,0.2912,0.4023],"Scotland|Jordan":[0.4023,0.2912,0.3065],"Jordan|France":[0.1661,0.308,0.526],"France|Jordan":[0.526,0.308,0.1661],"Jordan|Argentina":[0.1561,0.3163,0.5276],"Argentina|Jordan":[0.5276,0.3163,0.1561],"Jordan|Czechia":[0.4021,0.2921,0.3058],"Czechia|Jordan":[0.3058,0.2921,0.4021],"Jordan|Cura\u00e7ao":[0.4021,0.2921,0.3058],"Cura\u00e7ao|Jordan":[0.3058,0.2921,0.4021],"Jordan|Canada":[0.291,0.3033,0.4057],"Canada|Jordan":[0.4057,0.3033,0.291],"Jordan|T\u00fcrkiye":[0.4021,0.2921,0.3058],"T\u00fcrkiye|Jordan":[0.3058,0.2921,0.4021],"Jordan|South Africa":[0.3609,0.2936,0.3455],"South Africa|Jordan":[0.3455,0.2936,0.3609],"Jordan|C\u00f4te d'Ivoire":[0.4021,0.2921,0.3058],"C\u00f4te d'Ivoire|Jordan":[0.3058,0.2921,0.4021],"Jordan|Qatar":[0.3598,0.2672,0.373],"Qatar|Jordan":[0.373,0.2672,0.3598],"Jordan|Spain":[0.1874,0.2577,0.5549],"Spain|Jordan":[0.5549,0.2577,0.1874],"Jordan|Switzerland":[0.2317,0.3307,0.4377],"Switzerland|Jordan":[0.4377,0.3307,0.2317],"Jordan|Panama":[0.3309,0.2799,0.3892],"Panama|Jordan":[0.3892,0.2799,0.3309],"Saudi Arabia|Mexico":[0.2608,0.323,0.4162],"Mexico|Saudi Arabia":[0.4162,0.323,0.2608],"Saudi Arabia|Germany":[0.1968,0.3215,0.4817],"Germany|Saudi Arabia":[0.4817,0.3215,0.1968],"Saudi Arabia|Uzbekistan":[0.3267,0.2876,0.3856],"Uzbekistan|Saudi Arabia":[0.3856,0.2876,0.3267],"Saudi Arabia|Croatia":[0.2399,0.3237,0.4364],"Croatia|Saudi Arabia":[0.4364,0.3237,0.2399],"Saudi Arabia|Haiti":[0.4072,0.2786,0.3142],"Haiti|Saudi Arabia":[0.3142,0.2786,0.4072],"Saudi Arabia|Congo DR":[0.4174,0.308,0.2746],"Congo DR|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|Colombia":[0.2616,0.3016,0.4369],"Colombia|Saudi Arabia":[0.4369,0.3016,0.2616],"Saudi Arabia|Sweden":[0.3324,0.2892,0.3784],"Sweden|Saudi Arabia":[0.3784,0.2892,0.3324],"Saudi Arabia|Bosnia and Herzegovina":[0.3972,0.2686,0.3342],"Bosnia and Herzegovina|Saudi Arabia":[0.3342,0.2686,0.3972],"Saudi Arabia|Senegal":[0.2943,0.2949,0.4108],"Senegal|Saudi Arabia":[0.4108,0.2949,0.2943],"Saudi Arabia|Iraq":[0.3676,0.2954,0.337],"Iraq|Saudi Arabia":[0.337,0.2954,0.3676],"Saudi Arabia|Ecuador":[0.2862,0.307,0.4068],"Ecuador|Saudi Arabia":[0.4068,0.307,0.2862],"Saudi Arabia|Japan":[0.282,0.2895,0.4285],"Japan|Saudi Arabia":[0.4285,0.2895,0.282],"Saudi Arabia|Australia":[0.3146,0.2911,0.3943],"Australia|Saudi Arabia":[0.3943,0.2911,0.3146],"Saudi Arabia|IR Iran":[0.4174,0.308,0.2746],"IR Iran|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|Belgium":[0.2186,0.344,0.4374],"Belgium|Saudi Arabia":[0.4374,0.344,0.2186],"Saudi Arabia|Paraguay":[0.3181,0.2908,0.3911],"Paraguay|Saudi Arabia":[0.3911,0.2908,0.3181],"Saudi Arabia|Morocco":[0.2477,0.3304,0.4219],"Morocco|Saudi Arabia":[0.4219,0.3304,0.2477],"Saudi Arabia|England":[0.198,0.3071,0.4949],"England|Saudi Arabia":[0.4949,0.3071,0.198],"Saudi Arabia|Tunisia":[0.3484,0.3057,0.3459],"Tunisia|Saudi Arabia":[0.3459,0.3057,0.3484],"Saudi Arabia|Uruguay":[0.2336,0.3363,0.4301],"Uruguay|Saudi Arabia":[0.4301,0.3363,0.2336],"Saudi Arabia|Korea Republic":[0.4174,0.308,0.2746],"Korea Republic|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|USA":[0.4174,0.308,0.2746],"USA|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|Brazil":[0.1901,0.3251,0.4848],"Brazil|Saudi Arabia":[0.4848,0.3251,0.1901],"Saudi Arabia|Portugal":[0.2091,0.3006,0.4902],"Portugal|Saudi Arabia":[0.4902,0.3006,0.2091],"Saudi Arabia|Netherlands":[0.2311,0.3101,0.4588],"Netherlands|Saudi Arabia":[0.4588,0.3101,0.2311],"Saudi Arabia|Egypt":[0.3395,0.3177,0.3427],"Egypt|Saudi Arabia":[0.3427,0.3177,0.3395],"Saudi Arabia|Norway":[0.3253,0.2567,0.4179],"Norway|Saudi Arabia":[0.4179,0.2567,0.3253],"Saudi Arabia|New Zealand":[0.3865,0.271,0.3425],"New Zealand|Saudi Arabia":[0.3425,0.271,0.3865],"Saudi Arabia|Ghana":[0.3912,0.2786,0.3302],"Ghana|Saudi Arabia":[0.3302,0.2786,0.3912],"Saudi Arabia|Cabo Verde":[0.4174,0.308,0.2746],"Cabo Verde|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|Austria":[0.2701,0.3064,0.4235],"Austria|Saudi Arabia":[0.4235,0.3064,0.2701],"Saudi Arabia|Scotland":[0.3248,0.2879,0.3872],"Scotland|Saudi Arabia":[0.3872,0.2879,0.3248],"Saudi Arabia|France":[0.1887,0.3111,0.5003],"France|Saudi Arabia":[0.5003,0.3111,0.1887],"Saudi Arabia|Argentina":[0.1641,0.3524,0.4835],"Argentina|Saudi Arabia":[0.4835,0.3524,0.1641],"Saudi Arabia|Czechia":[0.4174,0.308,0.2746],"Czechia|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|Cura\u00e7ao":[0.4174,0.308,0.2746],"Cura\u00e7ao|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|Canada":[0.3049,0.3006,0.3945],"Canada|Saudi Arabia":[0.3945,0.3006,0.3049],"Saudi Arabia|T\u00fcrkiye":[0.4174,0.308,0.2746],"T\u00fcrkiye|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|South Africa":[0.3995,0.2876,0.3129],"South Africa|Saudi Arabia":[0.3129,0.2876,0.3995],"Saudi Arabia|C\u00f4te d'Ivoire":[0.4174,0.308,0.2746],"C\u00f4te d'Ivoire|Saudi Arabia":[0.2746,0.308,0.4174],"Saudi Arabia|Qatar":[0.3816,0.2725,0.3458],"Qatar|Saudi Arabia":[0.3458,0.2725,0.3816],"Saudi Arabia|Spain":[0.1687,0.3302,0.5011],"Spain|Saudi Arabia":[0.5011,0.3302,0.1687],"Saudi Arabia|Switzerland":[0.2443,0.3305,0.4252],"Switzerland|Saudi Arabia":[0.4252,0.3305,0.2443],"Saudi Arabia|Panama":[0.3614,0.2854,0.3532],"Panama|Saudi Arabia":[0.3532,0.2854,0.3614],"Mexico|Germany":[0.2806,0.3091,0.4103],"Germany|Mexico":[0.4103,0.3091,0.2806],"Mexico|Uzbekistan":[0.4241,0.3149,0.261],"Uzbekistan|Mexico":[0.261,0.3149,0.4241],"Mexico|Croatia":[0.3219,0.292,0.3861],"Croatia|Mexico":[0.3861,0.292,0.3219],"Mexico|Haiti":[0.4858,0.3017,0.2126],"Haiti|Mexico":[0.2126,0.3017,0.4858],"Mexico|Congo DR":[0.4597,0.3557,0.1846],"Congo DR|Mexico":[0.1846,0.3557,0.4597],"Mexico|Colombia":[0.3203,0.2788,0.401],"Colombia|Mexico":[0.401,0.2788,0.3203],"Mexico|Sweden":[0.3974,0.2829,0.3197],"Sweden|Mexico":[0.3197,0.2829,0.3974],"Mexico|Bosnia and Herzegovina":[0.4341,0.2816,0.2842],"Bosnia and Herzegovina|Mexico":[0.2842,0.2816,0.4341],"Mexico|Senegal":[0.3609,0.282,0.3571],"Senegal|Mexico":[0.3571,0.282,0.3609],"Mexico|Iraq":[0.4646,0.3007,0.2347],"Iraq|Mexico":[0.2347,0.3007,0.4646],"Mexico|Ecuador":[0.3354,0.294,0.3706],"Ecuador|Mexico":[0.3706,0.294,0.3354],"Mexico|Japan":[0.3311,0.2774,0.3915],"Japan|Mexico":[0.3915,0.2774,0.3311],"Mexico|Australia":[0.383,0.2904,0.3266],"Australia|Mexico":[0.3266,0.2904,0.383],"Mexico|IR Iran":[0.4597,0.3557,0.1846],"IR Iran|Mexico":[0.1846,0.3557,0.4597],"Mexico|Belgium":[0.3414,0.2868,0.3719],"Belgium|Mexico":[0.3719,0.2868,0.3414],"Mexico|Paraguay":[0.387,0.294,0.319],"Paraguay|Mexico":[0.319,0.294,0.387],"Mexico|Morocco":[0.3398,0.2985,0.3617],"Morocco|Mexico":[0.3617,0.2985,0.3398],"Mexico|England":[0.2965,0.2944,0.409],"England|Mexico":[0.409,0.2944,0.2965],"Mexico|Tunisia":[0.4108,0.3309,0.2582],"Tunisia|Mexico":[0.2582,0.3309,0.4108],"Mexico|Uruguay":[0.332,0.2932,0.3748],"Uruguay|Mexico":[0.3748,0.2932,0.332],"Mexico|Korea Republic":[0.4597,0.3557,0.1846],"Korea Republic|Mexico":[0.1846,0.3557,0.4597],"Mexico|USA":[0.4597,0.3557,0.1846],"USA|Mexico":[0.1846,0.3557,0.4597],"Mexico|Brazil":[0.2621,0.3239,0.414],"Brazil|Mexico":[0.414,0.3239,0.2621],"Mexico|Portugal":[0.3135,0.2806,0.4059],"Portugal|Mexico":[0.4059,0.2806,0.3135],"Mexico|Netherlands":[0.3117,0.2843,0.404],"Netherlands|Mexico":[0.404,0.2843,0.3117],"Mexico|Egypt":[0.4089,0.3074,0.2837],"Egypt|Mexico":[0.2837,0.3074,0.4089],"Mexico|Norway":[0.3692,0.2676,0.3632],"Norway|Mexico":[0.3632,0.2676,0.3692],"Mexico|New Zealand":[0.4416,0.3168,0.2416],"New Zealand|Mexico":[0.2416,0.3168,0.4416],"Mexico|Ghana":[0.434,0.2783,0.2877],"Ghana|Mexico":[0.2877,0.2783,0.434],"Mexico|Cabo Verde":[0.4597,0.3557,0.1846],"Cabo Verde|Mexico":[0.1846,0.3557,0.4597],"Mexico|Austria":[0.3557,0.2831,0.3612],"Austria|Mexico":[0.3612,0.2831,0.3557],"Mexico|Scotland":[0.3975,0.2893,0.3132],"Scotland|Mexico":[0.3132,0.2893,0.3975],"Mexico|France":[0.2623,0.3271,0.4106],"France|Mexico":[0.4106,0.3271,0.2623],"Mexico|Argentina":[0.2753,0.3077,0.4169],"Argentina|Mexico":[0.4169,0.3077,0.2753],"Mexico|Czechia":[0.4597,0.3557,0.1846],"Czechia|Mexico":[0.1846,0.3557,0.4597],"Mexico|Cura\u00e7ao":[0.4597,0.3557,0.1846],"Cura\u00e7ao|Mexico":[0.1846,0.3557,0.4597],"Mexico|Canada":[0.3763,0.2985,0.3252],"Canada|Mexico":[0.3252,0.2985,0.3763],"Mexico|T\u00fcrkiye":[0.4597,0.3557,0.1846],"T\u00fcrkiye|Mexico":[0.1846,0.3557,0.4597],"Mexico|South Africa":[0.453,0.3386,0.2084],"South Africa|Mexico":[0.2084,0.3386,0.453],"Mexico|C\u00f4te d'Ivoire":[0.4597,0.3557,0.1846],"C\u00f4te d'Ivoire|Mexico":[0.1846,0.3557,0.4597],"Mexico|Qatar":[0.4356,0.3275,0.2369],"Qatar|Mexico":[0.2369,0.3275,0.4356],"Mexico|Spain":[0.2749,0.29,0.4351],"Spain|Mexico":[0.4351,0.29,0.2749],"Mexico|Switzerland":[0.3493,0.284,0.3667],"Switzerland|Mexico":[0.3667,0.284,0.3493],"Mexico|Panama":[0.4328,0.3114,0.2559],"Panama|Mexico":[0.2559,0.3114,0.4328],"Germany|Uzbekistan":[0.4874,0.2698,0.2428],"Uzbekistan|Germany":[0.2428,0.2698,0.4874],"Germany|Croatia":[0.369,0.2878,0.3431],"Croatia|Germany":[0.3431,0.2878,0.369],"Germany|Haiti":[0.5295,0.2848,0.1856],"Haiti|Germany":[0.1856,0.2848,0.5295],"Germany|Congo DR":[0.5863,0.2676,0.1461],"Congo DR|Germany":[0.1461,0.2676,0.5863],"Germany|Colombia":[0.3664,0.2598,0.3739],"Colombia|Germany":[0.3739,0.2598,0.3664],"Germany|Sweden":[0.4277,0.3254,0.2469],"Sweden|Germany":[0.2469,0.3254,0.4277],"Germany|Bosnia and Herzegovina":[0.4702,0.3183,0.2116],"Bosnia and Herzegovina|Germany":[0.2116,0.3183,0.4702],"Germany|Senegal":[0.4118,0.3176,0.2706],"Senegal|Germany":[0.2706,0.3176,0.4118],"Germany|Iraq":[0.5098,0.2965,0.1937],"Iraq|Germany":[0.1937,0.2965,0.5098],"Germany|Ecuador":[0.3975,0.277,0.3255],"Ecuador|Germany":[0.3255,0.277,0.3975],"Germany|Japan":[0.3852,0.2671,0.3477],"Japan|Germany":[0.3477,0.2671,0.3852],"Germany|Australia":[0.4487,0.3094,0.2419],"Australia|Germany":[0.2419,0.3094,0.4487],"Germany|IR Iran":[0.5863,0.2676,0.1461],"IR Iran|Germany":[0.1461,0.2676,0.5863],"Germany|Belgium":[0.3852,0.2887,0.3262],"Belgium|Germany":[0.3262,0.2887,0.3852],"Germany|Paraguay":[0.4287,0.3096,0.2617],"Paraguay|Germany":[0.2617,0.3096,0.4287],"Germany|Morocco":[0.3946,0.3008,0.3046],"Morocco|Germany":[0.3046,0.3008,0.3946],"Germany|England":[0.3291,0.2886,0.3823],"England|Germany":[0.3823,0.2886,0.3291],"Germany|Tunisia":[0.4799,0.3213,0.1988],"Tunisia|Germany":[0.1988,0.3213,0.4799],"Germany|Uruguay":[0.377,0.2874,0.3356],"Uruguay|Germany":[0.3356,0.2874,0.377],"Germany|Korea Republic":[0.5863,0.2676,0.1461],"Korea Republic|Germany":[0.1461,0.2676,0.5863],"Germany|USA":[0.5863,0.2676,0.1461],"USA|Germany":[0.1461,0.2676,0.5863],"Germany|Brazil":[0.3379,0.2752,0.3869],"Brazil|Germany":[0.3869,0.2752,0.3379],"Germany|Portugal":[0.336,0.2836,0.3803],"Portugal|Germany":[0.3803,0.2836,0.336],"Germany|Netherlands":[0.3561,0.2813,0.3626],"Netherlands|Germany":[0.3626,0.2813,0.3561],"Germany|Egypt":[0.4736,0.2979,0.2285],"Egypt|Germany":[0.2285,0.2979,0.4736],"Germany|Norway":[0.4247,0.2802,0.2952],"Norway|Germany":[0.2952,0.2802,0.4247],"Germany|New Zealand":[0.5264,0.278,0.1957],"New Zealand|Germany":[0.1957,0.278,0.5264],"Germany|Ghana":[0.4594,0.3272,0.2134],"Ghana|Germany":[0.2134,0.3272,0.4594],"Germany|Cabo Verde":[0.5863,0.2676,0.1461],"Cabo Verde|Germany":[0.1461,0.2676,0.5863],"Germany|Austria":[0.4024,0.2896,0.308],"Austria|Germany":[0.308,0.2896,0.4024],"Germany|Scotland":[0.4293,0.3215,0.2492],"Scotland|Germany":[0.2492,0.3215,0.4293],"Germany|France":[0.3232,0.2813,0.3956],"France|Germany":[0.3956,0.2813,0.3232],"Germany|Argentina":[0.3132,0.2883,0.3985],"Argentina|Germany":[0.3985,0.2883,0.3132],"Germany|Czechia":[0.5863,0.2676,0.1461],"Czechia|Germany":[0.1461,0.2676,0.5863],"Germany|Cura\u00e7ao":[0.5863,0.2676,0.1461],"Cura\u00e7ao|Germany":[0.1461,0.2676,0.5863],"Germany|Canada":[0.4354,0.3086,0.256],"Canada|Germany":[0.256,0.3086,0.4354],"Germany|T\u00fcrkiye":[0.5863,0.2676,0.1461],"T\u00fcrkiye|Germany":[0.1461,0.2676,0.5863],"Germany|South Africa":[0.5311,0.2905,0.1784],"South Africa|Germany":[0.1784,0.2905,0.5311],"Germany|C\u00f4te d'Ivoire":[0.5863,0.2676,0.1461],"C\u00f4te d'Ivoire|Germany":[0.1461,0.2676,0.5863],"Germany|Qatar":[0.5289,0.2826,0.1885],"Qatar|Germany":[0.1885,0.2826,0.5289],"Germany|Spain":[0.3103,0.2718,0.4179],"Spain|Germany":[0.4179,0.2718,0.3103],"Germany|Switzerland":[0.3884,0.2813,0.3303],"Switzerland|Germany":[0.3303,0.2813,0.3884],"Germany|Panama":[0.4953,0.296,0.2087],"Panama|Germany":[0.2087,0.296,0.4953],"Uzbekistan|Croatia":[0.2318,0.3184,0.4498],"Croatia|Uzbekistan":[0.4498,0.3184,0.2318],"Uzbekistan|Haiti":[0.4208,0.2891,0.2901],"Haiti|Uzbekistan":[0.2901,0.2891,0.4208],"Uzbekistan|Congo DR":[0.45,0.2836,0.2664],"Congo DR|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|Colombia":[0.2262,0.332,0.4418],"Colombia|Uzbekistan":[0.4418,0.332,0.2262],"Uzbekistan|Sweden":[0.3663,0.2656,0.3682],"Sweden|Uzbekistan":[0.3682,0.2656,0.3663],"Uzbekistan|Bosnia and Herzegovina":[0.4062,0.2746,0.3191],"Bosnia and Herzegovina|Uzbekistan":[0.3191,0.2746,0.4062],"Uzbekistan|Senegal":[0.3153,0.2736,0.4111],"Senegal|Uzbekistan":[0.4111,0.2736,0.3153],"Uzbekistan|Iraq":[0.395,0.2982,0.3068],"Iraq|Uzbekistan":[0.3068,0.2982,0.395],"Uzbekistan|Ecuador":[0.2597,0.3183,0.422],"Ecuador|Uzbekistan":[0.422,0.3183,0.2597],"Uzbekistan|Japan":[0.2485,0.3025,0.449],"Japan|Uzbekistan":[0.449,0.3025,0.2485],"Uzbekistan|Australia":[0.3293,0.3002,0.3705],"Australia|Uzbekistan":[0.3705,0.3002,0.3293],"Uzbekistan|IR Iran":[0.45,0.2836,0.2664],"IR Iran|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|Belgium":[0.2682,0.2772,0.4546],"Belgium|Uzbekistan":[0.4546,0.2772,0.2682],"Uzbekistan|Paraguay":[0.3291,0.28,0.3909],"Paraguay|Uzbekistan":[0.3909,0.28,0.3291],"Uzbekistan|Morocco":[0.2621,0.308,0.4298],"Morocco|Uzbekistan":[0.4298,0.308,0.2621],"Uzbekistan|England":[0.2135,0.2979,0.4886],"England|Uzbekistan":[0.4886,0.2979,0.2135],"Uzbekistan|Tunisia":[0.3841,0.2874,0.3285],"Tunisia|Uzbekistan":[0.3285,0.2874,0.3841],"Uzbekistan|Uruguay":[0.2316,0.3188,0.4496],"Uruguay|Uzbekistan":[0.4496,0.3188,0.2316],"Uzbekistan|Korea Republic":[0.45,0.2836,0.2664],"Korea Republic|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|USA":[0.45,0.2836,0.2664],"USA|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|Brazil":[0.2223,0.2869,0.4908],"Brazil|Uzbekistan":[0.4908,0.2869,0.2223],"Uzbekistan|Portugal":[0.2167,0.2953,0.4879],"Portugal|Uzbekistan":[0.4879,0.2953,0.2167],"Uzbekistan|Netherlands":[0.2307,0.28,0.4893],"Netherlands|Uzbekistan":[0.4893,0.28,0.2307],"Uzbekistan|Egypt":[0.3861,0.2849,0.329],"Egypt|Uzbekistan":[0.329,0.2849,0.3861],"Uzbekistan|Norway":[0.293,0.2811,0.4259],"Norway|Uzbekistan":[0.4259,0.2811,0.293],"Uzbekistan|New Zealand":[0.3989,0.2788,0.3223],"New Zealand|Uzbekistan":[0.3223,0.2788,0.3989],"Uzbekistan|Ghana":[0.4048,0.2785,0.3166],"Ghana|Uzbekistan":[0.3166,0.2785,0.4048],"Uzbekistan|Cabo Verde":[0.45,0.2836,0.2664],"Cabo Verde|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|Austria":[0.307,0.2803,0.4127],"Austria|Uzbekistan":[0.4127,0.2803,0.307],"Uzbekistan|Scotland":[0.3581,0.269,0.3728],"Scotland|Uzbekistan":[0.3728,0.269,0.3581],"Uzbekistan|France":[0.2118,0.2959,0.4923],"France|Uzbekistan":[0.4923,0.2959,0.2118],"Uzbekistan|Argentina":[0.1936,0.3031,0.5033],"Argentina|Uzbekistan":[0.5033,0.3031,0.1936],"Uzbekistan|Czechia":[0.45,0.2836,0.2664],"Czechia|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|Cura\u00e7ao":[0.45,0.2836,0.2664],"Cura\u00e7ao|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|Canada":[0.3199,0.3029,0.3772],"Canada|Uzbekistan":[0.3772,0.3029,0.3199],"Uzbekistan|T\u00fcrkiye":[0.45,0.2836,0.2664],"T\u00fcrkiye|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|South Africa":[0.4012,0.2995,0.2993],"South Africa|Uzbekistan":[0.2993,0.2995,0.4012],"Uzbekistan|C\u00f4te d'Ivoire":[0.45,0.2836,0.2664],"C\u00f4te d'Ivoire|Uzbekistan":[0.2664,0.2836,0.45],"Uzbekistan|Qatar":[0.4026,0.2713,0.3261],"Qatar|Uzbekistan":[0.3261,0.2713,0.4026],"Uzbekistan|Spain":[0.1699,0.3001,0.53],"Spain|Uzbekistan":[0.53,0.3001,0.1699],"Uzbekistan|Switzerland":[0.2372,0.3205,0.4423],"Switzerland|Uzbekistan":[0.4423,0.3205,0.2372],"Uzbekistan|Panama":[0.3916,0.2854,0.323],"Panama|Uzbekistan":[0.323,0.2854,0.3916],"Croatia|Haiti":[0.5006,0.3103,0.1891],"Haiti|Croatia":[0.1891,0.3103,0.5006],"Croatia|Congo DR":[0.4842,0.3343,0.1814],"Congo DR|Croatia":[0.1814,0.3343,0.4842],"Croatia|Colombia":[0.3302,0.2912,0.3786],"Colombia|Croatia":[0.3786,0.2912,0.3302],"Croatia|Sweden":[0.4043,0.3002,0.2955],"Sweden|Croatia":[0.2955,0.3002,0.4043],"Croatia|Bosnia and Herzegovina":[0.4576,0.2802,0.2622],"Bosnia and Herzegovina|Croatia":[0.2622,0.2802,0.4576],"Croatia|Senegal":[0.3915,0.2897,0.3189],"Senegal|Croatia":[0.3189,0.2897,0.3915],"Croatia|Iraq":[0.4823,0.3136,0.2041],"Iraq|Croatia":[0.2041,0.3136,0.4823],"Croatia|Ecuador":[0.3714,0.2884,0.3402],"Ecuador|Croatia":[0.3402,0.2884,0.3714],"Croatia|Japan":[0.3602,0.2742,0.3656],"Japan|Croatia":[0.3656,0.2742,0.3602],"Croatia|Australia":[0.409,0.3246,0.2663],"Australia|Croatia":[0.2663,0.3246,0.409],"Croatia|IR Iran":[0.4842,0.3343,0.1814],"IR Iran|Croatia":[0.1814,0.3343,0.4842],"Croatia|Belgium":[0.3625,0.2909,0.3466],"Belgium|Croatia":[0.3466,0.2909,0.3625],"Croatia|Paraguay":[0.407,0.2889,0.3041],"Paraguay|Croatia":[0.3041,0.2889,0.407],"Croatia|Morocco":[0.3805,0.2884,0.331],"Morocco|Croatia":[0.331,0.2884,0.3805],"Croatia|England":[0.3244,0.2928,0.3828],"England|Croatia":[0.3828,0.2928,0.3244],"Croatia|Tunisia":[0.4342,0.3284,0.2374],"Tunisia|Croatia":[0.2374,0.3284,0.4342],"Croatia|Uruguay":[0.3581,0.2888,0.3531],"Uruguay|Croatia":[0.3531,0.2888,0.3581],"Croatia|Korea Republic":[0.4842,0.3343,0.1814],"Korea Republic|Croatia":[0.1814,0.3343,0.4842],"Croatia|USA":[0.4842,0.3343,0.1814],"USA|Croatia":[0.1814,0.3343,0.4842],"Croatia|Brazil":[0.3177,0.2916,0.3907],"Brazil|Croatia":[0.3907,0.2916,0.3177],"Croatia|Portugal":[0.3246,0.2858,0.3896],"Portugal|Croatia":[0.3896,0.2858,0.3246],"Croatia|Netherlands":[0.3335,0.285,0.3814],"Netherlands|Croatia":[0.3814,0.285,0.3335],"Croatia|Egypt":[0.4258,0.3131,0.2611],"Egypt|Croatia":[0.2611,0.3131,0.4258],"Croatia|Norway":[0.3992,0.2442,0.3566],"Norway|Croatia":[0.3566,0.2442,0.3992],"Croatia|New Zealand":[0.463,0.3278,0.2091],"New Zealand|Croatia":[0.2091,0.3278,0.463],"Croatia|Ghana":[0.4491,0.2931,0.2577],"Ghana|Croatia":[0.2577,0.2931,0.4491],"Croatia|Cabo Verde":[0.4842,0.3343,0.1814],"Cabo Verde|Croatia":[0.1814,0.3343,0.4842],"Croatia|Austria":[0.3949,0.2849,0.3202],"Austria|Croatia":[0.3202,0.2849,0.3949],"Croatia|Scotland":[0.4036,0.284,0.3124],"Scotland|Croatia":[0.3124,0.284,0.4036],"Croatia|France":[0.3077,0.2898,0.4026],"France|Croatia":[0.4026,0.2898,0.3077],"Croatia|Argentina":[0.294,0.309,0.3971],"Argentina|Croatia":[0.3971,0.309,0.294],"Croatia|Czechia":[0.4842,0.3343,0.1814],"Czechia|Croatia":[0.1814,0.3343,0.4842],"Croatia|Cura\u00e7ao":[0.4842,0.3343,0.1814],"Cura\u00e7ao|Croatia":[0.1814,0.3343,0.4842],"Croatia|Canada":[0.4067,0.3052,0.2882],"Canada|Croatia":[0.2882,0.3052,0.4067],"Croatia|T\u00fcrkiye":[0.4842,0.3343,0.1814],"T\u00fcrkiye|Croatia":[0.1814,0.3343,0.4842],"Croatia|South Africa":[0.4887,0.3314,0.1799],"South Africa|Croatia":[0.1799,0.3314,0.4887],"Croatia|C\u00f4te d'Ivoire":[0.4842,0.3343,0.1814],"C\u00f4te d'Ivoire|Croatia":[0.1814,0.3343,0.4842],"Croatia|Qatar":[0.4642,0.3224,0.2135],"Qatar|Croatia":[0.2135,0.3224,0.4642],"Croatia|Spain":[0.2952,0.2767,0.4281],"Spain|Croatia":[0.4281,0.2767,0.2952],"Croatia|Switzerland":[0.3625,0.2923,0.3451],"Switzerland|Croatia":[0.3451,0.2923,0.3625],"Croatia|Panama":[0.4477,0.315,0.2373],"Panama|Croatia":[0.2373,0.315,0.4477],"Haiti|Congo DR":[0.3993,0.2679,0.3327],"Congo DR|Haiti":[0.3327,0.2679,0.3993],"Haiti|Colombia":[0.187,0.3229,0.4901],"Colombia|Haiti":[0.4901,0.3229,0.187],"Haiti|Sweden":[0.2302,0.3264,0.4434],"Sweden|Haiti":[0.4434,0.3264,0.2302],"Haiti|Bosnia and Herzegovina":[0.3393,0.2559,0.4048],"Bosnia and Herzegovina|Haiti":[0.4048,0.2559,0.3393],"Haiti|Senegal":[0.2174,0.3176,0.465],"Senegal|Haiti":[0.465,0.3176,0.2174],"Haiti|Iraq":[0.3192,0.2789,0.4019],"Iraq|Haiti":[0.4019,0.2789,0.3192],"Haiti|Ecuador":[0.2161,0.3219,0.462],"Ecuador|Haiti":[0.462,0.3219,0.2161],"Haiti|Japan":[0.1882,0.327,0.4848],"Japan|Haiti":[0.4848,0.327,0.1882],"Haiti|Australia":[0.2658,0.3053,0.4289],"Australia|Haiti":[0.4289,0.3053,0.2658],"Haiti|IR Iran":[0.3993,0.2679,0.3327],"IR Iran|Haiti":[0.3327,0.2679,0.3993],"Haiti|Belgium":[0.2094,0.2877,0.503],"Belgium|Haiti":[0.503,0.2877,0.2094],"Haiti|Paraguay":[0.249,0.3095,0.4415],"Paraguay|Haiti":[0.4415,0.3095,0.249],"Haiti|Morocco":[0.2046,0.3048,0.4905],"Morocco|Haiti":[0.4905,0.3048,0.2046],"Haiti|England":[0.1711,0.2682,0.5606],"England|Haiti":[0.5606,0.2682,0.1711],"Haiti|Tunisia":[0.3088,0.2814,0.4098],"Tunisia|Haiti":[0.4098,0.2814,0.3088],"Haiti|Uruguay":[0.1979,0.2933,0.5088],"Uruguay|Haiti":[0.5088,0.2933,0.1979],"Haiti|Korea Republic":[0.3993,0.2679,0.3327],"Korea Republic|Haiti":[0.3327,0.2679,0.3993],"Haiti|USA":[0.3993,0.2679,0.3327],"USA|Haiti":[0.3327,0.2679,0.3993],"Haiti|Brazil":[0.1865,0.2542,0.5593],"Brazil|Haiti":[0.5593,0.2542,0.1865],"Haiti|Portugal":[0.1806,0.2793,0.54],"Portugal|Haiti":[0.54,0.2793,0.1806],"Haiti|Netherlands":[0.1857,0.2969,0.5175],"Netherlands|Haiti":[0.5175,0.2969,0.1857],"Haiti|Egypt":[0.2897,0.2979,0.4124],"Egypt|Haiti":[0.4124,0.2979,0.2897],"Haiti|Norway":[0.2272,0.2939,0.4788],"Norway|Haiti":[0.4788,0.2939,0.2272],"Haiti|New Zealand":[0.3237,0.2826,0.3937],"New Zealand|Haiti":[0.3937,0.2826,0.3237],"Haiti|Ghana":[0.3353,0.2678,0.397],"Ghana|Haiti":[0.397,0.2678,0.3353],"Haiti|Cabo Verde":[0.3993,0.2679,0.3327],"Cabo Verde|Haiti":[0.3327,0.2679,0.3993],"Haiti|Austria":[0.2066,0.3093,0.4841],"Austria|Haiti":[0.4841,0.3093,0.2066],"Haiti|Scotland":[0.2547,0.3016,0.4437],"Scotland|Haiti":[0.4437,0.3016,0.2547],"Haiti|France":[0.1776,0.2629,0.5595],"France|Haiti":[0.5595,0.2629,0.1776],"Haiti|Argentina":[0.1928,0.2452,0.562],"Argentina|Haiti":[0.562,0.2452,0.1928],"Haiti|Czechia":[0.3993,0.2679,0.3327],"Czechia|Haiti":[0.3327,0.2679,0.3993],"Haiti|Cura\u00e7ao":[0.3993,0.2679,0.3327],"Cura\u00e7ao|Haiti":[0.3327,0.2679,0.3993],"Haiti|Canada":[0.2415,0.3167,0.4418],"Canada|Haiti":[0.4418,0.3167,0.2415],"Haiti|T\u00fcrkiye":[0.3993,0.2679,0.3327],"T\u00fcrkiye|Haiti":[0.3327,0.2679,0.3993],"Haiti|South Africa":[0.3454,0.2831,0.3715],"South Africa|Haiti":[0.3715,0.2831,0.3454],"Haiti|C\u00f4te d'Ivoire":[0.3993,0.2679,0.3327],"C\u00f4te d'Ivoire|Haiti":[0.3327,0.2679,0.3993],"Haiti|Qatar":[0.3376,0.258,0.4044],"Qatar|Haiti":[0.4044,0.258,0.3376],"Haiti|Spain":[0.1505,0.1869,0.6627],"Spain|Haiti":[0.6627,0.1869,0.1505],"Haiti|Switzerland":[0.1974,0.3128,0.4898],"Switzerland|Haiti":[0.4898,0.3128,0.1974],"Haiti|Panama":[0.3227,0.2754,0.4019],"Panama|Haiti":[0.4019,0.2754,0.3227],"Congo DR|Colombia":[0.2165,0.2834,0.5001],"Colombia|Congo DR":[0.5001,0.2834,0.2165],"Congo DR|Sweden":[0.2701,0.2956,0.4343],"Sweden|Congo DR":[0.4343,0.2956,0.2701],"Congo DR|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|Congo DR":[0.4036,0.2848,0.3116],"Congo DR|Senegal":[0.2009,0.3383,0.4607],"Senegal|Congo DR":[0.4607,0.3383,0.2009],"Congo DR|Iraq":[0.3053,0.2777,0.4171],"Iraq|Congo DR":[0.4171,0.2777,0.3053],"Congo DR|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|Congo DR":[0.4632,0.2993,0.2375],"Congo DR|Japan":[0.1978,0.321,0.4812],"Japan|Congo DR":[0.4812,0.321,0.1978],"Congo DR|Australia":[0.2471,0.3007,0.4522],"Australia|Congo DR":[0.4522,0.3007,0.2471],"Congo DR|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|Belgium":[0.1687,0.3398,0.4914],"Belgium|Congo DR":[0.4914,0.3398,0.1687],"Congo DR|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|Congo DR":[0.4478,0.2987,0.2535],"Congo DR|Morocco":[0.1887,0.3444,0.4669],"Morocco|Congo DR":[0.4669,0.3444,0.1887],"Congo DR|England":[0.174,0.2506,0.5754],"England|Congo DR":[0.5754,0.2506,0.174],"Congo DR|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|Congo DR":[0.4178,0.3061,0.2761],"Congo DR|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|Congo DR":[0.4812,0.3423,0.1764],"Congo DR|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|USA":[0.3544,0.2912,0.3544],"USA|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|Brazil":[0.1683,0.236,0.5957],"Brazil|Congo DR":[0.5957,0.236,0.1683],"Congo DR|Portugal":[0.1752,0.2596,0.5652],"Portugal|Congo DR":[0.5652,0.2596,0.1752],"Congo DR|Netherlands":[0.1708,0.2752,0.554],"Netherlands|Congo DR":[0.554,0.2752,0.1708],"Congo DR|Egypt":[0.2745,0.3026,0.4228],"Egypt|Congo DR":[0.4228,0.3026,0.2745],"Congo DR|Norway":[0.2304,0.302,0.4675],"Norway|Congo DR":[0.4675,0.302,0.2304],"Congo DR|New Zealand":[0.302,0.2879,0.4101],"New Zealand|Congo DR":[0.4101,0.2879,0.302],"Congo DR|Ghana":[0.265,0.3204,0.4146],"Ghana|Congo DR":[0.4146,0.3204,0.265],"Congo DR|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|Austria":[0.2084,0.3297,0.4619],"Austria|Congo DR":[0.4619,0.3297,0.2084],"Congo DR|Scotland":[0.2268,0.3242,0.449],"Scotland|Congo DR":[0.449,0.3242,0.2268],"Congo DR|France":[0.1548,0.2145,0.6307],"France|Congo DR":[0.6307,0.2145,0.1548],"Congo DR|Argentina":[0.1173,0.1868,0.6959],"Argentina|Congo DR":[0.6959,0.1868,0.1173],"Congo DR|Czechia":[0.3544,0.2912,0.3544],"Czechia|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|Canada":[0.2458,0.3052,0.449],"Canada|Congo DR":[0.449,0.3052,0.2458],"Congo DR|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|South Africa":[0.3199,0.2814,0.3987],"South Africa|Congo DR":[0.3987,0.2814,0.3199],"Congo DR|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|Congo DR":[0.3544,0.2912,0.3544],"Congo DR|Qatar":[0.3064,0.287,0.4066],"Qatar|Congo DR":[0.4066,0.287,0.3064],"Congo DR|Spain":[0.1156,0.1828,0.7016],"Spain|Congo DR":[0.7016,0.1828,0.1156],"Congo DR|Switzerland":[0.1937,0.3313,0.475],"Switzerland|Congo DR":[0.475,0.3313,0.1937],"Congo DR|Panama":[0.2978,0.2799,0.4223],"Panama|Congo DR":[0.4223,0.2799,0.2978],"Colombia|Sweden":[0.419,0.289,0.292],"Sweden|Colombia":[0.292,0.289,0.419],"Colombia|Bosnia and Herzegovina":[0.4631,0.2687,0.2682],"Bosnia and Herzegovina|Colombia":[0.2682,0.2687,0.4631],"Colombia|Senegal":[0.3954,0.2859,0.3187],"Senegal|Colombia":[0.3187,0.2859,0.3954],"Colombia|Iraq":[0.4895,0.3045,0.2059],"Iraq|Colombia":[0.2059,0.3045,0.4895],"Colombia|Ecuador":[0.3883,0.2892,0.3226],"Ecuador|Colombia":[0.3226,0.2892,0.3883],"Colombia|Japan":[0.3816,0.2692,0.3492],"Japan|Colombia":[0.3492,0.2692,0.3816],"Colombia|Australia":[0.4055,0.3019,0.2926],"Australia|Colombia":[0.2926,0.3019,0.4055],"Colombia|IR Iran":[0.5001,0.2834,0.2165],"IR Iran|Colombia":[0.2165,0.2834,0.5001],"Colombia|Belgium":[0.3865,0.2815,0.332],"Belgium|Colombia":[0.332,0.2815,0.3865],"Colombia|Paraguay":[0.4069,0.286,0.3071],"Paraguay|Colombia":[0.3071,0.286,0.4069],"Colombia|Morocco":[0.3924,0.2902,0.3174],"Morocco|Colombia":[0.3174,0.2902,0.3924],"Colombia|England":[0.3422,0.2856,0.3722],"England|Colombia":[0.3722,0.2856,0.3422],"Colombia|Tunisia":[0.4326,0.291,0.2764],"Tunisia|Colombia":[0.2764,0.291,0.4326],"Colombia|Uruguay":[0.3932,0.2689,0.3379],"Uruguay|Colombia":[0.3379,0.2689,0.3932],"Colombia|Korea Republic":[0.5001,0.2834,0.2165],"Korea Republic|Colombia":[0.2165,0.2834,0.5001],"Colombia|USA":[0.5001,0.2834,0.2165],"USA|Colombia":[0.2165,0.2834,0.5001],"Colombia|Brazil":[0.3307,0.2927,0.3766],"Brazil|Colombia":[0.3766,0.2927,0.3307],"Colombia|Portugal":[0.335,0.2981,0.3669],"Portugal|Colombia":[0.3669,0.2981,0.335],"Colombia|Netherlands":[0.3587,0.2772,0.3641],"Netherlands|Colombia":[0.3641,0.2772,0.3587],"Colombia|Egypt":[0.4357,0.3029,0.2614],"Egypt|Colombia":[0.2614,0.3029,0.4357],"Colombia|Norway":[0.4091,0.2404,0.3504],"Norway|Colombia":[0.3504,0.2404,0.4091],"Colombia|New Zealand":[0.4645,0.3537,0.1817],"New Zealand|Colombia":[0.1817,0.3537,0.4645],"Colombia|Ghana":[0.4625,0.281,0.2565],"Ghana|Colombia":[0.2565,0.281,0.4625],"Colombia|Cabo Verde":[0.5001,0.2834,0.2165],"Cabo Verde|Colombia":[0.2165,0.2834,0.5001],"Colombia|Austria":[0.3995,0.2783,0.3222],"Austria|Colombia":[0.3222,0.2783,0.3995],"Colombia|Scotland":[0.4189,0.2926,0.2886],"Scotland|Colombia":[0.2886,0.2926,0.4189],"Colombia|France":[0.2949,0.2972,0.4079],"France|Colombia":[0.4079,0.2972,0.2949],"Colombia|Argentina":[0.3091,0.2899,0.401],"Argentina|Colombia":[0.401,0.2899,0.3091],"Colombia|Czechia":[0.5001,0.2834,0.2165],"Czechia|Colombia":[0.2165,0.2834,0.5001],"Colombia|Cura\u00e7ao":[0.5001,0.2834,0.2165],"Cura\u00e7ao|Colombia":[0.2165,0.2834,0.5001],"Colombia|Canada":[0.4076,0.2977,0.2947],"Canada|Colombia":[0.2947,0.2977,0.4076],"Colombia|T\u00fcrkiye":[0.5001,0.2834,0.2165],"T\u00fcrkiye|Colombia":[0.2165,0.2834,0.5001],"Colombia|South Africa":[0.4588,0.3523,0.1889],"South Africa|Colombia":[0.1889,0.3523,0.4588],"Colombia|C\u00f4te d'Ivoire":[0.5001,0.2834,0.2165],"C\u00f4te d'Ivoire|Colombia":[0.2165,0.2834,0.5001],"Colombia|Qatar":[0.4699,0.3229,0.2072],"Qatar|Colombia":[0.2072,0.3229,0.4699],"Colombia|Spain":[0.2878,0.2848,0.4274],"Spain|Colombia":[0.4274,0.2848,0.2878],"Colombia|Switzerland":[0.3905,0.2861,0.3234],"Switzerland|Colombia":[0.3234,0.2861,0.3905],"Colombia|Panama":[0.4487,0.3231,0.2282],"Panama|Colombia":[0.2282,0.3231,0.4487],"Sweden|Bosnia and Herzegovina":[0.4065,0.2641,0.3294],"Bosnia and Herzegovina|Sweden":[0.3294,0.2641,0.4065],"Sweden|Senegal":[0.327,0.2793,0.3937],"Senegal|Sweden":[0.3937,0.2793,0.327],"Sweden|Iraq":[0.4161,0.2691,0.3148],"Iraq|Sweden":[0.3148,0.2691,0.4161],"Sweden|Ecuador":[0.299,0.2993,0.4017],"Ecuador|Sweden":[0.4017,0.2993,0.299],"Sweden|Japan":[0.3109,0.2687,0.4203],"Japan|Sweden":[0.4203,0.2687,0.3109],"Sweden|Australia":[0.3347,0.2815,0.3838],"Australia|Sweden":[0.3838,0.2815,0.3347],"Sweden|IR Iran":[0.4343,0.2956,0.2701],"IR Iran|Sweden":[0.2701,0.2956,0.4343],"Sweden|Belgium":[0.3101,0.2847,0.4052],"Belgium|Sweden":[0.4052,0.2847,0.3101],"Sweden|Paraguay":[0.3501,0.2695,0.3804],"Paraguay|Sweden":[0.3804,0.2695,0.3501],"Sweden|Morocco":[0.3176,0.2856,0.3968],"Morocco|Sweden":[0.3968,0.2856,0.3176],"Sweden|England":[0.2354,0.3228,0.4417],"England|Sweden":[0.4417,0.3228,0.2354],"Sweden|Tunisia":[0.3772,0.2901,0.3327],"Tunisia|Sweden":[0.3327,0.2901,0.3772],"Sweden|Uruguay":[0.3067,0.29,0.4033],"Uruguay|Sweden":[0.4033,0.29,0.3067],"Sweden|Korea Republic":[0.4343,0.2956,0.2701],"Korea Republic|Sweden":[0.2701,0.2956,0.4343],"Sweden|USA":[0.4343,0.2956,0.2701],"USA|Sweden":[0.2701,0.2956,0.4343],"Sweden|Brazil":[0.2302,0.3411,0.4287],"Brazil|Sweden":[0.4287,0.3411,0.2302],"Sweden|Portugal":[0.2441,0.3136,0.4422],"Portugal|Sweden":[0.4422,0.3136,0.2441],"Sweden|Netherlands":[0.2624,0.3055,0.4322],"Netherlands|Sweden":[0.4322,0.3055,0.2624],"Sweden|Egypt":[0.3823,0.2845,0.3332],"Egypt|Sweden":[0.3332,0.2845,0.3823],"Sweden|Norway":[0.3383,0.246,0.4157],"Norway|Sweden":[0.4157,0.246,0.3383],"Sweden|New Zealand":[0.422,0.3064,0.2716],"New Zealand|Sweden":[0.2716,0.3064,0.422],"Sweden|Ghana":[0.4008,0.2933,0.3059],"Ghana|Sweden":[0.3059,0.2933,0.4008],"Sweden|Cabo Verde":[0.4343,0.2956,0.2701],"Cabo Verde|Sweden":[0.2701,0.2956,0.4343],"Sweden|Austria":[0.3194,0.283,0.3977],"Austria|Sweden":[0.3977,0.283,0.3194],"Sweden|Scotland":[0.3607,0.2677,0.3716],"Scotland|Sweden":[0.3716,0.2677,0.3607],"Sweden|France":[0.2043,0.345,0.4507],"France|Sweden":[0.4507,0.345,0.2043],"Sweden|Argentina":[0.2136,0.3335,0.4529],"Argentina|Sweden":[0.4529,0.3335,0.2136],"Sweden|Czechia":[0.4343,0.2956,0.2701],"Czechia|Sweden":[0.2701,0.2956,0.4343],"Sweden|Cura\u00e7ao":[0.4343,0.2956,0.2701],"Cura\u00e7ao|Sweden":[0.2701,0.2956,0.4343],"Sweden|Canada":[0.3336,0.2778,0.3886],"Canada|Sweden":[0.3886,0.2778,0.3336],"Sweden|T\u00fcrkiye":[0.4343,0.2956,0.2701],"T\u00fcrkiye|Sweden":[0.2701,0.2956,0.4343],"Sweden|South Africa":[0.4255,0.312,0.2624],"South Africa|Sweden":[0.2624,0.312,0.4255],"Sweden|C\u00f4te d'Ivoire":[0.4343,0.2956,0.2701],"C\u00f4te d'Ivoire|Sweden":[0.2701,0.2956,0.4343],"Sweden|Qatar":[0.4273,0.2929,0.2798],"Qatar|Sweden":[0.2798,0.2929,0.4273],"Sweden|Spain":[0.2168,0.3171,0.4661],"Spain|Sweden":[0.4661,0.3171,0.2168],"Sweden|Switzerland":[0.3119,0.2852,0.4029],"Switzerland|Sweden":[0.4029,0.2852,0.3119],"Sweden|Panama":[0.3957,0.2765,0.3278],"Panama|Sweden":[0.3278,0.2765,0.3957],"Bosnia and Herzegovina|Senegal":[0.2954,0.2742,0.4304],"Senegal|Bosnia and Herzegovina":[0.4304,0.2742,0.2954],"Bosnia and Herzegovina|Iraq":[0.3525,0.2615,0.3861],"Iraq|Bosnia and Herzegovina":[0.3861,0.2615,0.3525],"Bosnia and Herzegovina|Ecuador":[0.2625,0.2852,0.4523],"Ecuador|Bosnia and Herzegovina":[0.4523,0.2852,0.2625],"Bosnia and Herzegovina|Japan":[0.2764,0.2555,0.4682],"Japan|Bosnia and Herzegovina":[0.4682,0.2555,0.2764],"Bosnia and Herzegovina|Australia":[0.3019,0.2786,0.4195],"Australia|Bosnia and Herzegovina":[0.4195,0.2786,0.3019],"Bosnia and Herzegovina|IR Iran":[0.4036,0.2848,0.3116],"IR Iran|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|Belgium":[0.2364,0.3128,0.4508],"Belgium|Bosnia and Herzegovina":[0.4508,0.3128,0.2364],"Bosnia and Herzegovina|Paraguay":[0.3,0.2806,0.4193],"Paraguay|Bosnia and Herzegovina":[0.4193,0.2806,0.3],"Bosnia and Herzegovina|Morocco":[0.2875,0.271,0.4416],"Morocco|Bosnia and Herzegovina":[0.4416,0.271,0.2875],"Bosnia and Herzegovina|England":[0.1883,0.3372,0.4746],"England|Bosnia and Herzegovina":[0.4746,0.3372,0.1883],"Bosnia and Herzegovina|Tunisia":[0.333,0.2718,0.3951],"Tunisia|Bosnia and Herzegovina":[0.3951,0.2718,0.333],"Bosnia and Herzegovina|Uruguay":[0.2519,0.2965,0.4517],"Uruguay|Bosnia and Herzegovina":[0.4517,0.2965,0.2519],"Bosnia and Herzegovina|Korea Republic":[0.4036,0.2848,0.3116],"Korea Republic|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|USA":[0.4036,0.2848,0.3116],"USA|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|Brazil":[0.1799,0.346,0.4741],"Brazil|Bosnia and Herzegovina":[0.4741,0.346,0.1799],"Bosnia and Herzegovina|Portugal":[0.1973,0.3255,0.4772],"Portugal|Bosnia and Herzegovina":[0.4772,0.3255,0.1973],"Bosnia and Herzegovina|Netherlands":[0.2083,0.3227,0.469],"Netherlands|Bosnia and Herzegovina":[0.469,0.3227,0.2083],"Bosnia and Herzegovina|Egypt":[0.3228,0.2802,0.397],"Egypt|Bosnia and Herzegovina":[0.397,0.2802,0.3228],"Bosnia and Herzegovina|Norway":[0.312,0.2428,0.4452],"Norway|Bosnia and Herzegovina":[0.4452,0.2428,0.312],"Bosnia and Herzegovina|New Zealand":[0.3696,0.2453,0.3851],"New Zealand|Bosnia and Herzegovina":[0.3851,0.2453,0.3696],"Bosnia and Herzegovina|Ghana":[0.3772,0.27,0.3529],"Ghana|Bosnia and Herzegovina":[0.3529,0.27,0.3772],"Bosnia and Herzegovina|Cabo Verde":[0.4036,0.2848,0.3116],"Cabo Verde|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|Austria":[0.29,0.2785,0.4316],"Austria|Bosnia and Herzegovina":[0.4316,0.2785,0.29],"Bosnia and Herzegovina|Scotland":[0.3181,0.2755,0.4063],"Scotland|Bosnia and Herzegovina":[0.4063,0.2755,0.3181],"Bosnia and Herzegovina|France":[0.1678,0.3451,0.4871],"France|Bosnia and Herzegovina":[0.4871,0.3451,0.1678],"Bosnia and Herzegovina|Argentina":[0.2245,0.2769,0.4986],"Argentina|Bosnia and Herzegovina":[0.4986,0.2769,0.2245],"Bosnia and Herzegovina|Czechia":[0.4036,0.2848,0.3116],"Czechia|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|Cura\u00e7ao":[0.4036,0.2848,0.3116],"Cura\u00e7ao|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|Canada":[0.2976,0.2823,0.42],"Canada|Bosnia and Herzegovina":[0.42,0.2823,0.2976],"Bosnia and Herzegovina|T\u00fcrkiye":[0.4036,0.2848,0.3116],"T\u00fcrkiye|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|South Africa":[0.3872,0.2717,0.3411],"South Africa|Bosnia and Herzegovina":[0.3411,0.2717,0.3872],"Bosnia and Herzegovina|C\u00f4te d'Ivoire":[0.4036,0.2848,0.3116],"C\u00f4te d'Ivoire|Bosnia and Herzegovina":[0.3116,0.2848,0.4036],"Bosnia and Herzegovina|Qatar":[0.3645,0.2496,0.3859],"Qatar|Bosnia and Herzegovina":[0.3859,0.2496,0.3645],"Bosnia and Herzegovina|Spain":[0.2259,0.2667,0.5074],"Spain|Bosnia and Herzegovina":[0.5074,0.2667,0.2259],"Bosnia and Herzegovina|Switzerland":[0.2885,0.2638,0.4477],"Switzerland|Bosnia and Herzegovina":[0.4477,0.2638,0.2885],"Bosnia and Herzegovina|Panama":[0.3448,0.257,0.3982],"Panama|Bosnia and Herzegovina":[0.3982,0.257,0.3448],"Senegal|Iraq":[0.4665,0.2892,0.2443],"Iraq|Senegal":[0.2443,0.2892,0.4665],"Senegal|Ecuador":[0.3401,0.2835,0.3764],"Ecuador|Senegal":[0.3764,0.2835,0.3401],"Senegal|Japan":[0.3246,0.2722,0.4033],"Japan|Senegal":[0.4033,0.2722,0.3246],"Senegal|Australia":[0.3691,0.2874,0.3434],"Australia|Senegal":[0.3434,0.2874,0.3691],"Senegal|IR Iran":[0.4607,0.3383,0.2009],"IR Iran|Senegal":[0.2009,0.3383,0.4607],"Senegal|Belgium":[0.3251,0.2967,0.3781],"Belgium|Senegal":[0.3781,0.2967,0.3251],"Senegal|Paraguay":[0.3782,0.282,0.3398],"Paraguay|Senegal":[0.3398,0.282,0.3782],"Senegal|Morocco":[0.346,0.2904,0.3636],"Morocco|Senegal":[0.3636,0.2904,0.346],"Senegal|England":[0.2895,0.3044,0.4061],"England|Senegal":[0.4061,0.3044,0.2895],"Senegal|Tunisia":[0.4095,0.2895,0.301],"Tunisia|Senegal":[0.301,0.2895,0.4095],"Senegal|Uruguay":[0.3276,0.286,0.3863],"Uruguay|Senegal":[0.3863,0.286,0.3276],"Senegal|Korea Republic":[0.4607,0.3383,0.2009],"Korea Republic|Senegal":[0.2009,0.3383,0.4607],"Senegal|USA":[0.4607,0.3383,0.2009],"USA|Senegal":[0.2009,0.3383,0.4607],"Senegal|Brazil":[0.2682,0.3176,0.4142],"Brazil|Senegal":[0.4142,0.3176,0.2682],"Senegal|Portugal":[0.2908,0.3051,0.4041],"Portugal|Senegal":[0.4041,0.3051,0.2908],"Senegal|Netherlands":[0.3086,0.2967,0.3947],"Netherlands|Senegal":[0.3947,0.2967,0.3086],"Senegal|Egypt":[0.4104,0.3042,0.2855],"Egypt|Senegal":[0.2855,0.3042,0.4104],"Senegal|Norway":[0.3604,0.2613,0.3783],"Norway|Senegal":[0.3783,0.2613,0.3604],"Senegal|New Zealand":[0.4335,0.3475,0.219],"New Zealand|Senegal":[0.219,0.3475,0.4335],"Senegal|Ghana":[0.4221,0.3002,0.2776],"Ghana|Senegal":[0.2776,0.3002,0.4221],"Senegal|Cabo Verde":[0.4607,0.3383,0.2009],"Cabo Verde|Senegal":[0.2009,0.3383,0.4607],"Senegal|Austria":[0.3433,0.3165,0.3402],"Austria|Senegal":[0.3402,0.3165,0.3433],"Senegal|Scotland":[0.3868,0.285,0.3282],"Scotland|Senegal":[0.3282,0.285,0.3868],"Senegal|France":[0.2561,0.3312,0.4127],"France|Senegal":[0.4127,0.3312,0.2561],"Senegal|Argentina":[0.278,0.3056,0.4164],"Argentina|Senegal":[0.4164,0.3056,0.278],"Senegal|Czechia":[0.4607,0.3383,0.2009],"Czechia|Senegal":[0.2009,0.3383,0.4607],"Senegal|Cura\u00e7ao":[0.4607,0.3383,0.2009],"Cura\u00e7ao|Senegal":[0.2009,0.3383,0.4607],"Senegal|Canada":[0.3717,0.292,0.3364],"Canada|Senegal":[0.3364,0.292,0.3717],"Senegal|T\u00fcrkiye":[0.4607,0.3383,0.2009],"T\u00fcrkiye|Senegal":[0.2009,0.3383,0.4607],"Senegal|South Africa":[0.4473,0.3491,0.2036],"South Africa|Senegal":[0.2036,0.3491,0.4473],"Senegal|C\u00f4te d'Ivoire":[0.4607,0.3383,0.2009],"C\u00f4te d'Ivoire|Senegal":[0.2009,0.3383,0.4607],"Senegal|Qatar":[0.4344,0.3237,0.2418],"Qatar|Senegal":[0.2418,0.3237,0.4344],"Senegal|Spain":[0.2764,0.2938,0.4298],"Spain|Senegal":[0.4298,0.2938,0.2764],"Senegal|Switzerland":[0.3253,0.2952,0.3795],"Switzerland|Senegal":[0.3795,0.2952,0.3253],"Senegal|Panama":[0.4277,0.3141,0.2582],"Panama|Senegal":[0.2582,0.3141,0.4277],"Iraq|Ecuador":[0.2341,0.3207,0.4453],"Ecuador|Iraq":[0.4453,0.3207,0.2341],"Iraq|Japan":[0.2042,0.3341,0.4617],"Japan|Iraq":[0.4617,0.3341,0.2042],"Iraq|Australia":[0.268,0.3203,0.4118],"Australia|Iraq":[0.4118,0.3203,0.268],"Iraq|IR Iran":[0.4171,0.2777,0.3053],"IR Iran|Iraq":[0.3053,0.2777,0.4171],"Iraq|Belgium":[0.2231,0.2944,0.4826],"Belgium|Iraq":[0.4826,0.2944,0.2231],"Iraq|Paraguay":[0.2665,0.2993,0.4343],"Paraguay|Iraq":[0.4343,0.2993,0.2665],"Iraq|Morocco":[0.2306,0.304,0.4654],"Morocco|Iraq":[0.4654,0.304,0.2306],"Iraq|England":[0.1905,0.287,0.5225],"England|Iraq":[0.5225,0.287,0.1905],"Iraq|Tunisia":[0.3348,0.2943,0.3709],"Tunisia|Iraq":[0.3709,0.2943,0.3348],"Iraq|Uruguay":[0.2198,0.3033,0.4769],"Uruguay|Iraq":[0.4769,0.3033,0.2198],"Iraq|Korea Republic":[0.4171,0.2777,0.3053],"Korea Republic|Iraq":[0.3053,0.2777,0.4171],"Iraq|USA":[0.4171,0.2777,0.3053],"USA|Iraq":[0.3053,0.2777,0.4171],"Iraq|Brazil":[0.196,0.2863,0.5177],"Brazil|Iraq":[0.5177,0.2863,0.196],"Iraq|Portugal":[0.1944,0.2837,0.522],"Portugal|Iraq":[0.522,0.2837,0.1944],"Iraq|Netherlands":[0.2029,0.2809,0.5162],"Netherlands|Iraq":[0.5162,0.2809,0.2029],"Iraq|Egypt":[0.3219,0.3062,0.3719],"Egypt|Iraq":[0.3719,0.3062,0.3219],"Iraq|Norway":[0.2635,0.2719,0.4645],"Norway|Iraq":[0.4645,0.2719,0.2635],"Iraq|New Zealand":[0.3755,0.2813,0.3433],"New Zealand|Iraq":[0.3433,0.2813,0.3755],"Iraq|Ghana":[0.3907,0.259,0.3503],"Ghana|Iraq":[0.3503,0.259,0.3907],"Iraq|Cabo Verde":[0.4171,0.2777,0.3053],"Cabo Verde|Iraq":[0.3053,0.2777,0.4171],"Iraq|Austria":[0.2418,0.2863,0.4719],"Austria|Iraq":[0.4719,0.2863,0.2418],"Iraq|Scotland":[0.2783,0.2928,0.4289],"Scotland|Iraq":[0.4289,0.2928,0.2783],"Iraq|France":[0.1814,0.2827,0.536],"France|Iraq":[0.536,0.2827,0.1814],"Iraq|Argentina":[0.1744,0.3014,0.5242],"Argentina|Iraq":[0.5242,0.3014,0.1744],"Iraq|Czechia":[0.4171,0.2777,0.3053],"Czechia|Iraq":[0.3053,0.2777,0.4171],"Iraq|Cura\u00e7ao":[0.4171,0.2777,0.3053],"Cura\u00e7ao|Iraq":[0.3053,0.2777,0.4171],"Iraq|Canada":[0.258,0.3184,0.4236],"Canada|Iraq":[0.4236,0.3184,0.258],"Iraq|T\u00fcrkiye":[0.4171,0.2777,0.3053],"T\u00fcrkiye|Iraq":[0.3053,0.2777,0.4171],"Iraq|South Africa":[0.3839,0.2875,0.3286],"South Africa|Iraq":[0.3286,0.2875,0.3839],"Iraq|C\u00f4te d'Ivoire":[0.4171,0.2777,0.3053],"C\u00f4te d'Ivoire|Iraq":[0.3053,0.2777,0.4171],"Iraq|Qatar":[0.3813,0.2726,0.3461],"Qatar|Iraq":[0.3461,0.2726,0.3813],"Iraq|Spain":[0.1664,0.2729,0.5607],"Spain|Iraq":[0.5607,0.2729,0.1664],"Iraq|Switzerland":[0.2242,0.304,0.4718],"Switzerland|Iraq":[0.4718,0.304,0.2242],"Iraq|Panama":[0.3441,0.302,0.3539],"Panama|Iraq":[0.3539,0.302,0.3441],"Ecuador|Japan":[0.3428,0.2877,0.3695],"Japan|Ecuador":[0.3695,0.2877,0.3428],"Ecuador|Australia":[0.3938,0.296,0.3102],"Australia|Ecuador":[0.3102,0.296,0.3938],"Ecuador|IR Iran":[0.4632,0.2993,0.2375],"IR Iran|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|Belgium":[0.3519,0.2741,0.374],"Belgium|Ecuador":[0.374,0.2741,0.3519],"Ecuador|Paraguay":[0.3932,0.2931,0.3137],"Paraguay|Ecuador":[0.3137,0.2931,0.3932],"Ecuador|Morocco":[0.3571,0.2963,0.3466],"Morocco|Ecuador":[0.3466,0.2963,0.3571],"Ecuador|England":[0.2803,0.2951,0.4245],"England|Ecuador":[0.4245,0.2951,0.2803],"Ecuador|Tunisia":[0.4108,0.3079,0.2813],"Tunisia|Ecuador":[0.2813,0.3079,0.4108],"Ecuador|Uruguay":[0.335,0.3058,0.3592],"Uruguay|Ecuador":[0.3592,0.3058,0.335],"Ecuador|Korea Republic":[0.4632,0.2993,0.2375],"Korea Republic|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|USA":[0.4632,0.2993,0.2375],"USA|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|Brazil":[0.271,0.3081,0.4209],"Brazil|Ecuador":[0.4209,0.3081,0.271],"Ecuador|Portugal":[0.2689,0.3133,0.4178],"Portugal|Ecuador":[0.4178,0.3133,0.2689],"Ecuador|Netherlands":[0.281,0.3118,0.4073],"Netherlands|Ecuador":[0.4073,0.3118,0.281],"Ecuador|Egypt":[0.4044,0.3071,0.2885],"Egypt|Ecuador":[0.2885,0.3071,0.4044],"Ecuador|Norway":[0.3943,0.265,0.3407],"Norway|Ecuador":[0.3407,0.265,0.3943],"Ecuador|New Zealand":[0.4356,0.3192,0.2452],"New Zealand|Ecuador":[0.2452,0.3192,0.4356],"Ecuador|Ghana":[0.4477,0.2913,0.261],"Ghana|Ecuador":[0.261,0.2913,0.4477],"Ecuador|Cabo Verde":[0.4632,0.2993,0.2375],"Cabo Verde|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|Austria":[0.3824,0.2784,0.3392],"Austria|Ecuador":[0.3392,0.2784,0.3824],"Ecuador|Scotland":[0.3959,0.2848,0.3193],"Scotland|Ecuador":[0.3193,0.2848,0.3959],"Ecuador|France":[0.2425,0.3289,0.4285],"France|Ecuador":[0.4285,0.3289,0.2425],"Ecuador|Argentina":[0.2487,0.3301,0.4213],"Argentina|Ecuador":[0.4213,0.3301,0.2487],"Ecuador|Czechia":[0.4632,0.2993,0.2375],"Czechia|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|Cura\u00e7ao":[0.4632,0.2993,0.2375],"Cura\u00e7ao|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|Canada":[0.3898,0.2882,0.322],"Canada|Ecuador":[0.322,0.2882,0.3898],"Ecuador|T\u00fcrkiye":[0.4632,0.2993,0.2375],"T\u00fcrkiye|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|South Africa":[0.4443,0.3152,0.2405],"South Africa|Ecuador":[0.2405,0.3152,0.4443],"Ecuador|C\u00f4te d'Ivoire":[0.4632,0.2993,0.2375],"C\u00f4te d'Ivoire|Ecuador":[0.2375,0.2993,0.4632],"Ecuador|Qatar":[0.4478,0.3211,0.2311],"Qatar|Ecuador":[0.2311,0.3211,0.4478],"Ecuador|Spain":[0.2443,0.3249,0.4308],"Spain|Ecuador":[0.4308,0.3249,0.2443],"Ecuador|Switzerland":[0.3421,0.2956,0.3623],"Switzerland|Ecuador":[0.3623,0.2956,0.3421],"Ecuador|Panama":[0.417,0.3175,0.2654],"Panama|Ecuador":[0.2654,0.3175,0.417],"Japan|Australia":[0.4168,0.2718,0.3115],"Australia|Japan":[0.3115,0.2718,0.4168],"Japan|IR Iran":[0.4812,0.321,0.1978],"IR Iran|Japan":[0.1978,0.321,0.4812],"Japan|Belgium":[0.3846,0.2654,0.35],"Belgium|Japan":[0.35,0.2654,0.3846],"Japan|Paraguay":[0.4034,0.2784,0.3182],"Paraguay|Japan":[0.3182,0.2784,0.4034],"Japan|Morocco":[0.388,0.2769,0.3352],"Morocco|Japan":[0.3352,0.2769,0.388],"Japan|England":[0.3091,0.285,0.4059],"England|Japan":[0.4059,0.285,0.3091],"Japan|Tunisia":[0.4309,0.285,0.2842],"Tunisia|Japan":[0.2842,0.285,0.4309],"Japan|Uruguay":[0.3624,0.2826,0.355],"Uruguay|Japan":[0.355,0.2826,0.3624],"Japan|Korea Republic":[0.4812,0.321,0.1978],"Korea Republic|Japan":[0.1978,0.321,0.4812],"Japan|USA":[0.4812,0.321,0.1978],"USA|Japan":[0.1978,0.321,0.4812],"Japan|Brazil":[0.3079,0.2832,0.4089],"Brazil|Japan":[0.4089,0.2832,0.3079],"Japan|Portugal":[0.3259,0.2701,0.404],"Portugal|Japan":[0.404,0.2701,0.3259],"Japan|Netherlands":[0.3449,0.2694,0.3857],"Netherlands|Japan":[0.3857,0.2694,0.3449],"Japan|Egypt":[0.4255,0.3119,0.2626],"Egypt|Japan":[0.2626,0.3119,0.4255],"Japan|Norway":[0.4051,0.2438,0.3511],"Norway|Japan":[0.3511,0.2438,0.4051],"Japan|New Zealand":[0.4558,0.3186,0.2256],"New Zealand|Japan":[0.2256,0.3186,0.4558],"Japan|Ghana":[0.463,0.2773,0.2597],"Ghana|Japan":[0.2597,0.2773,0.463],"Japan|Cabo Verde":[0.4812,0.321,0.1978],"Cabo Verde|Japan":[0.1978,0.321,0.4812],"Japan|Austria":[0.4053,0.2686,0.3261],"Austria|Japan":[0.3261,0.2686,0.4053],"Japan|Scotland":[0.4197,0.2599,0.3205],"Scotland|Japan":[0.3205,0.2599,0.4197],"Japan|France":[0.2951,0.2865,0.4184],"France|Japan":[0.4184,0.2865,0.2951],"Japan|Argentina":[0.3117,0.2781,0.4102],"Argentina|Japan":[0.4102,0.2781,0.3117],"Japan|Czechia":[0.4812,0.321,0.1978],"Czechia|Japan":[0.1978,0.321,0.4812],"Japan|Cura\u00e7ao":[0.4812,0.321,0.1978],"Cura\u00e7ao|Japan":[0.1978,0.321,0.4812],"Japan|Canada":[0.4045,0.2863,0.3092],"Canada|Japan":[0.3092,0.2863,0.4045],"Japan|T\u00fcrkiye":[0.4812,0.321,0.1978],"T\u00fcrkiye|Japan":[0.1978,0.321,0.4812],"Japan|South Africa":[0.4677,0.3389,0.1935],"South Africa|Japan":[0.1935,0.3389,0.4677],"Japan|C\u00f4te d'Ivoire":[0.4812,0.321,0.1978],"C\u00f4te d'Ivoire|Japan":[0.1978,0.321,0.4812],"Japan|Qatar":[0.4586,0.2976,0.2438],"Qatar|Japan":[0.2438,0.2976,0.4586],"Japan|Spain":[0.2768,0.2927,0.4305],"Spain|Japan":[0.4305,0.2927,0.2768],"Japan|Switzerland":[0.3808,0.2643,0.3549],"Switzerland|Japan":[0.3549,0.2643,0.3808],"Japan|Panama":[0.4472,0.3113,0.2416],"Panama|Japan":[0.2416,0.3113,0.4472],"Australia|IR Iran":[0.4522,0.3007,0.2471],"IR Iran|Australia":[0.2471,0.3007,0.4522],"Australia|Belgium":[0.2744,0.3102,0.4155],"Belgium|Australia":[0.4155,0.3102,0.2744],"Australia|Paraguay":[0.3489,0.2926,0.3585],"Paraguay|Australia":[0.3585,0.2926,0.3489],"Australia|Morocco":[0.2934,0.3014,0.4052],"Morocco|Australia":[0.4052,0.3014,0.2934],"Australia|England":[0.2293,0.3251,0.4456],"England|Australia":[0.4456,0.3251,0.2293],"Australia|Tunisia":[0.3924,0.2891,0.3185],"Tunisia|Australia":[0.3185,0.2891,0.3924],"Australia|Uruguay":[0.2713,0.3124,0.4163],"Uruguay|Australia":[0.4163,0.3124,0.2713],"Australia|Korea Republic":[0.4522,0.3007,0.2471],"Korea Republic|Australia":[0.2471,0.3007,0.4522],"Australia|USA":[0.4522,0.3007,0.2471],"USA|Australia":[0.2471,0.3007,0.4522],"Australia|Brazil":[0.2066,0.3326,0.4608],"Brazil|Australia":[0.4608,0.3326,0.2066],"Australia|Portugal":[0.2283,0.3261,0.4456],"Portugal|Australia":[0.4456,0.3261,0.2283],"Australia|Netherlands":[0.2655,0.3038,0.4307],"Netherlands|Australia":[0.4307,0.3038,0.2655],"Australia|Egypt":[0.3898,0.2992,0.311],"Egypt|Australia":[0.311,0.2992,0.3898],"Australia|Norway":[0.3605,0.2465,0.393],"Norway|Australia":[0.393,0.2465,0.3605],"Australia|New Zealand":[0.405,0.3094,0.2855],"New Zealand|Australia":[0.2855,0.3094,0.405],"Australia|Ghana":[0.4164,0.2913,0.2924],"Ghana|Australia":[0.2924,0.2913,0.4164],"Australia|Cabo Verde":[0.4522,0.3007,0.2471],"Cabo Verde|Australia":[0.2471,0.3007,0.4522],"Australia|Austria":[0.3292,0.2934,0.3774],"Austria|Australia":[0.3774,0.2934,0.3292],"Australia|Scotland":[0.3788,0.2763,0.3449],"Scotland|Australia":[0.3449,0.2763,0.3788],"Australia|France":[0.2125,0.3178,0.4698],"France|Australia":[0.4698,0.3178,0.2125],"Australia|Argentina":[0.1978,0.3451,0.4571],"Argentina|Australia":[0.4571,0.3451,0.1978],"Australia|Czechia":[0.4522,0.3007,0.2471],"Czechia|Australia":[0.2471,0.3007,0.4522],"Australia|Cura\u00e7ao":[0.4522,0.3007,0.2471],"Cura\u00e7ao|Australia":[0.2471,0.3007,0.4522],"Australia|Canada":[0.3406,0.312,0.3474],"Canada|Australia":[0.3474,0.312,0.3406],"Australia|T\u00fcrkiye":[0.4522,0.3007,0.2471],"T\u00fcrkiye|Australia":[0.2471,0.3007,0.4522],"Australia|South Africa":[0.4106,0.3113,0.278],"South Africa|Australia":[0.278,0.3113,0.4106],"Australia|C\u00f4te d'Ivoire":[0.4522,0.3007,0.2471],"C\u00f4te d'Ivoire|Australia":[0.2471,0.3007,0.4522],"Australia|Qatar":[0.4079,0.2785,0.3136],"Qatar|Australia":[0.3136,0.2785,0.4079],"Australia|Spain":[0.2151,0.3085,0.4763],"Spain|Australia":[0.4763,0.3085,0.2151],"Australia|Switzerland":[0.2764,0.3212,0.4024],"Switzerland|Australia":[0.4024,0.3212,0.2764],"Australia|Panama":[0.3997,0.2925,0.3078],"Panama|Australia":[0.3078,0.2925,0.3997],"IR Iran|Belgium":[0.1687,0.3398,0.4914],"Belgium|IR Iran":[0.4914,0.3398,0.1687],"IR Iran|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|IR Iran":[0.4478,0.2987,0.2535],"IR Iran|Morocco":[0.1887,0.3444,0.4669],"Morocco|IR Iran":[0.4669,0.3444,0.1887],"IR Iran|England":[0.174,0.2506,0.5754],"England|IR Iran":[0.5754,0.2506,0.174],"IR Iran|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|IR Iran":[0.4178,0.3061,0.2761],"IR Iran|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|IR Iran":[0.4812,0.3423,0.1764],"IR Iran|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|USA":[0.3544,0.2912,0.3544],"USA|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|Brazil":[0.1683,0.236,0.5957],"Brazil|IR Iran":[0.5957,0.236,0.1683],"IR Iran|Portugal":[0.1752,0.2596,0.5652],"Portugal|IR Iran":[0.5652,0.2596,0.1752],"IR Iran|Netherlands":[0.1708,0.2752,0.554],"Netherlands|IR Iran":[0.554,0.2752,0.1708],"IR Iran|Egypt":[0.2745,0.3026,0.4228],"Egypt|IR Iran":[0.4228,0.3026,0.2745],"IR Iran|Norway":[0.2304,0.302,0.4675],"Norway|IR Iran":[0.4675,0.302,0.2304],"IR Iran|New Zealand":[0.302,0.2879,0.4101],"New Zealand|IR Iran":[0.4101,0.2879,0.302],"IR Iran|Ghana":[0.265,0.3204,0.4146],"Ghana|IR Iran":[0.4146,0.3204,0.265],"IR Iran|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|Austria":[0.2084,0.3297,0.4619],"Austria|IR Iran":[0.4619,0.3297,0.2084],"IR Iran|Scotland":[0.2268,0.3242,0.449],"Scotland|IR Iran":[0.449,0.3242,0.2268],"IR Iran|France":[0.1548,0.2145,0.6307],"France|IR Iran":[0.6307,0.2145,0.1548],"IR Iran|Argentina":[0.1173,0.1868,0.6959],"Argentina|IR Iran":[0.6959,0.1868,0.1173],"IR Iran|Czechia":[0.3544,0.2912,0.3544],"Czechia|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|Canada":[0.2458,0.3052,0.449],"Canada|IR Iran":[0.449,0.3052,0.2458],"IR Iran|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|South Africa":[0.3199,0.2814,0.3987],"South Africa|IR Iran":[0.3987,0.2814,0.3199],"IR Iran|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|IR Iran":[0.3544,0.2912,0.3544],"IR Iran|Qatar":[0.3064,0.287,0.4066],"Qatar|IR Iran":[0.4066,0.287,0.3064],"IR Iran|Spain":[0.1156,0.1828,0.7016],"Spain|IR Iran":[0.7016,0.1828,0.1156],"IR Iran|Switzerland":[0.1937,0.3313,0.475],"Switzerland|IR Iran":[0.475,0.3313,0.1937],"IR Iran|Panama":[0.2978,0.2799,0.4223],"Panama|IR Iran":[0.4223,0.2799,0.2978],"Belgium|Paraguay":[0.4181,0.3035,0.2784],"Paraguay|Belgium":[0.2784,0.3035,0.4181],"Belgium|Morocco":[0.3545,0.3102,0.3353],"Morocco|Belgium":[0.3353,0.3102,0.3545],"Belgium|England":[0.3213,0.2858,0.3929],"England|Belgium":[0.3929,0.2858,0.3213],"Belgium|Tunisia":[0.4311,0.3479,0.221],"Tunisia|Belgium":[0.221,0.3479,0.4311],"Belgium|Uruguay":[0.3553,0.2837,0.361],"Uruguay|Belgium":[0.361,0.2837,0.3553],"Belgium|Korea Republic":[0.4914,0.3398,0.1687],"Korea Republic|Belgium":[0.1687,0.3398,0.4914],"Belgium|USA":[0.4914,0.3398,0.1687],"USA|Belgium":[0.1687,0.3398,0.4914],"Belgium|Brazil":[0.3142,0.2884,0.3975],"Brazil|Belgium":[0.3975,0.2884,0.3142],"Belgium|Portugal":[0.328,0.2779,0.3941],"Portugal|Belgium":[0.3941,0.2779,0.328],"Belgium|Netherlands":[0.3343,0.2715,0.3942],"Netherlands|Belgium":[0.3942,0.2715,0.3343],"Belgium|Egypt":[0.4416,0.3151,0.2433],"Egypt|Belgium":[0.2433,0.3151,0.4416],"Belgium|Norway":[0.3942,0.2338,0.372],"Norway|Belgium":[0.372,0.2338,0.3942],"Belgium|New Zealand":[0.4777,0.3164,0.2058],"New Zealand|Belgium":[0.2058,0.3164,0.4777],"Belgium|Ghana":[0.4411,0.3039,0.255],"Ghana|Belgium":[0.255,0.3039,0.4411],"Belgium|Cabo Verde":[0.4914,0.3398,0.1687],"Cabo Verde|Belgium":[0.1687,0.3398,0.4914],"Belgium|Austria":[0.3837,0.2867,0.3297],"Austria|Belgium":[0.3297,0.2867,0.3837],"Belgium|Scotland":[0.4049,0.2829,0.3122],"Scotland|Belgium":[0.3122,0.2829,0.4049],"Belgium|France":[0.3154,0.2854,0.3992],"France|Belgium":[0.3992,0.2854,0.3154],"Belgium|Argentina":[0.2885,0.3008,0.4108],"Argentina|Belgium":[0.4108,0.3008,0.2885],"Belgium|Czechia":[0.4914,0.3398,0.1687],"Czechia|Belgium":[0.1687,0.3398,0.4914],"Belgium|Cura\u00e7ao":[0.4914,0.3398,0.1687],"Cura\u00e7ao|Belgium":[0.1687,0.3398,0.4914],"Belgium|Canada":[0.413,0.3098,0.2773],"Canada|Belgium":[0.2773,0.3098,0.413],"Belgium|T\u00fcrkiye":[0.4914,0.3398,0.1687],"T\u00fcrkiye|Belgium":[0.1687,0.3398,0.4914],"Belgium|South Africa":[0.4974,0.3043,0.1983],"South Africa|Belgium":[0.1983,0.3043,0.4974],"Belgium|C\u00f4te d'Ivoire":[0.4914,0.3398,0.1687],"C\u00f4te d'Ivoire|Belgium":[0.1687,0.3398,0.4914],"Belgium|Qatar":[0.4825,0.3192,0.1983],"Qatar|Belgium":[0.1983,0.3192,0.4825],"Belgium|Spain":[0.2981,0.2683,0.4336],"Spain|Belgium":[0.4336,0.2683,0.2981],"Belgium|Switzerland":[0.3568,0.2974,0.3458],"Switzerland|Belgium":[0.3458,0.2974,0.3568],"Belgium|Panama":[0.4666,0.2837,0.2497],"Panama|Belgium":[0.2497,0.2837,0.4666],"Paraguay|Morocco":[0.3188,0.2948,0.3865],"Morocco|Paraguay":[0.3865,0.2948,0.3188],"Paraguay|England":[0.2289,0.3386,0.4325],"England|Paraguay":[0.4325,0.3386,0.2289],"Paraguay|Tunisia":[0.3897,0.2934,0.3169],"Tunisia|Paraguay":[0.3169,0.2934,0.3897],"Paraguay|Uruguay":[0.2987,0.2987,0.4026],"Uruguay|Paraguay":[0.4026,0.2987,0.2987],"Paraguay|Korea Republic":[0.4478,0.2987,0.2535],"Korea Republic|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|USA":[0.4478,0.2987,0.2535],"USA|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|Brazil":[0.2099,0.362,0.4281],"Brazil|Paraguay":[0.4281,0.362,0.2099],"Paraguay|Portugal":[0.2449,0.3233,0.4318],"Portugal|Paraguay":[0.4318,0.3233,0.2449],"Paraguay|Netherlands":[0.2582,0.3165,0.4253],"Netherlands|Paraguay":[0.4253,0.3165,0.2582],"Paraguay|Egypt":[0.3888,0.2961,0.3152],"Egypt|Paraguay":[0.3152,0.2961,0.3888],"Paraguay|Norway":[0.3482,0.2666,0.3852],"Norway|Paraguay":[0.3852,0.2666,0.3482],"Paraguay|New Zealand":[0.4149,0.3072,0.2779],"New Zealand|Paraguay":[0.2779,0.3072,0.4149],"Paraguay|Ghana":[0.4118,0.2883,0.2999],"Ghana|Paraguay":[0.2999,0.2883,0.4118],"Paraguay|Cabo Verde":[0.4478,0.2987,0.2535],"Cabo Verde|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|Austria":[0.3393,0.2806,0.3801],"Austria|Paraguay":[0.3801,0.2806,0.3393],"Paraguay|Scotland":[0.3722,0.2768,0.351],"Scotland|Paraguay":[0.351,0.2768,0.3722],"Paraguay|France":[0.2089,0.3457,0.4454],"France|Paraguay":[0.4454,0.3457,0.2089],"Paraguay|Argentina":[0.2278,0.3243,0.4479],"Argentina|Paraguay":[0.4479,0.3243,0.2278],"Paraguay|Czechia":[0.4478,0.2987,0.2535],"Czechia|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|Cura\u00e7ao":[0.4478,0.2987,0.2535],"Cura\u00e7ao|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|Canada":[0.346,0.3004,0.3536],"Canada|Paraguay":[0.3536,0.3004,0.346],"Paraguay|T\u00fcrkiye":[0.4478,0.2987,0.2535],"T\u00fcrkiye|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|South Africa":[0.4195,0.3205,0.26],"South Africa|Paraguay":[0.26,0.3205,0.4195],"Paraguay|C\u00f4te d'Ivoire":[0.4478,0.2987,0.2535],"C\u00f4te d'Ivoire|Paraguay":[0.2535,0.2987,0.4478],"Paraguay|Qatar":[0.4128,0.2922,0.295],"Qatar|Paraguay":[0.295,0.2922,0.4128],"Paraguay|Spain":[0.2051,0.3355,0.4594],"Spain|Paraguay":[0.4594,0.3355,0.2051],"Paraguay|Switzerland":[0.3086,0.289,0.4024],"Switzerland|Paraguay":[0.4024,0.289,0.3086],"Paraguay|Panama":[0.4107,0.2878,0.3015],"Panama|Paraguay":[0.3015,0.2878,0.4107],"Morocco|England":[0.3043,0.2945,0.4012],"England|Morocco":[0.4012,0.2945,0.3043],"Morocco|Tunisia":[0.4218,0.3266,0.2516],"Tunisia|Morocco":[0.2516,0.3266,0.4218],"Morocco|Uruguay":[0.342,0.2958,0.3622],"Uruguay|Morocco":[0.3622,0.2958,0.342],"Morocco|Korea Republic":[0.4669,0.3444,0.1887],"Korea Republic|Morocco":[0.1887,0.3444,0.4669],"Morocco|USA":[0.4669,0.3444,0.1887],"USA|Morocco":[0.1887,0.3444,0.4669],"Morocco|Brazil":[0.2906,0.3048,0.4046],"Brazil|Morocco":[0.4046,0.3048,0.2906],"Morocco|Portugal":[0.3062,0.2952,0.3986],"Portugal|Morocco":[0.3986,0.2952,0.3062],"Morocco|Netherlands":[0.3072,0.2974,0.3954],"Netherlands|Morocco":[0.3954,0.2974,0.3072],"Morocco|Egypt":[0.4132,0.3134,0.2733],"Egypt|Morocco":[0.2733,0.3134,0.4132],"Morocco|Norway":[0.3713,0.2626,0.3661],"Norway|Morocco":[0.3661,0.2626,0.3713],"Morocco|New Zealand":[0.4497,0.3477,0.2025],"New Zealand|Morocco":[0.2025,0.3477,0.4497],"Morocco|Ghana":[0.4431,0.3159,0.241],"Ghana|Morocco":[0.241,0.3159,0.4431],"Morocco|Cabo Verde":[0.4669,0.3444,0.1887],"Cabo Verde|Morocco":[0.1887,0.3444,0.4669],"Morocco|Austria":[0.3649,0.2935,0.3417],"Austria|Morocco":[0.3417,0.2935,0.3649],"Morocco|Scotland":[0.3981,0.282,0.3198],"Scotland|Morocco":[0.3198,0.282,0.3981],"Morocco|France":[0.288,0.3029,0.4091],"France|Morocco":[0.4091,0.3029,0.288],"Morocco|Argentina":[0.2888,0.3069,0.4043],"Argentina|Morocco":[0.4043,0.3069,0.2888],"Morocco|Czechia":[0.4669,0.3444,0.1887],"Czechia|Morocco":[0.1887,0.3444,0.4669],"Morocco|Cura\u00e7ao":[0.4669,0.3444,0.1887],"Cura\u00e7ao|Morocco":[0.1887,0.3444,0.4669],"Morocco|Canada":[0.3965,0.2972,0.3063],"Canada|Morocco":[0.3063,0.2972,0.3965],"Morocco|T\u00fcrkiye":[0.4669,0.3444,0.1887],"T\u00fcrkiye|Morocco":[0.1887,0.3444,0.4669],"Morocco|South Africa":[0.4621,0.3316,0.2062],"South Africa|Morocco":[0.2062,0.3316,0.4621],"Morocco|C\u00f4te d'Ivoire":[0.4669,0.3444,0.1887],"C\u00f4te d'Ivoire|Morocco":[0.1887,0.3444,0.4669],"Morocco|Qatar":[0.4468,0.3217,0.2315],"Qatar|Morocco":[0.2315,0.3217,0.4468],"Morocco|Spain":[0.2877,0.2838,0.4285],"Spain|Morocco":[0.4285,0.2838,0.2877],"Morocco|Switzerland":[0.3476,0.2936,0.3587],"Switzerland|Morocco":[0.3587,0.2936,0.3476],"Morocco|Panama":[0.4404,0.2961,0.2634],"Panama|Morocco":[0.2634,0.2961,0.4404],"England|Tunisia":[0.4918,0.3077,0.2004],"Tunisia|England":[0.2004,0.3077,0.4918],"England|Uruguay":[0.3984,0.2885,0.3131],"Uruguay|England":[0.3131,0.2885,0.3984],"England|Korea Republic":[0.5754,0.2506,0.174],"Korea Republic|England":[0.174,0.2506,0.5754],"England|USA":[0.5754,0.2506,0.174],"USA|England":[0.174,0.2506,0.5754],"England|Brazil":[0.3463,0.3119,0.3418],"Brazil|England":[0.3418,0.3119,0.3463],"England|Portugal":[0.3516,0.2982,0.3502],"Portugal|England":[0.3502,0.2982,0.3516],"England|Netherlands":[0.3663,0.2884,0.3453],"Netherlands|England":[0.3453,0.2884,0.3663],"England|Egypt":[0.4871,0.294,0.219],"Egypt|England":[0.219,0.294,0.4871],"England|Norway":[0.4267,0.2814,0.2918],"Norway|England":[0.2918,0.2814,0.4267],"England|New Zealand":[0.5104,0.3022,0.1873],"New Zealand|England":[0.1873,0.3022,0.5104],"England|Ghana":[0.4693,0.3348,0.196],"Ghana|England":[0.196,0.3348,0.4693],"England|Cabo Verde":[0.5754,0.2506,0.174],"Cabo Verde|England":[0.174,0.2506,0.5754],"England|Austria":[0.4049,0.2882,0.3069],"Austria|England":[0.3069,0.2882,0.4049],"England|Scotland":[0.438,0.3106,0.2514],"Scotland|England":[0.2514,0.3106,0.438],"England|France":[0.3364,0.2885,0.3751],"France|England":[0.3751,0.2885,0.3364],"England|Argentina":[0.3224,0.2953,0.3822],"Argentina|England":[0.3822,0.2953,0.3224],"England|Czechia":[0.5754,0.2506,0.174],"Czechia|England":[0.174,0.2506,0.5754],"England|Cura\u00e7ao":[0.5754,0.2506,0.174],"Cura\u00e7ao|England":[0.174,0.2506,0.5754],"England|Canada":[0.4465,0.3336,0.2198],"Canada|England":[0.2198,0.3336,0.4465],"England|T\u00fcrkiye":[0.5754,0.2506,0.174],"T\u00fcrkiye|England":[0.174,0.2506,0.5754],"England|South Africa":[0.5103,0.3058,0.1839],"South Africa|England":[0.1839,0.3058,0.5103],"England|C\u00f4te d'Ivoire":[0.5754,0.2506,0.174],"C\u00f4te d'Ivoire|England":[0.174,0.2506,0.5754],"England|Qatar":[0.5274,0.2958,0.1769],"Qatar|England":[0.1769,0.2958,0.5274],"England|Spain":[0.3269,0.2608,0.4122],"Spain|England":[0.4122,0.2608,0.3269],"England|Switzerland":[0.3988,0.2895,0.3117],"Switzerland|England":[0.3117,0.2895,0.3988],"England|Panama":[0.4953,0.2961,0.2087],"Panama|England":[0.2087,0.2961,0.4953],"Tunisia|Uruguay":[0.2398,0.3291,0.4311],"Uruguay|Tunisia":[0.4311,0.3291,0.2398],"Tunisia|Korea Republic":[0.4178,0.3061,0.2761],"Korea Republic|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|USA":[0.4178,0.3061,0.2761],"USA|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|Brazil":[0.1946,0.3158,0.4897],"Brazil|Tunisia":[0.4897,0.3158,0.1946],"Tunisia|Portugal":[0.2129,0.3179,0.4692],"Portugal|Tunisia":[0.4692,0.3179,0.2129],"Tunisia|Netherlands":[0.2309,0.314,0.4551],"Netherlands|Tunisia":[0.4551,0.314,0.2309],"Tunisia|Egypt":[0.3434,0.3137,0.3429],"Egypt|Tunisia":[0.3429,0.3137,0.3434],"Tunisia|Norway":[0.3223,0.2588,0.419],"Norway|Tunisia":[0.419,0.2588,0.3223],"Tunisia|New Zealand":[0.3825,0.2814,0.3361],"New Zealand|Tunisia":[0.3361,0.2814,0.3825],"Tunisia|Ghana":[0.3892,0.2864,0.3244],"Ghana|Tunisia":[0.3244,0.2864,0.3892],"Tunisia|Cabo Verde":[0.4178,0.3061,0.2761],"Cabo Verde|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|Austria":[0.2675,0.3152,0.4174],"Austria|Tunisia":[0.4174,0.3152,0.2675],"Tunisia|Scotland":[0.3237,0.296,0.3803],"Scotland|Tunisia":[0.3803,0.296,0.3237],"Tunisia|France":[0.1918,0.3117,0.4965],"France|Tunisia":[0.4965,0.3117,0.1918],"Tunisia|Argentina":[0.1655,0.354,0.4805],"Argentina|Tunisia":[0.4805,0.354,0.1655],"Tunisia|Czechia":[0.4178,0.3061,0.2761],"Czechia|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|Cura\u00e7ao":[0.4178,0.3061,0.2761],"Cura\u00e7ao|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|Canada":[0.3085,0.2953,0.3962],"Canada|Tunisia":[0.3962,0.2953,0.3085],"Tunisia|T\u00fcrkiye":[0.4178,0.3061,0.2761],"T\u00fcrkiye|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|South Africa":[0.3954,0.2927,0.3118],"South Africa|Tunisia":[0.3118,0.2927,0.3954],"Tunisia|C\u00f4te d'Ivoire":[0.4178,0.3061,0.2761],"C\u00f4te d'Ivoire|Tunisia":[0.2761,0.3061,0.4178],"Tunisia|Qatar":[0.3713,0.2833,0.3453],"Qatar|Tunisia":[0.3453,0.2833,0.3713],"Tunisia|Spain":[0.1818,0.3212,0.4969],"Spain|Tunisia":[0.4969,0.3212,0.1818],"Tunisia|Switzerland":[0.2446,0.3369,0.4185],"Switzerland|Tunisia":[0.4185,0.3369,0.2446],"Tunisia|Panama":[0.3578,0.2896,0.3526],"Panama|Tunisia":[0.3526,0.2896,0.3578],"Uruguay|Korea Republic":[0.4812,0.3423,0.1764],"Korea Republic|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|USA":[0.4812,0.3423,0.1764],"USA|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|Brazil":[0.3091,0.2944,0.3964],"Brazil|Uruguay":[0.3964,0.2944,0.3091],"Uruguay|Portugal":[0.3196,0.2802,0.4002],"Portugal|Uruguay":[0.4002,0.2802,0.3196],"Uruguay|Netherlands":[0.3258,0.2928,0.3814],"Netherlands|Uruguay":[0.3814,0.2928,0.3258],"Uruguay|Egypt":[0.4163,0.3213,0.2624],"Egypt|Uruguay":[0.2624,0.3213,0.4163],"Uruguay|Norway":[0.4023,0.2566,0.3411],"Norway|Uruguay":[0.3411,0.2566,0.4023],"Uruguay|New Zealand":[0.4778,0.3082,0.214],"New Zealand|Uruguay":[0.214,0.3082,0.4778],"Uruguay|Ghana":[0.4488,0.3035,0.2477],"Ghana|Uruguay":[0.2477,0.3035,0.4488],"Uruguay|Cabo Verde":[0.4812,0.3423,0.1764],"Cabo Verde|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|Austria":[0.3855,0.2893,0.3252],"Austria|Uruguay":[0.3252,0.2893,0.3855],"Uruguay|Scotland":[0.3987,0.2882,0.313],"Scotland|Uruguay":[0.313,0.2882,0.3987],"Uruguay|France":[0.3129,0.2893,0.3978],"France|Uruguay":[0.3978,0.2893,0.3129],"Uruguay|Argentina":[0.2973,0.2952,0.4075],"Argentina|Uruguay":[0.4075,0.2952,0.2973],"Uruguay|Czechia":[0.4812,0.3423,0.1764],"Czechia|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|Cura\u00e7ao":[0.4812,0.3423,0.1764],"Cura\u00e7ao|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|Canada":[0.4142,0.3126,0.2731],"Canada|Uruguay":[0.2731,0.3126,0.4142],"Uruguay|T\u00fcrkiye":[0.4812,0.3423,0.1764],"T\u00fcrkiye|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|South Africa":[0.4864,0.3063,0.2073],"South Africa|Uruguay":[0.2073,0.3063,0.4864],"Uruguay|C\u00f4te d'Ivoire":[0.4812,0.3423,0.1764],"C\u00f4te d'Ivoire|Uruguay":[0.1764,0.3423,0.4812],"Uruguay|Qatar":[0.4663,0.3341,0.1996],"Qatar|Uruguay":[0.1996,0.3341,0.4663],"Uruguay|Spain":[0.2957,0.2809,0.4234],"Spain|Uruguay":[0.4234,0.2809,0.2957],"Uruguay|Switzerland":[0.3512,0.2953,0.3535],"Switzerland|Uruguay":[0.3535,0.2953,0.3512],"Uruguay|Panama":[0.4592,0.3288,0.212],"Panama|Uruguay":[0.212,0.3288,0.4592],"Korea Republic|USA":[0.3544,0.2912,0.3544],"USA|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|Brazil":[0.1683,0.236,0.5957],"Brazil|Korea Republic":[0.5957,0.236,0.1683],"Korea Republic|Portugal":[0.1752,0.2596,0.5652],"Portugal|Korea Republic":[0.5652,0.2596,0.1752],"Korea Republic|Netherlands":[0.1708,0.2752,0.554],"Netherlands|Korea Republic":[0.554,0.2752,0.1708],"Korea Republic|Egypt":[0.2745,0.3026,0.4228],"Egypt|Korea Republic":[0.4228,0.3026,0.2745],"Korea Republic|Norway":[0.2304,0.302,0.4675],"Norway|Korea Republic":[0.4675,0.302,0.2304],"Korea Republic|New Zealand":[0.302,0.2879,0.4101],"New Zealand|Korea Republic":[0.4101,0.2879,0.302],"Korea Republic|Ghana":[0.265,0.3204,0.4146],"Ghana|Korea Republic":[0.4146,0.3204,0.265],"Korea Republic|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|Austria":[0.2084,0.3297,0.4619],"Austria|Korea Republic":[0.4619,0.3297,0.2084],"Korea Republic|Scotland":[0.2268,0.3242,0.449],"Scotland|Korea Republic":[0.449,0.3242,0.2268],"Korea Republic|France":[0.1548,0.2145,0.6307],"France|Korea Republic":[0.6307,0.2145,0.1548],"Korea Republic|Argentina":[0.1173,0.1868,0.6959],"Argentina|Korea Republic":[0.6959,0.1868,0.1173],"Korea Republic|Czechia":[0.3544,0.2912,0.3544],"Czechia|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|Canada":[0.2458,0.3052,0.449],"Canada|Korea Republic":[0.449,0.3052,0.2458],"Korea Republic|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|South Africa":[0.3199,0.2814,0.3987],"South Africa|Korea Republic":[0.3987,0.2814,0.3199],"Korea Republic|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|Korea Republic":[0.3544,0.2912,0.3544],"Korea Republic|Qatar":[0.3064,0.287,0.4066],"Qatar|Korea Republic":[0.4066,0.287,0.3064],"Korea Republic|Spain":[0.1156,0.1828,0.7016],"Spain|Korea Republic":[0.7016,0.1828,0.1156],"Korea Republic|Switzerland":[0.1937,0.3313,0.475],"Switzerland|Korea Republic":[0.475,0.3313,0.1937],"Korea Republic|Panama":[0.2978,0.2799,0.4223],"Panama|Korea Republic":[0.4223,0.2799,0.2978],"USA|Brazil":[0.1683,0.236,0.5957],"Brazil|USA":[0.5957,0.236,0.1683],"USA|Portugal":[0.1752,0.2596,0.5652],"Portugal|USA":[0.5652,0.2596,0.1752],"USA|Netherlands":[0.1708,0.2752,0.554],"Netherlands|USA":[0.554,0.2752,0.1708],"USA|Egypt":[0.2745,0.3026,0.4228],"Egypt|USA":[0.4228,0.3026,0.2745],"USA|Norway":[0.2304,0.302,0.4675],"Norway|USA":[0.4675,0.302,0.2304],"USA|New Zealand":[0.302,0.2879,0.4101],"New Zealand|USA":[0.4101,0.2879,0.302],"USA|Ghana":[0.265,0.3204,0.4146],"Ghana|USA":[0.4146,0.3204,0.265],"USA|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|USA":[0.3544,0.2912,0.3544],"USA|Austria":[0.2084,0.3297,0.4619],"Austria|USA":[0.4619,0.3297,0.2084],"USA|Scotland":[0.2268,0.3242,0.449],"Scotland|USA":[0.449,0.3242,0.2268],"USA|France":[0.1548,0.2145,0.6307],"France|USA":[0.6307,0.2145,0.1548],"USA|Argentina":[0.1173,0.1868,0.6959],"Argentina|USA":[0.6959,0.1868,0.1173],"USA|Czechia":[0.3544,0.2912,0.3544],"Czechia|USA":[0.3544,0.2912,0.3544],"USA|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|USA":[0.3544,0.2912,0.3544],"USA|Canada":[0.2458,0.3052,0.449],"Canada|USA":[0.449,0.3052,0.2458],"USA|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|USA":[0.3544,0.2912,0.3544],"USA|South Africa":[0.3199,0.2814,0.3987],"South Africa|USA":[0.3987,0.2814,0.3199],"USA|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|USA":[0.3544,0.2912,0.3544],"USA|Qatar":[0.3064,0.287,0.4066],"Qatar|USA":[0.4066,0.287,0.3064],"USA|Spain":[0.1156,0.1828,0.7016],"Spain|USA":[0.7016,0.1828,0.1156],"USA|Switzerland":[0.1937,0.3313,0.475],"Switzerland|USA":[0.475,0.3313,0.1937],"USA|Panama":[0.2978,0.2799,0.4223],"Panama|USA":[0.4223,0.2799,0.2978],"Brazil|Portugal":[0.3561,0.287,0.3568],"Portugal|Brazil":[0.3568,0.287,0.3561],"Brazil|Netherlands":[0.3713,0.2771,0.3517],"Netherlands|Brazil":[0.3517,0.2771,0.3713],"Brazil|Egypt":[0.481,0.3028,0.2162],"Egypt|Brazil":[0.2162,0.3028,0.481],"Brazil|Norway":[0.4303,0.2873,0.2824],"Norway|Brazil":[0.2824,0.2873,0.4303],"Brazil|New Zealand":[0.5277,0.2887,0.1836],"New Zealand|Brazil":[0.1836,0.2887,0.5277],"Brazil|Ghana":[0.4691,0.3365,0.1944],"Ghana|Brazil":[0.1944,0.3365,0.4691],"Brazil|Cabo Verde":[0.5957,0.236,0.1683],"Cabo Verde|Brazil":[0.1683,0.236,0.5957],"Brazil|Austria":[0.4111,0.2996,0.2894],"Austria|Brazil":[0.2894,0.2996,0.4111],"Brazil|Scotland":[0.4381,0.327,0.235],"Scotland|Brazil":[0.235,0.327,0.4381],"Brazil|France":[0.3394,0.2898,0.3708],"France|Brazil":[0.3708,0.2898,0.3394],"Brazil|Argentina":[0.3263,0.2849,0.3888],"Argentina|Brazil":[0.3888,0.2849,0.3263],"Brazil|Czechia":[0.5957,0.236,0.1683],"Czechia|Brazil":[0.1683,0.236,0.5957],"Brazil|Cura\u00e7ao":[0.5957,0.236,0.1683],"Cura\u00e7ao|Brazil":[0.1683,0.236,0.5957],"Brazil|Canada":[0.4447,0.3331,0.2222],"Canada|Brazil":[0.2222,0.3331,0.4447],"Brazil|T\u00fcrkiye":[0.5957,0.236,0.1683],"T\u00fcrkiye|Brazil":[0.1683,0.236,0.5957],"Brazil|South Africa":[0.522,0.2961,0.1818],"South Africa|Brazil":[0.1818,0.2961,0.522],"Brazil|C\u00f4te d'Ivoire":[0.5957,0.236,0.1683],"C\u00f4te d'Ivoire|Brazil":[0.1683,0.236,0.5957],"Brazil|Qatar":[0.5464,0.2863,0.1673],"Qatar|Brazil":[0.1673,0.2863,0.5464],"Brazil|Spain":[0.3332,0.254,0.4128],"Spain|Brazil":[0.4128,0.254,0.3332],"Brazil|Switzerland":[0.4041,0.3058,0.2901],"Switzerland|Brazil":[0.2901,0.3058,0.4041],"Brazil|Panama":[0.5047,0.295,0.2003],"Panama|Brazil":[0.2003,0.295,0.5047],"Portugal|Netherlands":[0.3737,0.2839,0.3424],"Netherlands|Portugal":[0.3424,0.2839,0.3737],"Portugal|Egypt":[0.4893,0.2837,0.227],"Egypt|Portugal":[0.227,0.2837,0.4893],"Portugal|Norway":[0.4276,0.2745,0.2979],"Norway|Portugal":[0.2979,0.2745,0.4276],"Portugal|New Zealand":[0.5173,0.3044,0.1783],"New Zealand|Portugal":[0.1783,0.3044,0.5173],"Portugal|Ghana":[0.4589,0.3093,0.2318],"Ghana|Portugal":[0.2318,0.3093,0.4589],"Portugal|Cabo Verde":[0.5652,0.2596,0.1752],"Cabo Verde|Portugal":[0.1752,0.2596,0.5652],"Portugal|Austria":[0.402,0.2907,0.3074],"Austria|Portugal":[0.3074,0.2907,0.402],"Portugal|Scotland":[0.4382,0.2954,0.2664],"Scotland|Portugal":[0.2664,0.2954,0.4382],"Portugal|France":[0.3476,0.2822,0.3702],"France|Portugal":[0.3702,0.2822,0.3476],"Portugal|Argentina":[0.3206,0.2855,0.3939],"Argentina|Portugal":[0.3939,0.2855,0.3206],"Portugal|Czechia":[0.5652,0.2596,0.1752],"Czechia|Portugal":[0.1752,0.2596,0.5652],"Portugal|Cura\u00e7ao":[0.5652,0.2596,0.1752],"Cura\u00e7ao|Portugal":[0.1752,0.2596,0.5652],"Portugal|Canada":[0.4393,0.3355,0.2252],"Canada|Portugal":[0.2252,0.3355,0.4393],"Portugal|T\u00fcrkiye":[0.5652,0.2596,0.1752],"T\u00fcrkiye|Portugal":[0.1752,0.2596,0.5652],"Portugal|South Africa":[0.5099,0.3016,0.1884],"South Africa|Portugal":[0.1884,0.3016,0.5099],"Portugal|C\u00f4te d'Ivoire":[0.5652,0.2596,0.1752],"C\u00f4te d'Ivoire|Portugal":[0.1752,0.2596,0.5652],"Portugal|Qatar":[0.5263,0.2946,0.1791],"Qatar|Portugal":[0.1791,0.2946,0.5263],"Portugal|Spain":[0.3245,0.2622,0.4133],"Spain|Portugal":[0.4133,0.2622,0.3245],"Portugal|Switzerland":[0.3969,0.2795,0.3236],"Switzerland|Portugal":[0.3236,0.2795,0.3969],"Portugal|Panama":[0.5003,0.3005,0.1992],"Panama|Portugal":[0.1992,0.3005,0.5003],"Netherlands|Egypt":[0.4604,0.3097,0.2299],"Egypt|Netherlands":[0.2299,0.3097,0.4604],"Netherlands|Norway":[0.4212,0.2677,0.3111],"Norway|Netherlands":[0.3111,0.2677,0.4212],"Netherlands|New Zealand":[0.5251,0.3087,0.1662],"New Zealand|Netherlands":[0.1662,0.3087,0.5251],"Netherlands|Ghana":[0.4602,0.2943,0.2455],"Ghana|Netherlands":[0.2455,0.2943,0.4602],"Netherlands|Cabo Verde":[0.554,0.2752,0.1708],"Cabo Verde|Netherlands":[0.1708,0.2752,0.554],"Netherlands|Austria":[0.4006,0.2817,0.3177],"Austria|Netherlands":[0.3177,0.2817,0.4006],"Netherlands|Scotland":[0.4219,0.2912,0.2869],"Scotland|Netherlands":[0.2869,0.2912,0.4219],"Netherlands|France":[0.3316,0.2836,0.3847],"France|Netherlands":[0.3847,0.2836,0.3316],"Netherlands|Argentina":[0.3178,0.2855,0.3967],"Argentina|Netherlands":[0.3967,0.2855,0.3178],"Netherlands|Czechia":[0.554,0.2752,0.1708],"Czechia|Netherlands":[0.1708,0.2752,0.554],"Netherlands|Cura\u00e7ao":[0.554,0.2752,0.1708],"Cura\u00e7ao|Netherlands":[0.1708,0.2752,0.554],"Netherlands|Canada":[0.4207,0.3156,0.2637],"Canada|Netherlands":[0.2637,0.3156,0.4207],"Netherlands|T\u00fcrkiye":[0.554,0.2752,0.1708],"T\u00fcrkiye|Netherlands":[0.1708,0.2752,0.554],"Netherlands|South Africa":[0.5232,0.3064,0.1704],"South Africa|Netherlands":[0.1704,0.3064,0.5232],"Netherlands|C\u00f4te d'Ivoire":[0.554,0.2752,0.1708],"C\u00f4te d'Ivoire|Netherlands":[0.1708,0.2752,0.554],"Netherlands|Qatar":[0.5161,0.3052,0.1787],"Qatar|Netherlands":[0.1787,0.3052,0.5161],"Netherlands|Spain":[0.3113,0.2725,0.4161],"Spain|Netherlands":[0.4161,0.2725,0.3113],"Netherlands|Switzerland":[0.3866,0.2888,0.3246],"Switzerland|Netherlands":[0.3246,0.2888,0.3866],"Netherlands|Panama":[0.4988,0.3016,0.1996],"Panama|Netherlands":[0.1996,0.3016,0.4988],"Egypt|Norway":[0.3119,0.2751,0.4129],"Norway|Egypt":[0.4129,0.2751,0.3119],"Egypt|New Zealand":[0.3905,0.3005,0.309],"New Zealand|Egypt":[0.309,0.3005,0.3905],"Egypt|Ghana":[0.3933,0.2803,0.3264],"Ghana|Egypt":[0.3264,0.2803,0.3933],"Egypt|Cabo Verde":[0.4228,0.3026,0.2745],"Cabo Verde|Egypt":[0.2745,0.3026,0.4228],"Egypt|Austria":[0.2896,0.2972,0.4133],"Austria|Egypt":[0.4133,0.2972,0.2896],"Egypt|Scotland":[0.3159,0.2956,0.3885],"Scotland|Egypt":[0.3885,0.2956,0.3159],"Egypt|France":[0.1907,0.319,0.4903],"France|Egypt":[0.4903,0.319,0.1907],"Egypt|Argentina":[0.204,0.3001,0.4959],"Argentina|Egypt":[0.4959,0.3001,0.204],"Egypt|Czechia":[0.4228,0.3026,0.2745],"Czechia|Egypt":[0.2745,0.3026,0.4228],"Egypt|Cura\u00e7ao":[0.4228,0.3026,0.2745],"Cura\u00e7ao|Egypt":[0.2745,0.3026,0.4228],"Egypt|Canada":[0.311,0.2975,0.3915],"Canada|Egypt":[0.3915,0.2975,0.311],"Egypt|T\u00fcrkiye":[0.4228,0.3026,0.2745],"T\u00fcrkiye|Egypt":[0.2745,0.3026,0.4228],"Egypt|South Africa":[0.4033,0.3004,0.2964],"South Africa|Egypt":[0.2964,0.3004,0.4033],"Egypt|C\u00f4te d'Ivoire":[0.4228,0.3026,0.2745],"C\u00f4te d'Ivoire|Egypt":[0.2745,0.3026,0.4228],"Egypt|Qatar":[0.3881,0.2836,0.3283],"Qatar|Egypt":[0.3283,0.2836,0.3881],"Egypt|Spain":[0.1934,0.2988,0.5078],"Spain|Egypt":[0.5078,0.2988,0.1934],"Egypt|Switzerland":[0.2672,0.3206,0.4122],"Switzerland|Egypt":[0.4122,0.3206,0.2672],"Egypt|Panama":[0.3553,0.2998,0.3449],"Panama|Egypt":[0.3449,0.2998,0.3553],"Norway|New Zealand":[0.4486,0.3145,0.2369],"New Zealand|Norway":[0.2369,0.3145,0.4486],"Norway|Ghana":[0.4402,0.2539,0.3059],"Ghana|Norway":[0.3059,0.2539,0.4402],"Norway|Cabo Verde":[0.4675,0.302,0.2304],"Cabo Verde|Norway":[0.2304,0.302,0.4675],"Norway|Austria":[0.3822,0.2502,0.3676],"Austria|Norway":[0.3676,0.2502,0.3822],"Norway|Scotland":[0.4071,0.241,0.352],"Scotland|Norway":[0.352,0.241,0.4071],"Norway|France":[0.2653,0.3025,0.4322],"France|Norway":[0.4322,0.3025,0.2653],"Norway|Argentina":[0.2676,0.2872,0.4452],"Argentina|Norway":[0.4452,0.2872,0.2676],"Norway|Czechia":[0.4675,0.302,0.2304],"Czechia|Norway":[0.2304,0.302,0.4675],"Norway|Cura\u00e7ao":[0.4675,0.302,0.2304],"Cura\u00e7ao|Norway":[0.2304,0.302,0.4675],"Norway|Canada":[0.3778,0.2506,0.3716],"Canada|Norway":[0.3716,0.2506,0.3778],"Norway|T\u00fcrkiye":[0.4675,0.302,0.2304],"T\u00fcrkiye|Norway":[0.2304,0.302,0.4675],"Norway|South Africa":[0.4542,0.3192,0.2266],"South Africa|Norway":[0.2266,0.3192,0.4542],"Norway|C\u00f4te d'Ivoire":[0.4675,0.302,0.2304],"C\u00f4te d'Ivoire|Norway":[0.2304,0.302,0.4675],"Norway|Qatar":[0.4443,0.3021,0.2537],"Qatar|Norway":[0.2537,0.3021,0.4443],"Norway|Spain":[0.268,0.2794,0.4526],"Spain|Norway":[0.4526,0.2794,0.268],"Norway|Switzerland":[0.3642,0.2492,0.3866],"Switzerland|Norway":[0.3866,0.2492,0.3642],"Norway|Panama":[0.442,0.2983,0.2597],"Panama|Norway":[0.2597,0.2983,0.442],"New Zealand|Ghana":[0.385,0.2605,0.3545],"Ghana|New Zealand":[0.3545,0.2605,0.385],"New Zealand|Cabo Verde":[0.4101,0.2879,0.302],"Cabo Verde|New Zealand":[0.302,0.2879,0.4101],"New Zealand|Austria":[0.2301,0.3247,0.4451],"Austria|New Zealand":[0.4451,0.3247,0.2301],"New Zealand|Scotland":[0.2758,0.3019,0.4223],"Scotland|New Zealand":[0.4223,0.3019,0.2758],"New Zealand|France":[0.1831,0.2954,0.5216],"France|New Zealand":[0.5216,0.2954,0.1831],"New Zealand|Argentina":[0.1787,0.2914,0.5298],"Argentina|New Zealand":[0.5298,0.2914,0.1787],"New Zealand|Czechia":[0.4101,0.2879,0.302],"Czechia|New Zealand":[0.302,0.2879,0.4101],"New Zealand|Cura\u00e7ao":[0.4101,0.2879,0.302],"Cura\u00e7ao|New Zealand":[0.302,0.2879,0.4101],"New Zealand|Canada":[0.3043,0.2874,0.4083],"Canada|New Zealand":[0.4083,0.2874,0.3043],"New Zealand|T\u00fcrkiye":[0.4101,0.2879,0.302],"T\u00fcrkiye|New Zealand":[0.302,0.2879,0.4101],"New Zealand|South Africa":[0.3741,0.2861,0.3397],"South Africa|New Zealand":[0.3397,0.2861,0.3741],"New Zealand|C\u00f4te d'Ivoire":[0.4101,0.2879,0.302],"C\u00f4te d'Ivoire|New Zealand":[0.302,0.2879,0.4101],"New Zealand|Qatar":[0.3697,0.2619,0.3684],"Qatar|New Zealand":[0.3684,0.2619,0.3697],"New Zealand|Spain":[0.1699,0.2683,0.5618],"Spain|New Zealand":[0.5618,0.2683,0.1699],"New Zealand|Switzerland":[0.2313,0.3195,0.4492],"Switzerland|New Zealand":[0.4492,0.3195,0.2313],"New Zealand|Panama":[0.3379,0.2765,0.3856],"Panama|New Zealand":[0.3856,0.2765,0.3379],"Ghana|Cabo Verde":[0.4146,0.3204,0.265],"Cabo Verde|Ghana":[0.265,0.3204,0.4146],"Ghana|Austria":[0.2859,0.2909,0.4232],"Austria|Ghana":[0.4232,0.2909,0.2859],"Ghana|Scotland":[0.2968,0.2956,0.4076],"Scotland|Ghana":[0.4076,0.2956,0.2968],"Ghana|France":[0.1978,0.3232,0.4791],"France|Ghana":[0.4791,0.3232,0.1978],"Ghana|Argentina":[0.2482,0.2656,0.4862],"Argentina|Ghana":[0.4862,0.2656,0.2482],"Ghana|Czechia":[0.4146,0.3204,0.265],"Czechia|Ghana":[0.265,0.3204,0.4146],"Ghana|Cura\u00e7ao":[0.4146,0.3204,0.265],"Cura\u00e7ao|Ghana":[0.265,0.3204,0.4146],"Ghana|Canada":[0.2899,0.2928,0.4173],"Canada|Ghana":[0.4173,0.2928,0.2899],"Ghana|T\u00fcrkiye":[0.4146,0.3204,0.265],"T\u00fcrkiye|Ghana":[0.265,0.3204,0.4146],"Ghana|South Africa":[0.3719,0.2594,0.3687],"South Africa|Ghana":[0.3687,0.2594,0.3719],"Ghana|C\u00f4te d'Ivoire":[0.4146,0.3204,0.265],"C\u00f4te d'Ivoire|Ghana":[0.265,0.3204,0.4146],"Ghana|Qatar":[0.3447,0.2681,0.3872],"Qatar|Ghana":[0.3872,0.2681,0.3447],"Ghana|Spain":[0.2239,0.2504,0.5257],"Spain|Ghana":[0.5257,0.2504,0.2239],"Ghana|Switzerland":[0.2533,0.3057,0.4409],"Switzerland|Ghana":[0.4409,0.3057,0.2533],"Ghana|Panama":[0.3396,0.2676,0.3928],"Panama|Ghana":[0.3928,0.2676,0.3396],"Cabo Verde|Austria":[0.2084,0.3297,0.4619],"Austria|Cabo Verde":[0.4619,0.3297,0.2084],"Cabo Verde|Scotland":[0.2268,0.3242,0.449],"Scotland|Cabo Verde":[0.449,0.3242,0.2268],"Cabo Verde|France":[0.1548,0.2145,0.6307],"France|Cabo Verde":[0.6307,0.2145,0.1548],"Cabo Verde|Argentina":[0.1173,0.1868,0.6959],"Argentina|Cabo Verde":[0.6959,0.1868,0.1173],"Cabo Verde|Czechia":[0.3544,0.2912,0.3544],"Czechia|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|Canada":[0.2458,0.3052,0.449],"Canada|Cabo Verde":[0.449,0.3052,0.2458],"Cabo Verde|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|South Africa":[0.3199,0.2814,0.3987],"South Africa|Cabo Verde":[0.3987,0.2814,0.3199],"Cabo Verde|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|Cabo Verde":[0.3544,0.2912,0.3544],"Cabo Verde|Qatar":[0.3064,0.287,0.4066],"Qatar|Cabo Verde":[0.4066,0.287,0.3064],"Cabo Verde|Spain":[0.1156,0.1828,0.7016],"Spain|Cabo Verde":[0.7016,0.1828,0.1156],"Cabo Verde|Switzerland":[0.1937,0.3313,0.475],"Switzerland|Cabo Verde":[0.475,0.3313,0.1937],"Cabo Verde|Panama":[0.2978,0.2799,0.4223],"Panama|Cabo Verde":[0.4223,0.2799,0.2978],"Austria|Scotland":[0.3874,0.2835,0.3291],"Scotland|Austria":[0.3291,0.2835,0.3874],"Austria|France":[0.2761,0.3086,0.4153],"France|Austria":[0.4153,0.3086,0.2761],"Austria|Argentina":[0.2817,0.2978,0.4205],"Argentina|Austria":[0.4205,0.2978,0.2817],"Austria|Czechia":[0.4619,0.3297,0.2084],"Czechia|Austria":[0.2084,0.3297,0.4619],"Austria|Cura\u00e7ao":[0.4619,0.3297,0.2084],"Cura\u00e7ao|Austria":[0.2084,0.3297,0.4619],"Austria|Canada":[0.3775,0.2859,0.3366],"Canada|Austria":[0.3366,0.2859,0.3775],"Austria|T\u00fcrkiye":[0.4619,0.3297,0.2084],"T\u00fcrkiye|Austria":[0.2084,0.3297,0.4619],"Austria|South Africa":[0.4516,0.3418,0.2067],"South Africa|Austria":[0.2067,0.3418,0.4516],"Austria|C\u00f4te d'Ivoire":[0.4619,0.3297,0.2084],"C\u00f4te d'Ivoire|Austria":[0.2084,0.3297,0.4619],"Austria|Qatar":[0.4349,0.3175,0.2476],"Qatar|Austria":[0.2476,0.3175,0.4349],"Austria|Spain":[0.2934,0.2596,0.447],"Spain|Austria":[0.447,0.2596,0.2934],"Austria|Switzerland":[0.3257,0.2941,0.3803],"Switzerland|Austria":[0.3803,0.2941,0.3257],"Austria|Panama":[0.4387,0.2952,0.2661],"Panama|Austria":[0.2661,0.2952,0.4387],"Scotland|France":[0.2327,0.3177,0.4496],"France|Scotland":[0.4496,0.3177,0.2327],"Scotland|Argentina":[0.236,0.312,0.452],"Argentina|Scotland":[0.452,0.312,0.236],"Scotland|Czechia":[0.449,0.3242,0.2268],"Czechia|Scotland":[0.2268,0.3242,0.449],"Scotland|Cura\u00e7ao":[0.449,0.3242,0.2268],"Cura\u00e7ao|Scotland":[0.2268,0.3242,0.449],"Scotland|Canada":[0.3395,0.2805,0.3799],"Canada|Scotland":[0.3799,0.2805,0.3395],"Scotland|T\u00fcrkiye":[0.449,0.3242,0.2268],"T\u00fcrkiye|Scotland":[0.2268,0.3242,0.449],"Scotland|South Africa":[0.4219,0.3174,0.2607],"South Africa|Scotland":[0.2607,0.3174,0.4219],"Scotland|C\u00f4te d'Ivoire":[0.449,0.3242,0.2268],"C\u00f4te d'Ivoire|Scotland":[0.2268,0.3242,0.449],"Scotland|Qatar":[0.4222,0.3022,0.2756],"Qatar|Scotland":[0.2756,0.3022,0.4222],"Scotland|Spain":[0.2233,0.3058,0.4709],"Spain|Scotland":[0.4709,0.3058,0.2233],"Scotland|Switzerland":[0.3129,0.2856,0.4015],"Switzerland|Scotland":[0.4015,0.2856,0.3129],"Scotland|Panama":[0.4091,0.2933,0.2975],"Panama|Scotland":[0.2975,0.2933,0.4091],"France|Argentina":[0.3309,0.2942,0.3748],"Argentina|France":[0.3748,0.2942,0.3309],"France|Czechia":[0.6307,0.2145,0.1548],"Czechia|France":[0.1548,0.2145,0.6307],"France|Cura\u00e7ao":[0.6307,0.2145,0.1548],"Cura\u00e7ao|France":[0.1548,0.2145,0.6307],"France|Canada":[0.4511,0.3373,0.2117],"Canada|France":[0.2117,0.3373,0.4511],"France|T\u00fcrkiye":[0.6307,0.2145,0.1548],"T\u00fcrkiye|France":[0.1548,0.2145,0.6307],"France|South Africa":[0.5406,0.2879,0.1715],"South Africa|France":[0.1715,0.2879,0.5406],"France|C\u00f4te d'Ivoire":[0.6307,0.2145,0.1548],"C\u00f4te d'Ivoire|France":[0.1548,0.2145,0.6307],"France|Qatar":[0.5253,0.2902,0.1845],"Qatar|France":[0.1845,0.2902,0.5253],"France|Spain":[0.3293,0.2615,0.4092],"Spain|France":[0.4092,0.2615,0.3293],"France|Switzerland":[0.4109,0.3007,0.2883],"Switzerland|France":[0.2883,0.3007,0.4109],"France|Panama":[0.5052,0.2963,0.1985],"Panama|France":[0.1985,0.2963,0.5052],"Argentina|Czechia":[0.6959,0.1868,0.1173],"Czechia|Argentina":[0.1173,0.1868,0.6959],"Argentina|Cura\u00e7ao":[0.6959,0.1868,0.1173],"Cura\u00e7ao|Argentina":[0.1173,0.1868,0.6959],"Argentina|Canada":[0.4501,0.355,0.1949],"Canada|Argentina":[0.1949,0.355,0.4501],"Argentina|T\u00fcrkiye":[0.6959,0.1868,0.1173],"T\u00fcrkiye|Argentina":[0.1173,0.1868,0.6959],"Argentina|South Africa":[0.5638,0.2532,0.183],"South Africa|Argentina":[0.183,0.2532,0.5638],"Argentina|C\u00f4te d'Ivoire":[0.6959,0.1868,0.1173],"C\u00f4te d'Ivoire|Argentina":[0.1173,0.1868,0.6959],"Argentina|Qatar":[0.5526,0.2947,0.1526],"Qatar|Argentina":[0.1526,0.2947,0.5526],"Argentina|Spain":[0.3486,0.266,0.3855],"Spain|Argentina":[0.3855,0.266,0.3486],"Argentina|Switzerland":[0.4011,0.3034,0.2955],"Switzerland|Argentina":[0.2955,0.3034,0.4011],"Argentina|Panama":[0.5092,0.3141,0.1767],"Panama|Argentina":[0.1767,0.3141,0.5092],"Czechia|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|Czechia":[0.3544,0.2912,0.3544],"Czechia|Canada":[0.2458,0.3052,0.449],"Canada|Czechia":[0.449,0.3052,0.2458],"Czechia|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|Czechia":[0.3544,0.2912,0.3544],"Czechia|South Africa":[0.3199,0.2814,0.3987],"South Africa|Czechia":[0.3987,0.2814,0.3199],"Czechia|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|Czechia":[0.3544,0.2912,0.3544],"Czechia|Qatar":[0.3064,0.287,0.4066],"Qatar|Czechia":[0.4066,0.287,0.3064],"Czechia|Spain":[0.1156,0.1828,0.7016],"Spain|Czechia":[0.7016,0.1828,0.1156],"Czechia|Switzerland":[0.1937,0.3313,0.475],"Switzerland|Czechia":[0.475,0.3313,0.1937],"Czechia|Panama":[0.2978,0.2799,0.4223],"Panama|Czechia":[0.4223,0.2799,0.2978],"Cura\u00e7ao|Canada":[0.2458,0.3052,0.449],"Canada|Cura\u00e7ao":[0.449,0.3052,0.2458],"Cura\u00e7ao|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|South Africa":[0.3199,0.2814,0.3987],"South Africa|Cura\u00e7ao":[0.3987,0.2814,0.3199],"Cura\u00e7ao|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|Cura\u00e7ao":[0.3544,0.2912,0.3544],"Cura\u00e7ao|Qatar":[0.3064,0.287,0.4066],"Qatar|Cura\u00e7ao":[0.4066,0.287,0.3064],"Cura\u00e7ao|Spain":[0.1156,0.1828,0.7016],"Spain|Cura\u00e7ao":[0.7016,0.1828,0.1156],"Cura\u00e7ao|Switzerland":[0.1937,0.3313,0.475],"Switzerland|Cura\u00e7ao":[0.475,0.3313,0.1937],"Cura\u00e7ao|Panama":[0.2978,0.2799,0.4223],"Panama|Cura\u00e7ao":[0.4223,0.2799,0.2978],"Canada|T\u00fcrkiye":[0.449,0.3052,0.2458],"T\u00fcrkiye|Canada":[0.2458,0.3052,0.449],"Canada|South Africa":[0.4159,0.3042,0.28],"South Africa|Canada":[0.28,0.3042,0.4159],"Canada|C\u00f4te d'Ivoire":[0.449,0.3052,0.2458],"C\u00f4te d'Ivoire|Canada":[0.2458,0.3052,0.449],"Canada|Qatar":[0.4112,0.2897,0.2991],"Qatar|Canada":[0.2991,0.2897,0.4112],"Canada|Spain":[0.2175,0.327,0.4555],"Spain|Canada":[0.4555,0.327,0.2175],"Canada|Switzerland":[0.3108,0.2996,0.3896],"Switzerland|Canada":[0.3896,0.2996,0.3108],"Canada|Panama":[0.4043,0.2901,0.3056],"Panama|Canada":[0.3056,0.2901,0.4043],"T\u00fcrkiye|South Africa":[0.3199,0.2814,0.3987],"South Africa|T\u00fcrkiye":[0.3987,0.2814,0.3199],"T\u00fcrkiye|C\u00f4te d'Ivoire":[0.3544,0.2912,0.3544],"C\u00f4te d'Ivoire|T\u00fcrkiye":[0.3544,0.2912,0.3544],"T\u00fcrkiye|Qatar":[0.3064,0.287,0.4066],"Qatar|T\u00fcrkiye":[0.4066,0.287,0.3064],"T\u00fcrkiye|Spain":[0.1156,0.1828,0.7016],"Spain|T\u00fcrkiye":[0.7016,0.1828,0.1156],"T\u00fcrkiye|Switzerland":[0.1937,0.3313,0.475],"Switzerland|T\u00fcrkiye":[0.475,0.3313,0.1937],"T\u00fcrkiye|Panama":[0.2978,0.2799,0.4223],"Panama|T\u00fcrkiye":[0.4223,0.2799,0.2978],"South Africa|C\u00f4te d'Ivoire":[0.3987,0.2814,0.3199],"C\u00f4te d'Ivoire|South Africa":[0.3199,0.2814,0.3987],"South Africa|Qatar":[0.344,0.2714,0.3846],"Qatar|South Africa":[0.3846,0.2714,0.344],"South Africa|Spain":[0.1686,0.2317,0.5997],"Spain|South Africa":[0.5997,0.2317,0.1686],"South Africa|Switzerland":[0.2252,0.3203,0.4545],"Switzerland|South Africa":[0.4545,0.3203,0.2252],"South Africa|Panama":[0.3239,0.2836,0.3925],"Panama|South Africa":[0.3925,0.2836,0.3239],"C\u00f4te d'Ivoire|Qatar":[0.3064,0.287,0.4066],"Qatar|C\u00f4te d'Ivoire":[0.4066,0.287,0.3064],"C\u00f4te d'Ivoire|Spain":[0.1156,0.1828,0.7016],"Spain|C\u00f4te d'Ivoire":[0.7016,0.1828,0.1156],"C\u00f4te d'Ivoire|Switzerland":[0.1937,0.3313,0.475],"Switzerland|C\u00f4te d'Ivoire":[0.475,0.3313,0.1937],"C\u00f4te d'Ivoire|Panama":[0.2978,0.2799,0.4223],"Panama|C\u00f4te d'Ivoire":[0.4223,0.2799,0.2978],"Qatar|Spain":[0.1584,0.2688,0.5728],"Spain|Qatar":[0.5728,0.2688,0.1584],"Qatar|Switzerland":[0.2294,0.3228,0.4479],"Switzerland|Qatar":[0.4479,0.3228,0.2294],"Qatar|Panama":[0.3465,0.2688,0.3848],"Panama|Qatar":[0.3848,0.2688,0.3465],"Spain|Switzerland":[0.4359,0.2759,0.2882],"Switzerland|Spain":[0.2882,0.2759,0.4359],"Spain|Panama":[0.5493,0.2925,0.1582],"Panama|Spain":[0.1582,0.2925,0.5493],"Switzerland|Panama":[0.4377,0.3272,0.2351],"Panama|Switzerland":[0.2351,0.3272,0.4377]};
+
+const S=434.6;
+const SP_GS={
+  "Mexico|South Africa":[0.453,0.339,0.208],"Korea Republic|Czechia":[0.354,0.291,0.354],
+  "Canada|Bosnia and Herzegovina":[0.42,0.282,0.298],"USA|Paraguay":[0.253,0.299,0.448],
+  "Haiti|Scotland":[0.255,0.302,0.444],"Australia|T\u00fcrkiye":[0.452,0.301,0.247],
+  "Brazil|Morocco":[0.405,0.305,0.291],"Qatar|Switzerland":[0.229,0.323,0.448],
+  "C\u00f4te d'Ivoire|Ecuador":[0.238,0.299,0.463],"Germany|Cura\u00e7ao":[0.586,0.268,0.146],
+  "Netherlands|Japan":[0.386,0.269,0.345],"Sweden|Tunisia":[0.377,0.29,0.333],
+  "Saudi Arabia|Uruguay":[0.234,0.336,0.43],"Spain|Cabo Verde":[0.702,0.183,0.116],
+  "IR Iran|New Zealand":[0.302,0.288,0.41],"Belgium|Egypt":[0.442,0.315,0.243],
+  "France|Senegal":[0.413,0.331,0.256],"Iraq|Norway":[0.264,0.272,0.465],
+  "Argentina|Algeria":[0.434,0.323,0.243],"Austria|Jordan":[0.43,0.321,0.248],
+  "Ghana|Panama":[0.34,0.268,0.393],"England|Croatia":[0.383,0.293,0.324],
+  "Portugal|Congo DR":[0.565,0.26,0.175],"Uzbekistan|Colombia":[0.226,0.332,0.442],
+  "Czechia|South Africa":[0.32,0.281,0.399],"Switzerland|Bosnia and Herzegovina":[0.448,0.264,0.288],
+  "Canada|Qatar":[0.411,0.29,0.299],"Mexico|Korea Republic":[0.46,0.356,0.185],
+  "Brazil|Haiti":[0.559,0.254,0.186],"Scotland|Morocco":[0.32,0.282,0.398],
+  "T\u00fcrkiye|Paraguay":[0.253,0.299,0.448],"USA|Australia":[0.247,0.301,0.452],
+  "Germany|C\u00f4te d'Ivoire":[0.586,0.268,0.146],"Ecuador|Cura\u00e7ao":[0.463,0.299,0.238],
+  "Netherlands|Sweden":[0.432,0.305,0.262],"Tunisia|Japan":[0.284,0.285,0.431],
+  "Uruguay|Cabo Verde":[0.481,0.342,0.176],"Spain|Saudi Arabia":[0.501,0.33,0.169],
+  "Belgium|IR Iran":[0.491,0.34,0.169],"New Zealand|Egypt":[0.309,0.301,0.39],
+  "Norway|Senegal":[0.378,0.261,0.36],"France|Iraq":[0.536,0.283,0.181],
+  "Argentina|Austria":[0.421,0.298,0.282],"Jordan|Algeria":[0.297,0.288,0.415],
+  "England|Ghana":[0.469,0.335,0.196],"Panama|Croatia":[0.237,0.315,0.448],
+  "Portugal|Uzbekistan":[0.488,0.295,0.217],"Colombia|Congo DR":[0.5,0.283,0.216],
+  "Scotland|Brazil":[0.235,0.327,0.438],"Morocco|Haiti":[0.491,0.305,0.205],
+  "Switzerland|Canada":[0.39,0.3,0.311],"Bosnia and Herzegovina|Qatar":[0.364,0.25,0.386],
+  "Czechia|Mexico":[0.185,0.356,0.46],"South Africa|Korea Republic":[0.399,0.281,0.32],
+  "Cura\u00e7ao|C\u00f4te d'Ivoire":[0.354,0.291,0.354],"Ecuador|Germany":[0.325,0.277,0.397],
+  "Japan|Sweden":[0.42,0.269,0.311],"Tunisia|Netherlands":[0.231,0.314,0.455],
+  "T\u00fcrkiye|USA":[0.354,0.291,0.354],"Paraguay|Australia":[0.359,0.293,0.349],
+  "Norway|France":[0.265,0.302,0.432],"Senegal|Iraq":[0.467,0.289,0.244],
+  "Egypt|IR Iran":[0.423,0.303,0.275],"New Zealand|Belgium":[0.206,0.316,0.478],
+  "Cabo Verde|Saudi Arabia":[0.275,0.308,0.417],"Uruguay|Spain":[0.296,0.281,0.423],
+  "Panama|England":[0.209,0.296,0.495],"Croatia|Ghana":[0.449,0.293,0.258],
+  "Algeria|Austria":[0.325,0.292,0.383],"Jordan|Argentina":[0.156,0.316,0.528],
+  "Colombia|Portugal":[0.335,0.298,0.367],"Congo DR|Uzbekistan":[0.266,0.284,0.45]
+};
+
+// All group stage results (for accuracy tab - these are read-only reference data)
+const RESULTS_REF=[{"grupo":"Group A","fecha":"2026-06-11","a":"Mexico","b":"South Africa","ga":2,"gb":0,"pa":0.453,"pd":0.339,"pb":0.208,"outcome":"home","pred":"home","correct":true,"brier":0.4574,"ll":0.7919},{"grupo":"Group A","fecha":"2026-06-11","a":"Korea Republic","b":"Czechia","ga":2,"gb":2,"pa":0.354,"pd":0.291,"pb":0.354,"outcome":"draw","pred":"home","correct":false,"brier":0.7533,"ll":1.2344},{"grupo":"Group B","fecha":"2026-06-12","a":"Canada","b":"Bosnia and Herzegovina","ga":2,"gb":1,"pa":0.42,"pd":0.282,"pb":0.298,"outcome":"home","pred":"home","correct":true,"brier":0.5047,"ll":0.8675},{"grupo":"Group D","fecha":"2026-06-12","a":"USA","b":"Paraguay","ga":1,"gb":1,"pa":0.253,"pd":0.299,"pb":0.448,"outcome":"draw","pred":"away","correct":false,"brier":0.7561,"ll":1.2073},{"grupo":"Group C","fecha":"2026-06-13","a":"Haiti","b":"Scotland","ga":1,"gb":2,"pa":0.255,"pd":0.302,"pb":0.444,"outcome":"away","pred":"away","correct":true,"brier":0.4654,"ll":0.8119},{"grupo":"Group D","fecha":"2026-06-13","a":"Australia","b":"Türkiye","ga":3,"gb":0,"pa":0.452,"pd":0.301,"pb":0.247,"outcome":"home","pred":"home","correct":true,"brier":0.4519,"ll":0.7941},{"grupo":"Group C","fecha":"2026-06-13","a":"Brazil","b":"Morocco","ga":2,"gb":1,"pa":0.405,"pd":0.305,"pb":0.291,"outcome":"home","pred":"home","correct":true,"brier":0.5317,"ll":0.9039},{"grupo":"Group B","fecha":"2026-06-13","a":"Qatar","b":"Switzerland","ga":1,"gb":1,"pa":0.229,"pd":0.323,"pb":0.448,"outcome":"draw","pred":"away","correct":false,"brier":0.7115,"ll":1.1301},{"grupo":"Group E","fecha":"2026-06-14","a":"Côte d'Ivoire","b":"Ecuador","ga":1,"gb":2,"pa":0.238,"pd":0.299,"pb":0.463,"outcome":"away","pred":"away","correct":true,"brier":0.4344,"ll":0.77},{"grupo":"Group E","fecha":"2026-06-14","a":"Germany","b":"Curaçao","ga":3,"gb":1,"pa":0.586,"pd":0.268,"pb":0.146,"outcome":"home","pred":"home","correct":true,"brier":0.2645,"ll":0.5344},{"grupo":"Group F","fecha":"2026-06-14","a":"Netherlands","b":"Japan","ga":2,"gb":1,"pa":0.386,"pd":0.269,"pb":0.345,"outcome":"home","pred":"home","correct":true,"brier":0.5684,"ll":0.9519},{"grupo":"Group F","fecha":"2026-06-14","a":"Sweden","b":"Tunisia","ga":2,"gb":1,"pa":0.377,"pd":0.29,"pb":0.333,"outcome":"home","pred":"home","correct":true,"brier":0.5831,"ll":0.9755},{"grupo":"Group H","fecha":"2026-06-15","a":"Saudi Arabia","b":"Uruguay","ga":1,"gb":1,"pa":0.234,"pd":0.336,"pb":0.43,"outcome":"draw","pred":"away","correct":false,"brier":0.6806,"ll":1.0906},{"grupo":"Group H","fecha":"2026-06-15","a":"Spain","b":"Cabo Verde","ga":3,"gb":1,"pa":0.702,"pd":0.183,"pb":0.116,"outcome":"home","pred":"home","correct":true,"brier":0.1357,"ll":0.3538},{"grupo":"Group G","fecha":"2026-06-15","a":"IR Iran","b":"New Zealand","ga":1,"gb":2,"pa":0.302,"pd":0.288,"pb":0.41,"outcome":"away","pred":"away","correct":true,"brier":0.5222,"ll":0.8916},{"grupo":"Group G","fecha":"2026-06-15","a":"Belgium","b":"Egypt","ga":2,"gb":1,"pa":0.442,"pd":0.315,"pb":0.243,"outcome":"home","pred":"home","correct":true,"brier":0.4696,"ll":0.8164},{"grupo":"Group I","fecha":"2026-06-16","a":"France","b":"Senegal","ga":2,"gb":1,"pa":0.413,"pd":0.331,"pb":0.256,"outcome":"home","pred":"home","correct":true,"brier":0.5197,"ll":0.8843},{"grupo":"Group I","fecha":"2026-06-16","a":"Iraq","b":"Norway","ga":1,"gb":2,"pa":0.264,"pd":0.272,"pb":0.465,"outcome":"away","pred":"away","correct":true,"brier":0.4299,"ll":0.7657},{"grupo":"Group J","fecha":"2026-06-16","a":"Argentina","b":"Algeria","ga":2,"gb":1,"pa":0.434,"pd":0.323,"pb":0.243,"outcome":"home","pred":"home","correct":true,"brier":0.4837,"ll":0.8347},{"grupo":"Group J","fecha":"2026-06-16","a":"Austria","b":"Jordan","ga":2,"gb":1,"pa":0.43,"pd":0.321,"pb":0.248,"outcome":"home","pred":"home","correct":true,"brier":0.4894,"ll":0.844},{"grupo":"Group L","fecha":"2026-06-17","a":"Ghana","b":"Panama","ga":1,"gb":2,"pa":0.34,"pd":0.268,"pb":0.393,"outcome":"away","pred":"away","correct":true,"brier":0.5559,"ll":0.9339},{"grupo":"Group L","fecha":"2026-06-17","a":"England","b":"Croatia","ga":2,"gb":1,"pa":0.383,"pd":0.293,"pb":0.324,"outcome":"home","pred":"home","correct":true,"brier":0.5715,"ll":0.9597},{"grupo":"Group K","fecha":"2026-06-17","a":"Portugal","b":"Congo DR","ga":4,"gb":1,"pa":0.565,"pd":0.26,"pb":0.175,"outcome":"home","pred":"home","correct":true,"brier":0.2875,"ll":0.5709},{"grupo":"Group K","fecha":"2026-06-17","a":"Uzbekistan","b":"Colombia","ga":1,"gb":2,"pa":0.226,"pd":0.332,"pb":0.442,"outcome":"away","pred":"away","correct":true,"brier":0.4727,"ll":0.8164},{"grupo":"Group A","fecha":"2026-06-18","a":"Czechia","b":"South Africa","ga":1,"gb":2,"pa":0.32,"pd":0.281,"pb":0.399,"outcome":"away","pred":"away","correct":true,"brier":0.5426,"ll":0.9188},{"grupo":"Group B","fecha":"2026-06-18","a":"Switzerland","b":"Bosnia and Herzegovina","ga":3,"gb":1,"pa":0.448,"pd":0.264,"pb":0.288,"outcome":"home","pred":"home","correct":true,"brier":0.4573,"ll":0.803},{"grupo":"Group B","fecha":"2026-06-18","a":"Canada","b":"Qatar","ga":2,"gb":1,"pa":0.411,"pd":0.29,"pb":0.299,"outcome":"home","pred":"home","correct":true,"brier":0.5204,"ll":0.8892},{"grupo":"Group A","fecha":"2026-06-18","a":"Mexico","b":"Korea Republic","ga":2,"gb":1,"pa":0.46,"pd":0.356,"pb":0.185,"outcome":"home","pred":"home","correct":true,"brier":0.4526,"ll":0.7765},{"grupo":"Group C","fecha":"2026-06-19","a":"Brazil","b":"Haiti","ga":4,"gb":0,"pa":0.559,"pd":0.254,"pb":0.186,"outcome":"home","pred":"home","correct":true,"brier":0.2936,"ll":0.5816},{"grupo":"Group C","fecha":"2026-06-19","a":"Scotland","b":"Morocco","ga":1,"gb":2,"pa":0.32,"pd":0.282,"pb":0.398,"outcome":"away","pred":"away","correct":true,"brier":0.5443,"ll":0.9213},{"grupo":"Group D","fecha":"2026-06-19","a":"Türkiye","b":"Paraguay","ga":1,"gb":1,"pa":0.253,"pd":0.299,"pb":0.448,"outcome":"draw","pred":"away","correct":false,"brier":0.7561,"ll":1.2073},{"grupo":"Group D","fecha":"2026-06-19","a":"USA","b":"Australia","ga":1,"gb":1,"pa":0.247,"pd":0.301,"pb":0.452,"outcome":"draw","pred":"away","correct":false,"brier":0.7539,"ll":1.2006},{"grupo":"Group E","fecha":"2026-06-20","a":"Germany","b":"Côte d'Ivoire","ga":3,"gb":1,"pa":0.586,"pd":0.268,"pb":0.146,"outcome":"home","pred":"home","correct":true,"brier":0.2645,"ll":0.5344},{"grupo":"Group E","fecha":"2026-06-20","a":"Ecuador","b":"Curaçao","ga":3,"gb":0,"pa":0.463,"pd":0.299,"pb":0.238,"outcome":"home","pred":"home","correct":true,"brier":0.4344,"ll":0.77},{"grupo":"Group F","fecha":"2026-06-20","a":"Netherlands","b":"Sweden","ga":2,"gb":1,"pa":0.432,"pd":0.305,"pb":0.262,"outcome":"home","pred":"home","correct":true,"brier":0.4843,"ll":0.8393},{"grupo":"Group F","fecha":"2026-06-20","a":"Tunisia","b":"Japan","ga":1,"gb":2,"pa":0.284,"pd":0.285,"pb":0.431,"outcome":"away","pred":"away","correct":true,"brier":0.4856,"ll":0.8416},{"grupo":"Group H","fecha":"2026-06-21","a":"Uruguay","b":"Cabo Verde","ga":3,"gb":0,"pa":0.481,"pd":0.342,"pb":0.176,"outcome":"home","pred":"home","correct":true,"brier":0.4173,"ll":0.7319},{"grupo":"Group H","fecha":"2026-06-21","a":"Spain","b":"Saudi Arabia","ga":3,"gb":1,"pa":0.501,"pd":0.33,"pb":0.169,"outcome":"home","pred":"home","correct":true,"brier":0.3865,"ll":0.6911},{"grupo":"Group G","fecha":"2026-06-21","a":"Belgium","b":"IR Iran","ga":3,"gb":1,"pa":0.491,"pd":0.34,"pb":0.169,"outcome":"home","pred":"home","correct":true,"brier":0.4032,"ll":0.7113},{"grupo":"Group G","fecha":"2026-06-21","a":"New Zealand","b":"Egypt","ga":1,"gb":2,"pa":0.309,"pd":0.301,"pb":0.39,"outcome":"away","pred":"away","correct":true,"brier":0.5582,"ll":0.9416},{"grupo":"Group I","fecha":"2026-06-22","a":"Norway","b":"Senegal","ga":2,"gb":1,"pa":0.378,"pd":0.261,"pb":0.36,"outcome":"home","pred":"home","correct":true,"brier":0.5846,"ll":0.9729},{"grupo":"Group I","fecha":"2026-06-22","a":"France","b":"Iraq","ga":3,"gb":0,"pa":0.536,"pd":0.283,"pb":0.181,"outcome":"home","pred":"home","correct":true,"brier":0.3281,"ll":0.6236},{"grupo":"Group J","fecha":"2026-06-22","a":"Argentina","b":"Austria","ga":2,"gb":0,"pa":0.421,"pd":0.298,"pb":0.282,"outcome":"home","pred":"home","correct":true,"brier":0.5036,"ll":0.8651},{"grupo":"Group J","fecha":"2026-06-22","a":"Jordan","b":"Algeria","ga":1,"gb":1,"pa":0.297,"pd":0.288,"pb":0.415,"outcome":"draw","pred":"away","correct":false,"brier":0.7674,"ll":1.2448},{"grupo":"Group L","fecha":"2026-06-23","a":"England","b":"Ghana","ga":3,"gb":0,"pa":0.469,"pd":0.335,"pb":0.196,"outcome":"home","pred":"home","correct":true,"brier":0.4326,"ll":0.7572},{"grupo":"Group L","fecha":"2026-06-23","a":"Panama","b":"Croatia","ga":1,"gb":1,"pa":0.237,"pd":0.315,"pb":0.448,"outcome":"draw","pred":"away","correct":false,"brier":0.7261,"ll":1.1552},{"grupo":"Group K","fecha":"2026-06-23","a":"Portugal","b":"Uzbekistan","ga":2,"gb":0,"pa":0.488,"pd":0.295,"pb":0.217,"outcome":"home","pred":"home","correct":true,"brier":0.3963,"ll":0.7174},{"grupo":"Group K","fecha":"2026-06-23","a":"Colombia","b":"Congo DR","ga":6,"gb":0,"pa":0.5,"pd":0.283,"pb":0.216,"outcome":"home","pred":"home","correct":true,"brier":0.3767,"ll":0.6931},{"grupo":"Group C","fecha":"2026-06-24","a":"Scotland","b":"Brazil","ga":1,"gb":1,"pa":0.235,"pd":0.327,"pb":0.438,"outcome":"draw","pred":"away","correct":false,"brier":0.7,"ll":1.1178},{"grupo":"Group C","fecha":"2026-06-24","a":"Morocco","b":"Haiti","ga":3,"gb":1,"pa":0.491,"pd":0.305,"pb":0.205,"outcome":"home","pred":"home","correct":true,"brier":0.3941,"ll":0.7113},{"grupo":"Group B","fecha":"2026-06-24","a":"Switzerland","b":"Canada","ga":2,"gb":1,"pa":0.39,"pd":0.3,"pb":0.311,"outcome":"home","pred":"home","correct":true,"brier":0.5588,"ll":0.9416},{"grupo":"Group B","fecha":"2026-06-24","a":"Bosnia and Herzegovina","b":"Qatar","ga":1,"gb":2,"pa":0.364,"pd":0.25,"pb":0.386,"outcome":"away","pred":"away","correct":true,"brier":0.572,"ll":0.9519},{"grupo":"Group A","fecha":"2026-06-24","a":"Czechia","b":"Mexico","ga":1,"gb":1,"pa":0.185,"pd":0.356,"pb":0.46,"outcome":"draw","pred":"away","correct":false,"brier":0.6606,"ll":1.0328},{"grupo":"Group A","fecha":"2026-06-24","a":"South Africa","b":"Korea Republic","ga":2,"gb":1,"pa":0.399,"pd":0.281,"pb":0.32,"outcome":"home","pred":"home","correct":true,"brier":0.5426,"ll":0.9188},{"grupo":"Group E","fecha":"2026-06-25","a":"Curaçao","b":"Côte d'Ivoire","ga":2,"gb":2,"pa":0.354,"pd":0.291,"pb":0.354,"outcome":"draw","pred":"home","correct":false,"brier":0.7533,"ll":1.2344},{"grupo":"Group E","fecha":"2026-06-25","a":"Ecuador","b":"Germany","ga":1,"gb":1,"pa":0.325,"pd":0.277,"pb":0.397,"outcome":"draw","pred":"away","correct":false,"brier":0.786,"ll":1.2837},{"grupo":"Group F","fecha":"2026-06-25","a":"Japan","b":"Sweden","ga":2,"gb":1,"pa":0.42,"pd":0.269,"pb":0.311,"outcome":"home","pred":"home","correct":true,"brier":0.5055,"ll":0.8675},{"grupo":"Group F","fecha":"2026-06-25","a":"Tunisia","b":"Netherlands","ga":1,"gb":1,"pa":0.231,"pd":0.314,"pb":0.455,"outcome":"draw","pred":"away","correct":false,"brier":0.731,"ll":1.1584},{"grupo":"Group D","fecha":"2026-06-25","a":"Türkiye","b":"USA","ga":2,"gb":2,"pa":0.354,"pd":0.291,"pb":0.354,"outcome":"draw","pred":"home","correct":false,"brier":0.7533,"ll":1.2344},{"grupo":"Group D","fecha":"2026-06-25","a":"Paraguay","b":"Australia","ga":1,"gb":0,"pa":0.359,"pd":0.293,"pb":0.349,"outcome":"home","pred":"home","correct":true,"brier":0.6185,"ll":1.0244},{"grupo":"Group I","fecha":"2026-06-26","a":"Norway","b":"France","ga":1,"gb":1,"pa":0.265,"pd":0.302,"pb":0.432,"outcome":"draw","pred":"away","correct":false,"brier":0.7441,"ll":1.1973},{"grupo":"Group I","fecha":"2026-06-26","a":"Senegal","b":"Iraq","ga":3,"gb":1,"pa":0.467,"pd":0.289,"pb":0.244,"outcome":"home","pred":"home","correct":true,"brier":0.4271,"ll":0.7614},{"grupo":"Group G","fecha":"2026-06-26","a":"Egypt","b":"IR Iran","ga":2,"gb":1,"pa":0.423,"pd":0.303,"pb":0.275,"outcome":"home","pred":"home","correct":true,"brier":0.5004,"ll":0.8604},{"grupo":"Group G","fecha":"2026-06-26","a":"New Zealand","b":"Belgium","ga":1,"gb":1,"pa":0.206,"pd":0.316,"pb":0.478,"outcome":"draw","pred":"away","correct":false,"brier":0.7388,"ll":1.152},{"grupo":"Group H","fecha":"2026-06-26","a":"Cabo Verde","b":"Saudi Arabia","ga":1,"gb":2,"pa":0.275,"pd":0.308,"pb":0.417,"outcome":"away","pred":"away","correct":true,"brier":0.5104,"ll":0.8747},{"grupo":"Group H","fecha":"2026-06-26","a":"Uruguay","b":"Spain","ga":1,"gb":2,"pa":0.296,"pd":0.281,"pb":0.423,"outcome":"away","pred":"away","correct":true,"brier":0.4995,"ll":0.8604},{"grupo":"Group L","fecha":"2026-06-27","a":"Panama","b":"England","ga":1,"gb":1,"pa":0.209,"pd":0.296,"pb":0.495,"outcome":"draw","pred":"away","correct":false,"brier":0.7843,"ll":1.2174},{"grupo":"Group L","fecha":"2026-06-27","a":"Croatia","b":"Ghana","ga":3,"gb":0,"pa":0.449,"pd":0.293,"pb":0.258,"outcome":"home","pred":"home","correct":true,"brier":0.456,"ll":0.8007},{"grupo":"Group J","fecha":"2026-06-27","a":"Algeria","b":"Austria","ga":1,"gb":2,"pa":0.325,"pd":0.292,"pb":0.383,"outcome":"away","pred":"away","correct":true,"brier":0.5716,"ll":0.9597},{"grupo":"Group J","fecha":"2026-06-27","a":"Jordan","b":"Argentina","ga":1,"gb":1,"pa":0.156,"pd":0.316,"pb":0.528,"outcome":"draw","pred":"away","correct":false,"brier":0.771,"ll":1.152},{"grupo":"Group K","fecha":"2026-06-27","a":"Colombia","b":"Portugal","ga":1,"gb":1,"pa":0.335,"pd":0.298,"pb":0.367,"outcome":"draw","pred":"away","correct":false,"brier":0.7397,"ll":1.2107},{"grupo":"Group K","fecha":"2026-06-27","a":"Congo DR","b":"Uzbekistan","ga":1,"gb":2,"pa":0.266,"pd":0.284,"pb":0.45,"outcome":"away","pred":"away","correct":true,"brier":0.4539,"ll":0.7985}];
+const GS_SCORE={};RESULTS_REF.forEach(r=>GS_SCORE[`${r.a}|${r.b}`]=[r.ga,r.gb]);
+const GS_REAL={};RESULTS_REF.forEach(r=>GS_REAL[`${r.a}|${r.b}`]=[r.ga,r.gb]);
+const RREF_MAP={};RESULTS_REF.forEach(r=>RREF_MAP[`${r.a}|${r.b}`]=r);
+
+const TL={
+  "Mexico":[1.667,0.667],"South Africa":[1.333,1.333],"Korea Republic":[1.333,2.0],
+  "Czechia":[1.333,1.667],"Canada":[1.667,1.333],"Bosnia and Herzegovina":[1.0,2.333],
+  "USA":[1.333,1.333],"Paraguay":[1.0,0.667],"Haiti":[0.667,3.0],
+  "Scotland":[1.333,1.333],"Australia":[1.333,0.667],"T\u00fcrkiye":[1.0,2.0],
+  "Brazil":[2.333,0.667],"Morocco":[2.0,1.333],"Qatar":[1.333,1.333],
+  "Switzerland":[2.0,1.0],"C\u00f4te d'Ivoire":[1.333,2.333],"Ecuador":[2.0,0.667],
+  "Germany":[2.333,1.0],"Cura\u00e7ao":[1.0,2.667],"Netherlands":[1.667,1.0],
+  "Japan":[1.667,1.333],"Sweden":[1.333,1.667],"Tunisia":[1.0,1.667],
+  "Saudi Arabia":[1.333,1.667],"Uruguay":[1.667,1.0],"Spain":[2.667,1.0],
+  "Cabo Verde":[0.667,2.667],"IR Iran":[1.0,2.333],"New Zealand":[1.333,1.333],
+  "Belgium":[2.0,1.0],"Egypt":[1.667,1.333],"France":[2.0,0.667],
+  "Senegal":[1.667,1.667],"Iraq":[0.667,2.667],"Norway":[1.667,1.0],
+  "Argentina":[1.667,0.667],"Algeria":[1.0,1.667],"Austria":[1.333,1.333],
+  "Jordan":[1.0,1.333],"Ghana":[0.333,2.667],"Panama":[1.333,1.0],
+  "England":[2.0,0.667],"Croatia":[1.667,1.0],"Portugal":[2.333,0.667],
+  "Congo DR":[0.667,4.0],"Uzbekistan":[1.0,1.667],"Colombia":[3.0,0.667]
+};
+
+const FLAG={
+  "Mexico":"\uD83C\uDDF2\uD83C\uDDFD","South Africa":"\uD83C\uDDFF\uD83C\uDDE6",
+  "Korea Republic":"\uD83C\uDDF0\uD83C\uDDF7","Czechia":"\uD83C\uDDE8\uD83C\uDDFF",
+  "Canada":"\uD83C\uDDE8\uD83C\uDDE6","Qatar":"\uD83C\uDDF6\uD83C\uDDE6",
+  "Bosnia and Herzegovina":"\uD83C\uDDE7\uD83C\uDDE6","Switzerland":"\uD83C\uDDE8\uD83C\uDDED",
+  "Morocco":"\uD83C\uDDF2\uD83C\uDDE6","Brazil":"\uD83C\uDDE7\uD83C\uDDF7",
+  "Haiti":"\uD83C\uDDED\uD83C\uDDF9","Scotland":"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74\uDB40\uDC7F",
+  "Australia":"\uD83C\uDDE6\uD83C\uDDFA","USA":"\uD83C\uDDFA\uD83C\uDDF8",
+  "Paraguay":"\uD83C\uDDF5\uD83C\uDDFE","T\u00fcrkiye":"\uD83C\uDDF9\uD83C\uDDF7",
+  "Cura\u00e7ao":"\uD83C\uDDE8\uD83C\uDDFC","Ecuador":"\uD83C\uDDEA\uD83C\uDDE8",
+  "C\u00f4te d'Ivoire":"\uD83C\uDDE8\uD83C\uDDEE","Germany":"\uD83C\uDDE9\uD83C\uDDEA",
+  "Tunisia":"\uD83C\uDDF9\uD83C\uDDF3","Japan":"\uD83C\uDDEF\uD83C\uDDF5",
+  "Netherlands":"\uD83C\uDDF3\uD83C\uDDF1","Sweden":"\uD83C\uDDF8\uD83C\uDDEA",
+  "Egypt":"\uD83C\uDDEA\uD83C\uDDEC","IR Iran":"\uD83C\uDDEE\uD83C\uDDF7",
+  "Belgium":"\uD83C\uDDE7\uD83C\uDDEA","New Zealand":"\uD83C\uDDF3\uD83C\uDDFF",
+  "Saudi Arabia":"\uD83C\uDDF8\uD83C\uDDE6","Spain":"\uD83C\uDDEA\uD83C\uDDF8",
+  "Uruguay":"\uD83C\uDDFA\uD83C\uDDFE","Cabo Verde":"\uD83C\uDDE8\uD83C\uDDFB",
+  "Norway":"\uD83C\uDDF3\uD83C\uDDF4","Iraq":"\uD83C\uDDEE\uD83C\uDDF6",
+  "Senegal":"\uD83C\uDDF8\uD83C\uDDF3","France":"\uD83C\uDDEB\uD83C\uDDF7",
+  "Jordan":"\uD83C\uDDEF\uD83C\uDDF4","Argentina":"\uD83C\uDDE6\uD83C\uDDF7",
+  "Algeria":"\uD83C\uDDE9\uD83C\uDDFF","Austria":"\uD83C\uDDE6\uD83C\uDDF9",
+  "Colombia":"\uD83C\uDDE8\uD83C\uDDF4","Portugal":"\uD83C\uDDF5\uD83C\uDDF9",
+  "Congo DR":"\uD83C\uDDE8\uD83C\uDDE9","Uzbekistan":"\uD83C\uDDFA\uD83C\uDDFF",
+  "Panama":"\uD83C\uDDF5\uD83C\uDDE6","Croatia":"\uD83C\uDDED\uD83C\uDDF7",
+  "Ghana":"\uD83C\uDDEC\uD83C\uDDED","England":"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F"
+};
+const NAME_ES={
+  "South Africa":"Sudáfrica","Korea Republic":"Corea","Czechia":"Chequia",
+  "Bosnia and Herzegovina":"Bosnia","Switzerland":"Suiza","Morocco":"Marruecos",
+  "Brazil":"Brasil","Haiti":"Haití","Scotland":"Escocia","T\u00fcrkiye":"Turquía",
+  "Cura\u00e7ao":"Curazao","C\u00f4te d'Ivoire":"Costa de Marfil","Germany":"Alemania",
+  "Tunisia":"Túnez","Japan":"Japón","Netherlands":"Países Bajos","Sweden":"Suecia",
+  "Egypt":"Egipto","IR Iran":"Irán","Belgium":"Bélgica","New Zealand":"Nueva Zelanda",
+  "Saudi Arabia":"Arabia Saudita","Spain":"España","Cabo Verde":"Cabo Verde",
+  "Norway":"Noruega","Iraq":"Irak","France":"Francia","Jordan":"Jordania",
+  "Argentina":"Argentina","Algeria":"Argelia","Austria":"Austria","Colombia":"Colombia",
+  "Portugal":"Portugal","Congo DR":"R.D. Congo","Uzbekistan":"Uzbekistán",
+  "Panama":"Panamá","Croatia":"Croacia","Ghana":"Ghana","England":"Inglaterra",
+  "Mexico":"México","Canada":"Canadá","Qatar":"Catar","USA":"EE. UU.","Paraguay":"Paraguay","Australia":"Australia"
+};
+const ISO={
+  "Mexico":"mx","South Africa":"za","Korea Republic":"kr","Czechia":"cz",
+  "Canada":"ca","Bosnia and Herzegovina":"ba","Qatar":"qa","Switzerland":"ch",
+  "Haiti":"ht","Scotland":"gb-sct","Brazil":"br","Morocco":"ma",
+  "USA":"us","Paraguay":"py","Australia":"au","T\u00fcrkiye":"tr",
+  "C\u00f4te d'Ivoire":"ci","Ecuador":"ec","Germany":"de","Cura\u00e7ao":"cw",
+  "Netherlands":"nl","Japan":"jp","Sweden":"se","Tunisia":"tn",
+  "IR Iran":"ir","New Zealand":"nz","Belgium":"be","Egypt":"eg",
+  "Saudi Arabia":"sa","Uruguay":"uy","Spain":"es","Cabo Verde":"cv",
+  "France":"fr","Senegal":"sn","Iraq":"iq","Norway":"no",
+  "Argentina":"ar","Algeria":"dz","Austria":"at","Jordan":"jo",
+  "Portugal":"pt","Congo DR":"cd","Uzbekistan":"uz","Colombia":"co",
+  "Ghana":"gh","Panama":"pa","England":"gb-eng","Croatia":"hr"
+};
+const es=t=>NAME_ES[t]||t;
+// Banderas como imagen real (flagcdn) para que salgan en cualquier sistema;
+// si no hay internet, cae al emoji de bandera.
+const fl=t=>{
+  const c=ISO[t];
+  if(!c)return FLAG[t]||"\u26BD";
+  return`<img class="flag" src="https://flagcdn.com/${c}.svg" alt="${FLAG[t]||""}" loading="lazy" onerror="this.outerHTML='${FLAG[t]||"\u26BD"}'">`;
+};
+
+const FIFA_R32=[
+  {id:73,home:"Runner-up Group A",  away:"Runner-up Group B"},
+  {id:74,home:"Winner Group E",     away:"Best 3rd ABCDF"},
+  {id:75,home:"Winner Group F",     away:"Runner-up Group C"},
+  {id:76,home:"Winner Group C",     away:"Runner-up Group F"},
+  {id:77,home:"Winner Group I",     away:"Best 3rd CDFGH"},
+  {id:78,home:"Runner-up Group E",  away:"Runner-up Group I"},
+  {id:79,home:"Winner Group A",     away:"Best 3rd CEFHI"},
+  {id:80,home:"Winner Group L",     away:"Best 3rd EHIJK"},
+  {id:81,home:"Winner Group D",     away:"Best 3rd BEFIJ"},
+  {id:82,home:"Winner Group G",     away:"Best 3rd AEHIJ"},
+  {id:83,home:"Runner-up Group K",  away:"Runner-up Group L"},
+  {id:84,home:"Winner Group H",     away:"Runner-up Group J"},
+  {id:85,home:"Winner Group B",     away:"Best 3rd EFGIJ"},
+  {id:86,home:"Winner Group J",     away:"Runner-up Group H"},
+  {id:87,home:"Winner Group K",     away:"Best 3rd DEIJL"},
+  {id:88,home:"Runner-up Group D",  away:"Runner-up Group G"},
+];
+const R16P=[[73,75],[74,77],[76,78],[79,80],[83,84],[81,82],[86,88],[85,87]];
+
+// ── Árbol de eliminatorias EXACTO del CSV oficial FIFA 2026 ──
+const R32BYID={};FIFA_R32.forEach(m=>R32BYID[m.id]=m);
+const KO_FEED={
+  89:[73,75],90:[74,77],91:[76,78],92:[79,80],93:[83,84],94:[81,82],95:[86,88],96:[85,87],
+  97:[89,90],98:[93,94],99:[91,92],100:[95,96],101:[97,98],102:[99,100],104:[101,102]
+};
+// Orden vertical de cada columna para que el árbol conecte bien visualmente
+const R32_ORDER=[73,75,74,77,83,84,81,82,76,78,79,80,86,88,85,87];
+const R16_ORDER=[89,90,93,94,91,92,95,96];
+const QF_ORDER=[97,98,99,100];
+const SF_ORDER=[101,102];
+const FINAL_ID=104;
+const BEST3_SLOTS=FIFA_R32.filter(m=>m.away.startsWith("Best 3rd"))
+  .map(m=>({key:m.away,groups:m.away.slice(9).split("")}));
+// Tabla oficial FIFA Annex C: 460 de 495 combinaciones de 8 grupos de 12.
+// Clave = 8 letras ordenadas. Valor = 8 letras en orden de slots:
+// [CEFHI, EFGIJ, BEFIJ, ABCDF, AEHIJ, CDFGH, DEIJL, EHIJK]
+const FIFA3RD_KEYS=["Best 3rd CEFHI","Best 3rd EFGIJ","Best 3rd BEFIJ","Best 3rd ABCDF","Best 3rd AEHIJ","Best 3rd CDFGH","Best 3rd DEIJL","Best 3rd EHIJK"];
+const FIFA3RD={
+  "ABCDEFGH":"HGBCAFDE","ABCDEFGI":"CGBDAFEI","ABCDEFGJ":"CGBDAFEJ","ABCDEFGK":"CGBDAFEK","ABCDEFGL":"CGBDAFLE","ABCDEFHI":"HEBCAFDI","ABCDEFHJ":"HJBCAFDE","ABCDEFHK":"HEBCAFDK","ABCDEFHL":"HFBCADLE","ABCDEFIJ":"CJBDAFEI","ABCDEFIK":"CEBDAFIK","ABCDEFIL":"CEBDAFLI","ABCDEFJK":"CJBDAFEK","ABCDEFJL":"CJBDAFLE","ABCDEFKL":"CEBDAFLK",
+  "ABCDEGHI":"HGBCADEI","ABCDEGHJ":"HGBCADEJ","ABCDEGHK":"HGBCADEK","ABCDEGHL":"HGBCADLE","ABCDEGIJ":"EGBCADIJ","ABCDEGIK":"EGBCADIK","ABCDEGIL":"EGBCADLI","ABCDEGJK":"EGBCADJK","ABCDEGJL":"EGBCADLJ","ABCDEGKL":"EGBCADLK","ABCDEHIJ":"HJBCADEI","ABCDEHIK":"HEBCADIK","ABCDEHIL":"HEBCADLI","ABCDEHJK":"HJBCADEK","ABCDEHJL":"HJBCADLE","ABCDEHKL":"HEBCADLK","ABCDEIJK":"EJBCADIK","ABCDEIJL":"EJBCADLI","ABCDEIKL":"EIBCADLK","ABCDEJKL":"EJBCADLK",
+  "ABCDFGHI":"HGBCAFDI","ABCDFGHJ":"HGBCAFDJ","ABCDFGHK":"HGBCAFDK","ABCDFGHL":"CGBDAFLH","ABCDFGIJ":"CGBDAFIJ","ABCDFGIK":"CGBDAFIK","ABCDFGIL":"CGBDAFLI","ABCDFGJK":"CGBDAFJK","ABCDFGJL":"CGBDAFLJ","ABCDFGKL":"CGBDAFLK","ABCDFHIJ":"HJBCAFDI","ABCDFHIK":"HFBCADIK","ABCDFHIL":"HFBCADLI","ABCDFHJK":"HJBCAFDK","ABCDFHJL":"CJBDAFLH","ABCDFHKL":"HFBCADLK","ABCDFIJK":"CJBDAFIK","ABCDFIJL":"CJBDAFLI","ABCDFIKL":"CIBDAFLK","ABCDFJKL":"CJBDAFLK",
+  "ABCDGHIJ":"HGBCADIJ","ABCDGHIK":"HGBCADIK","ABCDGHIL":"HGBCADLI","ABCDGHJK":"HGBCADJK","ABCDGHJL":"HGBCADLJ","ABCDGHKL":"HGBCADLK","ABCDGIJK":"CJBDAGIK","ABCDGIJL":"CJBDAGLI","ABCDGIKL":"IGBCADLK","ABCDGJKL":"CJBDAGLK","ABCDHIJK":"HJBCADIK","ABCDHIJL":"HJBCADLI","ABCDHIKL":"HIBCADLK","ABCDHJKL":"HJBCADLK","ABCDIJKL":"IJBCADLK",
+  "ABCEFGHI":"HGBCAFEI","ABCEFGHJ":"HGBCAFEJ","ABCEFGHK":"HGBCAFEK","ABCEFGHL":"HGBCAFLE","ABCEFGIJ":"EGBCAFIJ","ABCEFGIK":"EGBCAFIK","ABCEFGIL":"EGBCAFLI","ABCEFGJK":"EGBCAFJK","ABCEFGJL":"EGBCAFLJ","ABCEFGKL":"EGBCAFLK","ABCEFHIJ":"HJBCAFEI","ABCEFHIK":"HEBCAFIK","ABCEFHIL":"HEBCAFLI","ABCEFHJK":"HJBCAFEK","ABCEFHJL":"HJBCAFLE","ABCEFHKL":"HEBCAFLK","ABCEFIJK":"EJBCAFIK","ABCEFIJL":"EJBCAFLI","ABCEFIKL":"EIBCAFLK","ABCEFJKL":"EJBCAFLK",
+  "ABCEGHIJ":"HJBCAGEI","ABCEGHIK":"EGBCAHIK","ABCEGHIL":"EGBCAHLI","ABCEGHJK":"HJBCAGEK","ABCEGHJL":"HJBCAGLE","ABCEGHKL":"EGBCAHLK","ABCEGIJK":"EJBCAGIK","ABCEGIJL":"EJBCAGLI","ABCEGIKL":"EGBAICLK","ABCEGJKL":"EJBCAGLK","ABCEHIJK":"EJBCAHIK","ABCEHIJL":"EJBCAHLI","ABCEHIKL":"EIBCAHLK","ABCEHJKL":"EJBCAHLK","ABCEIJKL":"EJBAICLK",
+  "ABCFGHIJ":"HGBCAFIJ","ABCFGHIK":"HGBCAFIK","ABCFGHIL":"HGBCAFLI","ABCFGHJK":"HGBCAFJK","ABCFGHJL":"HGBCAFLJ","ABCFGHKL":"HGBCAFLK","ABCFGIJK":"CJBFAGIK","ABCFGIJL":"CJBFAGLI","ABCFGIKL":"IGBCAFLK","ABCFGJKL":"CJBFAGLK","ABCFHIJK":"HJBCAFIK","ABCFHIJL":"HJBCAFLI","ABCFHIKL":"HIBCAFLK","ABCFHJKL":"HJBCAFLK","ABCFIJKL":"IJBCAFLK",
+  "ABCGHIJK":"HJBCAGIK","ABCGHIJL":"HJBCAGLI","ABCGHIKL":"IGBCAHLK","ABCGHJKL":"HJBCAGLK","ABCGIJKL":"IJBCAGLK","ABCHIJKL":"IJBCAHLK",
+  "ABDEFGHI":"HGBDAFEI","ABDEFGHJ":"HGBDAFEJ","ABDEFGHK":"HGBDAFEK","ABDEFGHL":"HGBDAFLE","ABDEFGIJ":"EGBDAFIJ","ABDEFGIK":"EGBDAFIK","ABDEFGIL":"EGBDAFLI","ABDEFGJK":"EGBDAFJK","ABDEFGJL":"EGBDAFLJ","ABDEFGKL":"EGBDAFLK","ABDEFHIJ":"HJBDAFEI","ABDEFHIK":"HEBDAFIK","ABDEFHIL":"HEBDAFLI","ABDEFHJK":"HJBDAFEK","ABDEFHJL":"HJBDAFLE","ABDEFHKL":"HEBDAFLK","ABDEFIJK":"EJBDAFIK","ABDEFIJL":"EJBDAFLI","ABDEFIKL":"EIBDAFLK","ABDEFJKL":"EJBDAFLK",
+  "ABDEGHIJ":"HJBDAGEI","ABDEGHIK":"EGBDAHIK","ABDEGHIL":"EGBDAHLI","ABDEGHJK":"HJBDAGEK","ABDEGHJL":"HJBDAGLE","ABDEGHKL":"EGBDAHLK","ABDEGIJK":"EJBDAGIK","ABDEGIJL":"EJBDAGLI","ABDEGIKL":"EGBAIDLK","ABDEGJKL":"EJBDAGLK","ABDEHIJK":"EJBDAHIK","ABDEHIJL":"EJBDAHLI","ABDEHIKL":"EIBDAHLK","ABDEHJKL":"EJBDAHLK","ABDEIJKL":"EJBAIDLK",
+  "ABDFGHIJ":"HGBDAFIJ","ABDFGHIK":"HGBDAFIK","ABDFGHIL":"HGBDAFLI","ABDFGHJK":"HGBDAFJK","ABDFGHJL":"HGBDAFLJ","ABDFGHKL":"HGBDAFLK","ABDFGIJK":"FJBDAGIK","ABDFGIJL":"FJBDAGLI","ABDFGIKL":"IGBDAFLK","ABDFGJKL":"FJBDAGLK","ABDFHIJK":"HJBDAFIK","ABDFHIJL":"HJBDAFLI","ABDFHIKL":"HIBDAFLK","ABDFHJKL":"HJBDAFLK","ABDFIJKL":"IJBDAFLK",
+  "ABDGHIJK":"HJBDAGIK","ABDGHIJL":"HJBDAGLI","ABDGHIKL":"IGBDAHLK","ABDGHJKL":"HJBDAGLK","ABDGIJKL":"IJBDAGLK","ABDHIJKL":"IJBDAHLK",
+  "ABEFGHIJ":"HJBFAGEI","ABEFGHIK":"EGBFAHIK","ABEFGHIL":"EGBFAHLI","ABEFGHJK":"HJBFAGEK","ABEFGHJL":"HJBFAGLE","ABEFGHKL":"EGBFAHLK","ABEFGIJK":"EJBFAGIK","ABEFGIJL":"EJBFAGLI","ABEFGIKL":"EGBAIFLK","ABEFGJKL":"EJBFAGLK","ABEFHIJK":"EJBFAHIK","ABEFHIJL":"EJBFAHLI","ABEFHIKL":"EIBFAHLK","ABEFHJKL":"EJBFAHLK","ABEFIJKL":"EJBAIFLK",
+  "ABEGHIJK":"EJBAHGIK","ABEGHIJL":"EJBAHGLI","ABEGHIKL":"EGBAIHLK","ABEGHJKL":"EJBAHGLK","ABEGIJKL":"EJBAIGLK","ABEHIJKL":"EJBAIHLK",
+  "ABFGHIJK":"HJBFAGIK","ABFGHIJL":"HJBFAGLI","ABFGHIKL":"HGBAIFLK","ABFGHJKL":"HJBFAGLK","ABFGIJKL":"IJBFAGLK","ABFHIJKL":"HJBAIFLK","ABGHIJKL":"HJBAIGLK",
+  "ACDEFGHI":"HGECAFDI","ACDEFGHJ":"HGJCAFDE","ACDEFGHK":"HGECAFDK","ACDEFGHL":"HGFCADLE","ACDEFGIJ":"CGJDAFEI","ACDEFGIK":"CGEDAFIK","ACDEFGIL":"CGEDAFLI","ACDEFGJK":"CGJDAFEK","ACDEFGJL":"CGJDAFLE","ACDEFGKL":"CGEDAFLK","ACDEFHIJ":"HJECAFDI","ACDEFHIK":"HEFCADIK","ACDEFHIL":"HEFCADLI","ACDEFHJK":"HJECAFDK","ACDEFHJL":"HJFCADLE","ACDEFHKL":"HEFCADLK","ACDEFIJK":"CJEDAFIK","ACDEFIJL":"CJEDAFLI","ACDEFIKL":"CEIDAFLK","ACDEFJKL":"CJEDAFLK",
+  "ACDEGHIJ":"HGJCADEI","ACDEGHIK":"HGECADIK","ACDEGHIL":"HGECADLI","ACDEGHJK":"HGJCADEK","ACDEGHJL":"HGJCADLE","ACDEGHKL":"HGECADLK","ACDEGIJK":"EGJCADIK","ACDEGIJL":"EGJCADLI","ACDEGIKL":"EGICADLK","ACDEGJKL":"EGJCADLK","ACDEHIJK":"HJECADIK","ACDEHIJL":"HJECADLI","ACDEHIKL":"HEICADLK","ACDEHJKL":"HJECADLK","ACDEIJKL":"EJICADLK",
+  "ACDFGHIJ":"HGJCAFDI","ACDFGHIK":"HGFCADIK","ACDFGHIL":"HGFCADLI","ACDFGHJK":"HGJCAFDK","ACDFGHJL":"CGJDAFLH","ACDFGHKL":"HGFCADLK","ACDFGIJK":"CGJDAFIK","ACDFGIJL":"CGJDAFLI","ACDFGIKL":"CGIDAFLK","ACDFGJKL":"CGJDAFLK","ACDFHIJK":"HJFCADIK","ACDFHIJL":"HJFCADLI","ACDFHIKL":"HFICADLK","ACDFHJKL":"HJFCADLK","ACDFIJKL":"CJIDAFLK",
+  "ACDGHIJK":"HGJCADIK","ACDGHIJL":"HGJCADLI","ACDGHIKL":"HGICADLK","ACDGHJKL":"HGJCADLK","ACDGIJKL":"IGJCADLK","ACDHIJKL":"HJICADLK",
+  "ACEFGHIJ":"HGJCAFEI","ACEFGHIK":"HGECAFIK","ACEFGHIL":"HGECAFLI","ACEFGHJK":"HGJCAFEK","ACEFGHJL":"HGJCAFLE","ACEFGHKL":"HGECAFLK","ACEFGIJK":"EGJCAFIK","ACEFGIJL":"EGJCAFLI","ACEFGIKL":"EGICAFLK","ACEFGJKL":"EGJCAFLK","ACEFHIJK":"HJECAFIK","ACEFHIJL":"HJECAFLI","ACEFHIKL":"HEICAFLK","ACEFHJKL":"HJECAFLK","ACEFIJKL":"EJICAFLK",
+  "ACEGHIJK":"EGJCAHIK","ACEGHIJL":"EGJCAHLI","ACEGHIKL":"EGICAHLK","ACEGHJKL":"EGJCAHLK","ACEGIJKL":"EJICAGLK","ACEHIJKL":"EJICAHLK",
+  "ACFGHIJK":"HGJCAFIK","ACFGHIJL":"HGJCAFLI","ACFGHIKL":"HGICAFLK","ACFGHJKL":"HGJCAFLK","ACFGIJKL":"IGJCAFLK","ACFHIJKL":"HJICAFLK","ACGHIJKL":"HJICAGLK",
+  "ADEFGHIJ":"HGJDAFEI","ADEFGHIK":"HGEDAFIK","ADEFGHIL":"HGEDAFLI","ADEFGHJK":"HGJDAFEK","ADEFGHJL":"HGJDAFLE","ADEFGHKL":"HGEDAFLK","ADEFGIJK":"EGJDAFIK","ADEFGIJL":"EGJDAFLI","ADEFGIKL":"EGIDAFLK","ADEFGJKL":"EGJDAFLK","ADEFHIJK":"HJEDAFIK","ADEFHIJL":"HJEDAFLI","ADEFHIKL":"HEIDAFLK","ADEFHJKL":"HJEDAFLK","ADEFIJKL":"EJIDAFLK",
+  "ADEGHIJK":"EGJDAHIK","ADEGHIJL":"EGJDAHLI","ADEGHIKL":"EGIDAHLK","ADEGHJKL":"EGJDAHLK","ADEGIJKL":"EJIDAGLK","ADEHIJKL":"EJIDAHLK",
+  "ADFGHIJK":"HGJDAFIK","ADFGHIJL":"HGJDAFLI","ADFGHIKL":"HGIDAFLK","ADFGHJKL":"HGJDAFLK","ADFGIJKL":"IGJDAFLK","ADFHIJKL":"HJIDAFLK","ADGHIJKL":"HJIDAGLK",
+  "AEFGHIJK":"EGJFAHIK","AEFGHIJL":"EGJFAHLI","AEFGHIKL":"EGIFAHLK","AEFGHJKL":"EGJFAHLK","AEFGIJKL":"EJIFAGLK","AEFHIJKL":"EJIFAHLK","AEGHIJKL":"EJIAHGLK","AFGHIJKL":"HJIFAGLK",
+  "BCDFGHIJ":"HGBCJFDI","BCDFGHIK":"CGBDHFIK","BCDFGHIL":"CGBDHFLI","BCDFGHJK":"HGBCJFDK","BCDFGHJL":"CGBDHFLJ","BCDFGHKL":"CGBDHFLK","BCDFGIJK":"CGBDJFIK","BCDFGIJL":"CGBDJFLI","BCDFGIKL":"CGBDIFLK","BCDFGJKL":"CGBDJFLK","BCDFHIJK":"CJBDHFIK","BCDFHIJL":"CJBDHFLI","BCDFHIKL":"CIBDHFLK","BCDFHJKL":"CJBDHFLK","BCDFIJKL":"CJBDIFLK",
+  "BCDGHIJK":"HGBCJDIK","BCDGHIJL":"HGBCJDLI","BCDGHIKL":"HGBCIDLK","BCDGHJKL":"HGBCJDLK","BCDGIJKL":"IGBCJDLK","BCDHIJKL":"HJBCIDLK",
+  "BCEFGHIJ":"HGBCJFEI","BCEFGHIK":"EGBCHFIK","BCEFGHIL":"EGBCHFLI","BCEFGHJK":"HGBCJFEK","BCEFGHJL":"HGBCJFLE","BCEFGHKL":"EGBCHFLK","BCEFGIJK":"EGBCJFIK","BCEFGIJL":"EGBCJFLI","BCEFGIKL":"EGBCIFLK","BCEFGJKL":"EGBCJFLK","BCEFHIJK":"EJBCHFIK","BCEFHIJL":"EJBCHFLI","BCEFHIKL":"EIBCHFLK","BCEFHJKL":"EJBCHFLK","BCEFIJKL":"EJBCIFLK",
+  "BCEGHIJK":"EJBCHGIK","BCEGHIJL":"EJBCHGLI","BCEGHIKL":"EGBCIHLK","BCEGHJKL":"EJBCHGLK","BCEGIJKL":"EJBCIGLK","BCEHIJKL":"EJBCIHLK",
+  "BCFGHIJK":"HGBCJFIK","BCFGHIJL":"HGBCJFLI","BCFGHIKL":"HGBCIFLK","BCFGHJKL":"HGBCJFLK","BCFGIJKL":"IGBCJFLK","BCFHIJKL":"HJBCIFLK","BCGHIJKL":"HJBCIGLK",
+  "BDEFGHIJ":"HGBDJFEI","BDEFGHIK":"EGBDHFIK","BDEFGHIL":"EGBDHFLI","BDEFGHJK":"HGBDJFEK","BDEFGHJL":"HGBDJFLE","BDEFGHKL":"EGBDHFLK","BDEFGIJK":"EGBDJFIK","BDEFGIJL":"EGBDJFLI","BDEFGIKL":"EGBDIFLK","BDEFGJKL":"EGBDJFLK","BDEFHIJK":"EJBDHFIK","BDEFHIJL":"EJBDHFLI","BDEFHIKL":"EIBDHFLK","BDEFHJKL":"EJBDHFLK","BDEFIJKL":"EJBDIFLK",
+  "BDEGHIJK":"EJBDHGIK","BDEGHIJL":"EJBDHGLI","BDEGHIKL":"EGBDIHLK","BDEGHJKL":"EJBDHGLK","BDEGIJKL":"EJBDIGLK","BDEHIJKL":"EJBDIHLK",
+  "BDFGHIJK":"HGBDJFIK","BDFGHIJL":"HGBDJFLI","BDFGHIKL":"HGBDIFLK","BDFGHJKL":"HGBDJFLK","BDFGIJKL":"IGBDJFLK","BDFHIJKL":"HJBDIFLK","BDGHIJKL":"HJBDIGLK",
+  "BEFGHIJK":"EJBFHGIK","BEFGHIJL":"EJBFHGLI","BEFGHIKL":"EGBFIHLK","BEFGHJKL":"EJBFHGLK","BEFGIJKL":"EJBFIGLK","BEFHIJKL":"EJBFIHLK","BEGHIJKL":"EJIBHGLK","BFGHIJKL":"HJBFIGLK",
+  "CDEFGHIJ":"CGJDHFEI","CDEFGHIK":"CGEDHFIK","CDEFGHIL":"CGEDHFLI","CDEFGHJK":"CGJDHFEK","CDEFGHJL":"CGJDHFLE","CDEFGHKL":"CGEDHFLK","CDEFGIJK":"CGEDJFIK","CDEFGIJL":"CGEDJFLI","CDEFGIKL":"CGEDIFLK","CDEFGJKL":"CGEDJFLK","CDEFHIJK":"CJEDHFIK","CDEFHIJL":"CJEDHFLI","CDEFHIKL":"CEIDHFLK","CDEFHJKL":"CJEDHFLK","CDEFIJKL":"CJEDIFLK",
+  "CDEGHIJK":"EGJCHDIK","CDEGHIJL":"EGJCHDLI","CDEGHIKL":"EGICHDLK","CDEGHJKL":"EGJCHDLK","CDEGIJKL":"EGICJDLK","CDEHIJKL":"EJICHDLK",
+  "CDFGHIJK":"CGJDHFIK","CDFGHIJL":"CGJDHFLI","CDFGHIKL":"CGIDHFLK","CDFGHJKL":"CGJDHFLK","CDFGIJKL":"CGIDJFLK","CDFHIJKL":"CJIDHFLK","CDGHIJKL":"HGICJDLK",
+  "CEFGHIJK":"EGJCHFIK","CEFGHIJL":"EGJCHFLI","CEFGHIKL":"EGICHFLK","CEFGHJKL":"EGJCHFLK","CEFGIJKL":"EGICJFLK","CEFHIJKL":"EJICHFLK","CEGHIJKL":"EJICHGLK","CFGHIJKL":"HGICJFLK",
+  "DEFGHIJK":"EGJDHFIK","DEFGHIJL":"EGJDHFLI","DEFGHIKL":"EGIDHFLK","DEFGHJKL":"EGJDHFLK","DEFGIJKL":"EGIDJFLK","DEFHIJKL":"EJIDHFLK","DEGHIJKL":"EJIDHGLK","DFGHIJKL":"HGIDJFLK","EFGHIJKL":"EJIFHGLK"
+};
+let _thirdMemo={};
+// Asigna cada slot "Best 3rd" usando la tabla oficial FIFA (Annex C, 495 combinaciones).
+// Con fallback a backtracking para las ~35 combinaciones no incluidas en la tabla.
+function matchThirds(availGroups){
+  const sig=[...availGroups].sort().join("");
+  if(_thirdMemo[sig])return _thirdMemo[sig];
+  const assign={};
+  if(FIFA3RD[sig]){
+    // Lookup oficial: vals[i] corresponde a FIFA3RD_KEYS[i]
+    const vals=FIFA3RD[sig];
+    FIFA3RD_KEYS.forEach((k,i)=>{assign[k]=vals[i]||null;});
+    _thirdMemo[sig]=assign;return assign;
+  }
+  // Fallback backtracking (combinaciones no cubiertas por la tabla)
+  const avail=new Set(availGroups);
+  const order=[...BEST3_SLOTS].sort((a,b)=>
+    a.groups.filter(g=>avail.has(g)).length-b.groups.filter(g=>avail.has(g)).length);
+  const used=new Set(),partial=avail.size<order.length;
+  (function bt(i){
+    if(i===order.length)return true;
+    const s=order[i];
+    for(const g of s.groups){
+      if(avail.has(g)&&!used.has(g)){
+        used.add(g);assign[s.key]=g;
+        if(bt(i+1))return true;
+        used.delete(g);delete assign[s.key];
+      }
+    }
+    if(partial){assign[s.key]=null;if(bt(i+1))return true;delete assign[s.key];}
+    return false;
+  })(0);
+  _thirdMemo[sig]=assign;return assign;
+}
+
+const FIXTURES=Object.keys(SP_GS).map(k=>{const[a,b]=k.split("|");return{k,a,b,g:TG[a]}}).filter(f=>f.g);
+// Predicciones BASE: goles exactos del CSV del modelo (goles_A, goles_B). Inmutables.
+const PRED_GS={};
+RESULTS_REF.forEach(r=>{
+  PRED_GS[`${r.a}|${r.b}`]=[r.ga,r.gb];
+  PRED_GS[`${r.b}|${r.a}`]=[r.gb,r.ga];
+});
+
+let ST={gr:{},ko:{}};
+let mc=null,proj=null,elaAdj={};
+let curView="quiniela";
+const KEY="wc2026_v5";
+
+function save(){
+  setSave("Guardando\u2026");
+  try{localStorage.setItem(KEY,JSON.stringify({gr:ST.gr,ko:ST.ko}));setSave("Guardado");}
+  catch(e){setSave("Sin guardar");}
+}
+function load(){
+  try{
+    const r=localStorage.getItem(KEY);
+    if(r){const o=JSON.parse(r);ST.gr=o.gr||{};ST.ko=o.ko||{};}
+    // First run: ST.gr stays empty — user fills results manually
+  }catch(e){}
+}
+function setSave(t){const e=document.getElementById("saveTxt");if(e)e.textContent=t;}
+
+const baseElo=t=>ELO[t]||1500;
+const effElo=t=>baseElo(t)+(elaAdj[t]||0);
+
+function eloProb(ea,eb){
+  const d=(ea-eb)/S,ad=Math.abs(d);
+  const pD=0.05+0.27*Math.exp(-ad*0.85),r=Math.exp(d);
+  return[(1-pD)*r/(1+r),pD,(1-pD)/(1+r)];
+}
+function norm(p){const s=p[0]+p[1]+p[2]||1;return[p[0]/s,p[1]/s,p[2]/s];}
+
+// Probabilidad BASE del modelo (cache del notebook). NO usa ajustes por resultados.
+// Se usa para la pestaña de Accuracy (sin fuga de datos).
+function probFromCache(cache,a,b,source){
+  const k1=`${a}|${b}`,k2=`${b}|${a}`;
+  if(cache[k1])return{p:cache[k1].slice(),source};
+  if(cache[k2]){const p=cache[k2];return{p:[p[2],p[1],p[0]],source:`${source} invertido`};}
+  return null;
+}
+function getProbBaseInfo(a,b,isKO=false){
+  const first=isKO?probFromCache(MC_CACHE,a,b,"match_proba_cache"):probFromCache(SP_GS,a,b,"CSV grupos");
+  const second=isKO?probFromCache(SP_GS,a,b,"CSV grupos"):probFromCache(MC_CACHE,a,b,"match_proba_cache");
+  return first||second||{p:eloProb(baseElo(a),baseElo(b)),source:"ELO fallback"};
+}
+function getProbBase(a,b,isKO=false){
+  return getProbBaseInfo(a,b,isKO).p;
+}
+// Desplaza una terna [pa,pd,pb] según una diferencia de ELO (mantiene fijo el empate).
+function shiftProbs(p,dElo){
+  if(!dElo)return p.slice();
+  const pd=p[1],rem=1-pd,den=(p[0]+p[2])||1,share=Math.min(0.999,Math.max(0.001,p[0]/den));
+  const logit=Math.log(share/(1-share))+dElo/S;
+  const r=1/(1+Math.exp(-logit));
+  return[rem*r,pd,rem*(1-r)];
+}
+// Probabilidad VIGENTE: base del modelo, ajustada por los resultados reales ya ingresados.
+function getProbInfo(a,b,isKO=false){
+  const base=getProbBaseInfo(a,b,isKO);
+  const dAdj=(elaAdj[a]||0)-(elaAdj[b]||0);
+  return{p:dAdj?shiftProbs(base.p,dAdj):base.p,base:base.p,source:base.source,dAdj};
+}
+function getProb(a,b,isKO=false){
+  return getProbInfo(a,b,isKO).p;
+}
+
+function goalLambdas(a,b){
+  const la=TL[a]||[1.3,1.3],lb=TL[b]||[1.3,1.3];
+  return[la[0]*0.5+lb[1]*0.35+0.15,lb[0]*0.5+la[1]*0.35+0.15];
+}
+function groupScore(a,b){
+  const k=`${a}|${b}`,k2=`${b}|${a}`;
+  if(GS_SCORE[k])return GS_SCORE[k].slice();
+  if(GS_SCORE[k2]){const s=GS_SCORE[k2];return[s[1],s[0]];}
+  return null;
+}
+function predGoals(a,b,isKO=false){
+  const gs=isKO?null:groupScore(a,b);
+  if(gs)return gs;
+  const[la,lb]=goalLambdas(a,b);
+  return[Math.max(0,Math.round(la)),Math.max(0,Math.round(lb))];
+}
+function predScore(a,b,isKO=false){
+  const pinfo=getProbInfo(a,b,isKO);
+  const[pa,pd,pb]=pinfo.p;
+  let[ga,gb]=predGoals(a,b,isKO);
+  if(!isKO&&groupScore(a,b)&&!pinfo.dAdj)return[ga,gb];
+  if(pa>pb&&pa>=pd&&ga<=gb)ga=gb+1;
+  else if(pb>pa&&pb>=pd&&gb<=ga)gb=ga+1;
+  else if(pd>=pa&&pd>=pb){
+    if(isKO){// En KO no puede haber empate: gana el que tiene mayor prob 1X2
+      if(pa>=pb){const m=Math.max(ga,gb,0);ga=m+1;gb=m;}
+      else{const m=Math.max(ga,gb,0);gb=m+1;ga=m;}
+    }else{const m=Math.max(ga,gb,1);ga=gb=m;}
+  }
+  // Seguridad extra para KO: asegurar ga !== gb
+  if(isKO&&ga===gb){if(pa>=pb)ga++;else gb++;}
+  return[ga,gb];
+}
+function applyElo(a,b,ga,gb){
+  const exp=eloProb(effElo(a),effElo(b)),sA=ga>gb?1:(ga<gb?0:0.5);
+  const mg=1+Math.log(1+Math.abs(ga-gb))*0.6;
+  const delta=26*mg*(sA-(exp[0]+exp[1]/2));
+  elaAdj[a]=(elaAdj[a]||0)+delta;
+  elaAdj[b]=(elaAdj[b]||0)-delta;
+}
+function recomputeElo(){
+  elaAdj={};
+  for(const fx of FIXTURES){const r=ST.gr[fx.k];if(r)applyElo(fx.a,fx.b,r[0],r[1]);}
+}
+function groupTable(g){
+  const teams=GROUPS[g],row={};
+  teams.forEach(t=>row[t]={t,Pts:0,GD:0,GF:0,played:0});
+  for(const fx of FIXTURES){
+    if(fx.g!==g)continue;
+    const r=ST.gr[fx.k];if(!r)continue;
+    const[ga,gb]=r,A=row[fx.a],B=row[fx.b];
+    A.played++;B.played++;A.GF+=ga;A.GD+=ga-gb;B.GF+=gb;B.GD+=gb-ga;
+    if(ga>gb)A.Pts+=3;else if(ga<gb)B.Pts+=3;else{A.Pts++;B.Pts++;}
+  }
+  return teams.map(t=>row[t]);
+}
+function makeProj(){
+  const gkeys=Object.keys(GROUPS),tables={},W={},R={},thirds=[];
+  for(const g of gkeys){
+    const teams=GROUPS[g],row={};
+    teams.forEach(t=>row[t]={Pts:0,GD:0,GF:0});
+    for(const fx of FIXTURES){
+      if(fx.g!==g)continue;
+      const real=ST.gr[fx.k]||GS_REAL[fx.k]; // usa resultados reales aunque no estén en ST.gr
+      if(real){
+        const[ga,gb]=real;
+        row[fx.a].Pts+=ga>gb?3:(ga===gb?1:0);row[fx.b].Pts+=gb>ga?3:(gb===ga?1:0);
+        row[fx.a].GD+=ga-gb;row[fx.b].GD+=gb-ga;row[fx.a].GF+=ga;row[fx.b].GF+=gb;
+      }else{
+        const[pa,pd,pb]=getProb(fx.a,fx.b,false);
+        row[fx.a].Pts+=pa*3+pd;row[fx.b].Pts+=pb*3+pd;
+        const[sa,sb]=predScore(fx.a,fx.b);
+        row[fx.a].GD+=sa-sb;row[fx.b].GD+=sb-sa;row[fx.a].GF+=sa;row[fx.b].GF+=sb;
+      }
+    }
+    const ranked=teams.map(t=>(({t,...row[t]}))).sort((x,y)=>y.Pts-x.Pts||y.GD-x.GD||y.GF-x.GF||effElo(y.t)-effElo(x.t));
+    tables[g]=ranked;W[g]=ranked[0].t;R[g]=ranked[1].t;
+    thirds.push({g,t:ranked[2].t,Pts:ranked[2].Pts,GD:ranked[2].GD});
+  }
+  thirds.sort((x,y)=>y.Pts-x.Pts||y.GD-x.GD||effElo(y.t)-effElo(x.t));
+  const best=thirds.slice(0,8),B={};best.forEach(b=>B[b.g]=b.t);
+  const assign=matchThirds(best.map(b=>b.g));
+  function slotTeam(s){
+    if(s.startsWith("Winner Group "))return W[s.slice(13)]||"TBD";
+    if(s.startsWith("Runner-up Group "))return R[s.slice(16)]||"TBD";
+    if(s.startsWith("Best 3rd ")){const g=assign[s];return g&&B[g]?B[g]:"TBD";}
+    return"TBD";
+  }
+  function win(a,b){
+    if(!a||a==="TBD")return b||"TBD";if(!b||b==="TBD")return a;
+    const rk=kk(a,b);if(ST.ko[rk])return ST.ko[rk];
+    const[pa,,pb]=getProb(a,b,true);return pa>=pb?a:b;
+  }
+  const teamsAt={},winner={};
+  for(const m of FIFA_R32){teamsAt[m.id]=[slotTeam(m.home),slotTeam(m.away)];winner[m.id]=win(teamsAt[m.id][0],teamsAt[m.id][1]);}
+  [...R16_ORDER,...QF_ORDER,...SF_ORDER,FINAL_ID].forEach(id=>{
+    const[f1,f2]=KO_FEED[id],a=winner[f1]||"TBD",b=winner[f2]||"TBD";
+    teamsAt[id]=[a,b];winner[id]=win(a,b);
+  });
+  return{tables,W,R,teamsAt,winner,champion:winner[FINAL_ID]||"TBD",assign};
+}
+const pois=l=>{let L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;};
+const kk=(a,b)=>[a,b].sort().join("\u2295");
+function forceOutcome(ga,gb,outcome){
+  if(outcome==="home"&&ga<=gb)return[gb+1,gb];
+  if(outcome==="away"&&gb<=ga)return[ga,ga+1];
+  if(outcome==="draw"&&ga!==gb){const m=Math.max(ga,gb,1);return[m,m];}
+  return[ga,gb];
+}
+function sampleOutcome(pa,pd,pb){
+  const u=Math.random();
+  if(u<pa)return"home";
+  if(u<pa+pd)return"draw";
+  return"away";
+}
+
+function runMC(N=5000){
+  _thirdMemo={};
+  const reach={};
+  ALL_TEAMS.forEach(t=>reach[t]={qual:0,r16:0,qf:0,sf:0,fin:0,ch:0});
+  for(let s=0;s<N;s++){
+    const W={},R={},thirds=[];
+    for(const g of Object.keys(GROUPS)){
+      const teams=GROUPS[g],row={};
+      teams.forEach(t=>row[t]={Pts:0,GD:0,GF:0,r:Math.random()});
+      for(const fx of FIXTURES){
+        if(fx.g!==g)continue;
+        const real=ST.gr[fx.k]||GS_REAL[fx.k]; // fase de grupos ya conocida
+        let ga,gb;
+        if(real){[ga,gb]=real;}
+        else{
+          const[la,lb]=goalLambdas(fx.a,fx.b);
+          ga=pois(la);gb=pois(lb);
+          const[pa,pd,pb]=getProb(fx.a,fx.b,false);
+          [ga,gb]=forceOutcome(ga,gb,sampleOutcome(pa,pd,pb));
+        }
+        row[fx.a].GF+=ga;row[fx.b].GF+=gb;row[fx.a].GD+=ga-gb;row[fx.b].GD+=gb-ga;
+        if(ga>gb)row[fx.a].Pts+=3;else if(ga<gb)row[fx.b].Pts+=3;else{row[fx.a].Pts++;row[fx.b].Pts++;}
+      }
+      // KEY FIX: include team name in row object when sorting
+      const rk=teams.map(t=>(({t,...row[t]})))
+                    .sort((x,y)=>y.Pts-x.Pts||y.GD-x.GD||y.GF-x.GF||y.r-x.r);
+      W[g]=rk[0].t;R[g]=rk[1].t;
+      thirds.push({t:rk[2].t,Pts:rk[2].Pts,GD:rk[2].GD,r:rk[2].r,g});
+    }
+    thirds.sort((x,y)=>y.Pts-x.Pts||y.GD-x.GD||y.r-x.r);
+    const best=thirds.slice(0,8),B={};best.forEach(b=>B[b.g]=b.t);
+    const assign=matchThirds(best.map(b=>b.g));
+    function sl(s){
+      if(s.startsWith("Winner Group "))return W[s.slice(13)]||null;
+      if(s.startsWith("Runner-up Group "))return R[s.slice(16)]||null;
+      if(s.startsWith("Best 3rd ")){const g=assign[s];return g?B[g]:null;}
+      return null;
+    }
+    function koW(a,b){
+      if(!a)return b||null;if(!b)return a;
+      const rk=kk(a,b);if(ST.ko[rk])return ST.ko[rk];
+      const[pa,,pb]=getProb(a,b,true),tot=pa+pb||1;return Math.random()<pa/tot?a:b;
+    }
+    const winner={};
+    // Round of 32: cada clasificado aparece en EXACTAMENTE un slot → qual ≤ 100%
+    for(const m of FIFA_R32){
+      const x=sl(m.home),y=sl(m.away);
+      if(x&&reach[x])reach[x].qual++;
+      if(y&&reach[y])reach[y].qual++;
+      winner[m.id]=koW(x,y);
+    }
+    R16_ORDER.forEach(id=>{const[f1,f2]=KO_FEED[id];const w=koW(winner[f1],winner[f2]);winner[id]=w;if(w&&reach[w])reach[w].r16++;});
+    QF_ORDER.forEach(id=>{const[f1,f2]=KO_FEED[id];const w=koW(winner[f1],winner[f2]);winner[id]=w;if(w&&reach[w])reach[w].qf++;});
+    SF_ORDER.forEach(id=>{const[f1,f2]=KO_FEED[id];const w=koW(winner[f1],winner[f2]);winner[id]=w;});
+    SF_ORDER.forEach(id=>{const w=winner[id];if(w&&reach[w])reach[w].fin++;}); // finalistas
+    const finW=koW(winner[101],winner[102]);if(finW&&reach[finW])reach[finW].ch++;
+  }
+  const out={};
+  ALL_TEAMS.forEach(t=>{
+    const r=reach[t];
+    out[t]={qual:r.qual/N,r16:r.r16/N,qf:r.qf/N,sf:r.sf/N,fin:r.fin/N,ch:r.ch/N};
+  });
+  return out;
+}
+let mcSims=10000;
+function recalcMC(){
+  toast("Recalculando 10\u202f000 simulaciones\u2026");
+  setTimeout(()=>{mc=runMC(10000);mcSims=10000;if(curView==="favoritos")renderF();toast("\u2713 Simulaciones actualizadas");},30);
+}
+function recompute(){recomputeElo();proj=makeProj();mc=runMC(10000);}
+
+const p0=x=>Math.round(x*100)+"%";
+const p1=x=>(x*100).toFixed(1)+"%";
+const enc=encodeURIComponent,dec=decodeURIComponent;
+const TABS=[["quiniela","Quiniela"],["grupos","Grupos"],["bracket","Bracket"],["favoritos","Favoritos"],["accuracy","Accuracy"],["como","C\u00f3mo"]];
+
+function renderNav(){
+  document.getElementById("nav").innerHTML=TABS.map(([id,l])=>
+    `<button class="tab ${curView===id?"on":""}" data-v="${id}">${l}</button>`).join("");
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{curView=b.dataset.v;render();window.scrollTo({top:0,behavior:"smooth"});});
+}
+function render(){renderNav();
+  if(curView==="quiniela")renderQ();
+  else if(curView==="grupos")renderG();
+  else if(curView==="bracket")renderB();
+  else if(curView==="favoritos")renderF();
+  else if(curView==="accuracy")renderA();
+  else renderC();
+}
+
+// ── QUINIELA ──
+function renderQ(){
+  const byGroup={};Object.keys(GROUPS).forEach(g=>byGroup[g]=[]);
+  FIXTURES.forEach(fx=>byGroup[fx.g].push(fx));
+  let html=`<div class="view"><div class="lead">
+    <div class="tag tag-g">72 partidos &middot; 12 grupos</div>
+    <h2>Quiniela de grupos</h2>
+    <p>Los porcentajes salen del CSV de grupos y el marcador predicho parte de la quiniela base; al guardar resultados reales se ajustan ELO, tablas y simulaciones.</p>
+    <div class="legend">
+      <span><span class="lsw" style="background:var(--g)"></span>Gana local</span>
+      <span><span class="lsw" style="background:#d1d5db"></span>Empate</span>
+      <span><span class="lsw" style="background:#fca5a5"></span>Gana visitante</span>
+    </div></div>`;
+  Object.keys(GROUPS).sort().forEach(g=>{
+    html+=`<div class="grp-header"><span class="grp-label">Grupo ${g}</span><span class="grp-line"></span></div>`;
+    html+=`<div class="mgrid">`;
+    byGroup[g].forEach(fx=>{html+=mCard(fx);});
+    html+=`</div>`;
+  });
+  html+=`</div>`;
+  document.getElementById("app").innerHTML=html;
+  wireM();
+}
+function mCard(fx){
+  const r=ST.gr[fx.k],played=!!r;
+  const pinfo=getProbInfo(fx.a,fx.b,false);
+  const[pa,pd,pb]=pinfo.p;
+  const[sa,sb]=r||predScore(fx.a,fx.b);
+  const scoreSrc=played?"Resultado real":(groupScore(fx.a,fx.b)?"CSV quiniela":"Poisson");
+  const adj=Math.round(pinfo.dAdj);
+  // Score predicho original (del modelo) para mostrar junto al resultado real
+  const _predSc=PRED_GS[`${fx.a}|${fx.b}`]||null; // predicción fija del modelo
+  return`<div class="mc ${played?"played":""}" data-k="${fx.k}">
+    <div class="gtag">${played?'<span class="played-badge">&#x2713; Real</span>':''}<span>Grupo ${fx.g}</span></div>
+    <div class="mteams">
+      <div class="mt"><div class="mname">${fl(fx.a)} <b>${es(fx.a)}</b></div><div class="melo">ELO ${effElo(fx.a).toFixed(0)}</div></div>
+      <div class="sbadge"><div class="sc">${sa}&ndash;${sb}</div><div class="slbl">${played?"real":"pred"}</div>${played&&_predSc?`<div style="font-size:9px;font-weight:700;color:var(--ink4);margin-top:3px;font-family:'JetBrains Mono',monospace;">pred ${_predSc[0]}&ndash;${_predSc[1]}</div>`:""}</div>
+      <div class="mt away"><div class="mname"><b>${es(fx.b)}</b> ${fl(fx.b)}</div><div class="melo">ELO ${effElo(fx.b).toFixed(0)}</div></div>
+    </div>
+    <div class="pbar"><div class="pw" style="width:${pa*100}%"></div><div class="pd" style="width:${pd*100}%"></div><div class="pl" style="width:${pb*100}%"></div></div>
+    <div class="plbs"><span><b>${p0(pa)}</b> ${es(fx.a)}</span><span>X <b>${p0(pd)}</b></span><span>${es(fx.b)} <b>${p0(pb)}</b></span></div>
+    <div class="ptrace"><span>Prob: ${pinfo.source}</span><span>Marcador: ${scoreSrc}</span>${adj?`<span class="adj">ELO ${adj>0?"+":""}${adj}</span>`:""}</div>
+    <div class="mact">
+      <input class="sin" data-s="a" type="number" min="0" max="25" value="${r?r[0]:""}" placeholder="&ndash;">
+      <span class="vs">:</span>
+      <input class="sin" data-s="b" type="number" min="0" max="25" value="${r?r[1]:""}" placeholder="&ndash;">
+      <span class="msp"></span>
+      ${played?`<button class="cbtn" data-act="clr">Borrar</button>`:""}
+      <button class="gbtn" data-act="sv">${played?"Actualizar":"Guardar"}</button>
+    </div></div>`;
+}
+function wireM(){
+  document.querySelectorAll(".mc").forEach(card=>{
+    const k=card.dataset.k;
+    const inA=()=>card.querySelector('.sin[data-s="a"]');
+    const inB=()=>card.querySelector('.sin[data-s="b"]');
+    card.querySelector("[data-act='sv']").onclick=()=>{
+      const va=parseInt(inA().value),vb=parseInt(inB().value);
+      if(isNaN(va)||isNaN(vb)){toast("Escribe ambos goles");return;}
+      ST.gr[k]=[Math.max(0,va),Math.max(0,vb)];
+      save();recompute();render();toast("\u2713 Guardado");
+    };
+    const cl=card.querySelector("[data-act='clr']");
+    if(cl)cl.onclick=()=>{delete ST.gr[k];save();recompute();render();toast("Borrado");};
+    card.querySelectorAll(".sin").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")card.querySelector("[data-act='sv']").click();}));
+  });
+}
+
+// ── GRUPOS ──
+function renderG(){
+  const cards=Object.keys(GROUPS).sort().map(g=>{
+    const real=groupTable(g),order=proj.tables[g].map(x=>x.t);
+    const byT={};real.forEach(r=>byT[r.t]=r);
+    const played=real.reduce((s,r)=>s+r.played,0)/2;
+    const rows=order.map((t,i)=>{
+      const r=byT[t];
+      const cls=i<2?"q"+(i+1):(i===2?"q3":"");
+      const qualPct=mc&&mc[t]?p0(mc[t].qual):"–";
+      return`<div class="grow ${cls}">
+        <div class="gpos">${i+1}</div>
+        <div class="gnm">${fl(t)}<span class="gnmt">${es(t)}</span></div>
+        <div class="gpts">${Math.round(r.Pts)}</div>
+        <div class="gadv">${qualPct}</div>
+      </div>`;
+    }).join("");
+    return`<div class="gcard">
+      <div class="gcardh"><span>Grupo ${g}</span><span class="gcardh-right">${played?played+"/6":""} jugados</span></div>
+      <div class="gheader"><span>#</span><span>Equipo</span><span>Pts</span><span>Clasif.</span></div>
+      ${rows}
+      <div class="gnote">Pts proyectados &middot; Clasif. = % de avanzar a 32avos (5&thinsp;000 sims.)</div>
+    </div>`;
+  }).join("");
+  document.getElementById("app").innerHTML=`<div class="view">
+    <div class="lead">
+      <div class="tag tag-g">12 grupos &middot; 48 equipos</div>
+      <h2>Tabla de grupos</h2>
+      <p>Clasifican los 2 primeros + los 8 mejores terceros. % = probabilidad de clasificar seg\u00fan 5&thinsp;000 simulaciones Monte Carlo.</p>
+    </div>
+    <div class="ggrid">${cards}</div>
+  </div>`;
+}
+
+// ── BRACKET ──
+function renderB(){
+  const p=proj;
+  function tieHTML(id){
+    const pair=p.teamsAt[id]||["TBD","TBD"];
+    const ta=pair[0]||"TBD",tb=pair[1]||"TBD";
+    const both=ta!=="TBD"&&tb!=="TBD";
+    const rk=both?kk(ta,tb):null,realW=rk?ST.ko[rk]:null,winT=p.winner[id];
+    let pa=0.5,pb=0.5;
+    if(both){const pr=getProb(ta,tb,true);const tot=pr[0]+pr[2]||1;pa=pr[0]/tot;pb=pr[2]/tot;}
+    function slot(t,o,wp){
+      if(!t||t==="TBD")return`<div class="bslot"><span class="btbd">Por definir&hellip;</span></div>`;
+      const isR=realW&&realW===t,isWin=!realW&&winT===t;
+      return`<div class="bslot ${realW===t?"real":isWin?"win":""}" data-a="${enc(t)}" data-b="${enc(o&&o!=="TBD"?o:"")}">
+        <span>${fl(t)}</span><span class="bnm">${es(t)}</span>
+        ${o&&o!=="TBD"?`<span class="bwp">${p0(wp)}</span>`:""}</div>`;
+    }
+    let sc="vs";
+    if(both){const[ga,gb]=predScore(ta,tb,true);sc=`${ga}&ndash;${gb} pred`;}
+    return`<div class="tie">${slot(ta,tb,pa)}${slot(tb,ta,pb)}<div class="bsc ${both?"has":""}">${sc}</div></div>`;
+  }
+  const col=(title,ids,extra="")=>`<div class="bcol ${extra}"><div class="brh">${title}</div>${ids.map(tieHTML).join("")}</div>`;
+  // Campe\u00f3n: usar el l\u00EDder del MC (mayor prob. de campeonato) cuando est\u00E9 disponible
+  const mcLeader=mc?Object.entries(mc).filter(([t])=>t!=="TBD"&&mc[t].ch>0).sort((a,b)=>b[1].ch-a[1].ch)[0]:null;
+  const ch=mcLeader?mcLeader[0]:p.champion;
+  const chMc=mcLeader?p1(mcLeader[1].ch):(mc&&mc[p.champion]?p1(mc[p.champion].ch):"");
+  const brackChamp=p.champion;
+  let html=`<div class="bracket">`;
+  html+=col("32avos",R32_ORDER);
+  html+=col("16avos",R16_ORDER,"sfcol");
+  html+=col("Cuartos",QF_ORDER,"sfcol");
+  html+=col("Semis",SF_ORDER,"sfcol");
+  html+=`<div class="bcol champcol"><div class="brh">Campe\u00f3n</div>
+    <div class="trophy"><div class="tk">&#x2605; Favorito MC</div>
+    <div class="tfl">${ch!=="TBD"?fl(ch):"\uD83C\uDFC6"}</div>
+    <div class="tnm">${ch!=="TBD"?es(ch):"Por definir"}</div>
+    ${chMc?`<div class="tpc">${chMc} prob. MC</div>`:""}
+    ${brackChamp&&brackChamp!=="TBD"&&brackChamp!==ch?`<div style="font-size:9px;color:var(--ink3);margin-top:6px;">Por bracket: ${es(brackChamp)}</div>`:""}
+    </div></div>`;
+  html+=`</div>`;
+  document.getElementById("app").innerHTML=`<div class="view">
+    <div class="lead"><div class="tag tag-g">Bracket oficial FIFA 2026</div><h2>Fase final</h2>
+    <p>Slots exactos de la FIFA (32avos &rarr; final). Toca un equipo para fijar el ganador &mdash; recalcula las simulaciones.</p></div>
+    <div style="background:var(--s0);border:1px solid var(--line2);border-radius:14px;padding:16px;box-shadow:var(--sh);">
+      <div class="bracket-scroll">${html}</div>
+      <p style="font-size:10px;color:var(--ink4);font-weight:600;margin-top:8px;">% = probabilidad de ganar ese cruce (modelo) &middot; pred = marcador Poisson &middot; toca un equipo para fijar/liberar el ganador</p>
+    </div></div>`;
+  document.querySelectorAll(".bslot[data-a]").forEach(s=>{
+    s.onclick=()=>{
+      const a=dec(s.dataset.a),b=dec(s.dataset.b);if(!b)return;
+      const k=kk(a,b);
+      if(ST.ko[k]===a){delete ST.ko[k];toast(`${es(a)} &middot; liberado`);}
+      else{ST.ko[k]=a;toast(`${fl(a)} ${es(a)} avanza \u2713`);}
+      save();recompute();render();
+    };
+  });
+}
+
+// ── FAVORITOS ──
+function renderF(){
+  if(!mc){document.getElementById("app").innerHTML=`<div class="view"><p style="padding:40px;color:var(--ink3)">Cargando simulaciones&hellip;</p></div>`;return;}
+  const arr=ALL_TEAMS.map(t=>(({t,...(mc[t]||{ch:0,fin:0,sf:0,qf:0,r16:0,qual:0})})))
+    .sort((a,b)=>b.ch-a.ch);
+  const top=arr[0],maxch=top.ch||0.01;
+  document.getElementById("app").innerHTML=`<div class="view">
+    <div class="lead"><div class="tag tag-g">${mcSims.toLocaleString()} simulaciones &middot; Monte Carlo</div><h2>Favoritos al título</h2>
+    <p>Probabilidad de campeón usando resultados reales de fase de grupos y cruces del bracket. La fase de grupos ya está completa.</p>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button onclick="recalcMC()" class="gbtn">⟳ Recalcular (10 000 sim.)</button>
+    </div></div>
+    <div class="fhero">
+      <div class="champ-c"><div class="ck">&#x2605; M\u00e1ximo favorito</div>
+        <div class="champ-nm">${fl(top.t)} ${es(top.t)}</div>
+        <div class="champ-p"><b>${p1(top.ch)}</b> de ser campe\u00f3n</div>
+        <p class="champ-sub">Final: ${p0(top.fin)} &middot; Semis: ${p0(top.sf)} &middot; Cuartos: ${p0(top.qf)}</p>
+      </div>
+      <div class="flist">${arr.slice(0,6).map((r,i)=>`<div class="frow ${["t1","t2","t3"][i]||""}">
+          <div class="frank">${i+1}</div>
+          <div><div class="fnm">${fl(r.t)} ${es(r.t)}</div>
+            <div class="fbar-bg"><span class="fbar-fill" style="width:${r.ch/maxch*100}%"></span></div>
+          </div><div class="fval">${p1(r.ch)}</div>
+        </div>`).join("")}</div>
+    </div>
+    <div class="fulllist">${arr.filter(r=>r.ch>0.0001).map((r,i)=>`<div class="frow ${["t1","t2","t3"][i]||""}">
+        <div class="frank">${i+1}</div>
+        <div><div class="fnm">${fl(r.t)} ${es(r.t)}</div>
+          <div class="fbar-bg"><span class="fbar-fill" style="width:${Math.max(2,r.ch/maxch*100)}%"></span></div>
+          <div class="fmini">Final ${p0(r.fin)} &middot; Semis ${p0(r.sf)} &middot; Cuartos ${p0(r.qf)} &middot; Clasif. ${p0(r.qual)}</div>
+        </div>
+        <div><div class="fval">${p1(r.ch)}</div><div class="fval2">campe\u00f3n</div></div>
+      </div>`).join("")}</div>
+  </div>`;
+}
+
+// ── ACCURACY ──
+function renderA(){
+  // Accuracy EN VIVO: partidos de grupos que ingresaste + cruces de bracket que fijaste,
+  // evaluados contra la probabilidad BASE del modelo (sin fuga de datos).
+  // Usa GS_REAL como fallback para mostrar todos los 48 partidos (fase de grupos completa)
+  const gp=FIXTURES.filter(fx=>ST.gr[fx.k]||GS_REAL[fx.k]).map(fx=>{
+    const[ga,gb]=ST.gr[fx.k]||GS_REAL[fx.k];
+    const[pa,pd,pb]=getProbBase(fx.a,fx.b,false);
+    const outcome=ga>gb?"home":(ga<gb?"away":"draw");
+    // Pred FIJO del modelo: RREF_MAP para outcome, PRED_GS para marcador (no cambia con ELO)
+    const _ref=RREF_MAP[`${fx.a}|${fx.b}`];
+    const _predSc=PRED_GS[`${fx.a}|${fx.b}`]||null;
+    const predGa=_predSc?_predSc[0]:null,predGb=_predSc?_predSc[1]:null;
+    const pred=_ref?_ref.pred:(_predSc?(predGa>predGb?"home":(predGa<predGb?"away":"draw")):((pa>=pd&&pa>=pb)?"home":((pb>=pd&&pb>=pa)?"away":"draw")));
+    const yH=outcome==="home"?1:0,yD=outcome==="draw"?1:0,yA=outcome==="away"?1:0;
+    const brier=(pa-yH)**2+(pd-yD)**2+(pb-yA)**2;
+    const pAct=outcome==="home"?pa:(outcome==="draw"?pd:pb);
+    // "correct" se basa en el marcador predicho (goles_A/goles_B del CSV), no en la columna resultado
+    const predOutcome=predGa!=null?(predGa>predGb?"home":predGa<predGb?"away":"draw"):pred;
+    return{phase:"G",a:fx.a,b:fx.b,ga,gb,predGa,predGb,pa,pd,pb,outcome,pred,correct:predOutcome===outcome,brier,ll:-Math.log(Math.max(pAct,1e-9))};
+  });
+  // Bracket: cada cruce fijado es binario (sin empate)
+  const ko=Object.keys(ST.ko).map(k=>{
+    const parts=k.split("\u2295");if(parts.length!==2)return null;
+    const t1=parts[0],t2=parts[1],w=ST.ko[k];if(w!==t1&&w!==t2)return null;
+    const pr=getProbBase(t1,t2,true),tot=(pr[0]+pr[2])||1,p1=pr[0]/tot;
+    const correct=(p1>=0.5)===(w===t1);
+    const pAct=w===t1?p1:1-p1,y1=w===t1?1:0;
+    return{phase:"K",a:t1,b:t2,w,p1,correct,brier:(p1-y1)**2+((1-p1)-(1-y1))**2,ll:-Math.log(Math.max(pAct,1e-9))};
+  }).filter(Boolean);
+  const all=gp.concat(ko),nAll=all.length,n=gp.length;
+  const exactScore=gp.filter(m=>m.predGa!=null&&m.predGa===m.ga&&m.predGb===m.gb).length;
+  const koCorrect=ko.filter(m=>m.correct).length;
+  if(nAll===0){
+    document.getElementById("app").innerHTML=`<div class="view">
+      <div class="lead"><div class="tag tag-a">Se actualiza con tus resultados</div>
+      <h2>Accuracy del modelo</h2>
+      <p>Aquí verás qué tan bien le atina el modelo, calculado <b>en vivo</b> con los resultados reales que vayas ingresando.</p></div>
+      <div style="background:var(--s0);border:1px solid var(--line2);border-radius:14px;padding:40px 20px;text-align:center;box-shadow:var(--sh);">
+        <div style="font-size:34px;margin-bottom:8px;">📊</div>
+        <p style="color:var(--ink3);font-weight:600;max-width:440px;margin:0 auto;">Todavía no has ingresado resultados. Anda a <b>Quiniela</b> y escribe los marcadores de la fase de grupos (y fija ganadores en el <b>Bracket</b>): aquí se irá calculando accuracy, Brier, log-loss y calibración partido por partido.</p>
+      </div></div>`;
+    return;
+  }
+  const correctAll=all.filter(m=>m.correct).length;
+  const brier=all.reduce((s,m)=>s+m.brier,0)/nAll;
+  const ll=all.reduce((s,m)=>s+m.ll,0)/nAll;
+  // Per-resultado y calibración: solo fase de grupos (3 vías)
+  const bktLabels=["0-20%","20-40%","40-60%","60-80%","80-100%"];
+  const buckets={};bktLabels.forEach(l=>buckets[l]={pred:0,actual:0,n:0});
+  gp.forEach(m=>{
+    [{p:m.pa,hit:m.outcome==="home"},{p:m.pd,hit:m.outcome==="draw"},{p:m.pb,hit:m.outcome==="away"}].forEach(({p,hit})=>{
+      const idx=Math.min(4,Math.floor(p*5)),lbl=bktLabels[idx];
+      buckets[lbl].pred+=p;buckets[lbl].actual+=hit?1:0;buckets[lbl].n++;
+    });
+  });
+  const cnt=o=>gp.filter(m=>m.outcome===o).length,cor=o=>gp.filter(m=>m.correct&&m.outcome===o).length;
+  const homeG=cnt("home"),drawG=cnt("draw"),awayG=cnt("away");
+  const homeC=cor("home"),drawC=cor("draw"),awayC=cor("away");
+  const calRows=bktLabels.map(l=>{
+    const b=buckets[l];if(b.n===0)return"";
+    const predPct=b.pred/b.n*100,actPct=b.actual/b.n*100;
+    return`<div style="margin-bottom:10px">
+      <div style="font-size:10px;font-weight:800;color:var(--ink3);margin-bottom:4px;letter-spacing:.5px;">Predicho: ${l} &middot; n=${b.n}</div>
+      <div class="cal-bar-wrap"><div class="cal-lbl">Pred.</div>
+        <div class="cal-bar"><div class="cal-fill cal-fill-a" style="width:${predPct}%"><span class="cal-cnt">${predPct.toFixed(0)}%</span></div></div><div class="cal-pct">&nbsp;</div></div>
+      <div class="cal-bar-wrap"><div class="cal-lbl">Real</div>
+        <div class="cal-bar"><div class="cal-fill ${actPct>=predPct-8&&actPct<=predPct+8?"cal-fill-g":(actPct<predPct?"cal-fill-r":"cal-fill-a")}" style="width:${actPct}%"><span class="cal-cnt">${actPct.toFixed(0)}%</span></div></div><div class="cal-pct">&nbsp;</div></div>
+    </div>`;
+  }).join("");
+  const exactMatchRows=gp.filter(m=>m.predGa!=null&&m.predGa===m.ga&&m.predGb===m.gb)
+    .map(m=>`<div class="ml-row correct" style="border-left:3px solid var(--gold);">
+      <div class="ml-badge" style="background:var(--gld);color:var(--gold);">⭐</div>
+      <div class="ml-teams">${es(m.a)} vs ${es(m.b)}</div>
+      <div class="ml-prob">${p0(m.pa)}/${p0(m.pd)}/${p0(m.pb)}</div>
+      <div class="ml-score" style="font-size:10px;color:var(--gold);">${m.predGa}&ndash;${m.predGb} ✓ exacto</div>
+    </div>`).join("");
+  const matchRows=all.slice().reverse().map(m=>{
+    if(m.phase==="K"){
+      const correct=m.correct;
+      return`<div class="ml-row ${correct?"correct":"wrong"}">
+        <div class="ml-badge ${correct?"ok":"err"}">${correct?"\u2713":"\u2717"}</div>
+        <div class="ml-teams">${es(m.a)} &rarr; <b>${es(m.w)}</b> <span style="color:var(--ink4);font-weight:700;">&middot; bracket</span></div>
+        <div class="ml-prob">${p0(m.p1)}/${p0(1-m.p1)}</div>
+        <div class="ml-score" style="font-size:10px;color:${correct?"var(--g2)":"var(--red)"};">KO</div>
+      </div>`;
+    }
+    const predScLbl=m.predGa!=null?`${m.predGa}&ndash;${m.predGb}`:(m.pred==="home"?"L":(m.pred==="draw"?"X":"V"));
+    const realScLbl=`${m.ga}&ndash;${m.gb}`;
+    return`<div class="ml-row ${m.correct?"correct":"wrong"}">
+      <div class="ml-badge ${m.correct?"ok":"err"}">${m.correct?"\u2713":"\u2717"}</div>
+      <div class="ml-teams">${es(m.a)} vs ${es(m.b)}</div>
+      <div class="ml-prob">${p0(m.pa)}/${p0(m.pd)}/${p0(m.pb)}</div>
+      <div class="ml-score" style="font-size:10px;color:${m.correct?"var(--g2)":"var(--red)"};">pred ${predScLbl} &#x2192; real ${realScLbl}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("app").innerHTML=`<div class="view">
+    <div class="lead">
+      <div class="tag tag-a">${n} grupos${ko.length?` + ${ko.length} bracket`:""} &middot; se actualiza solo</div>
+      <h2>Accuracy del modelo</h2>
+      <p>Calculado en vivo con tus resultados reales, comparados con la probabilidad previa del modelo.</p>
+    </div>
+    <div class="acc-grid">
+      <div class="acc-stat hi"><div class="as-lbl">Accuracy global</div><div class="as-val">${(correctAll/nAll*100).toFixed(1)}%</div><div class="as-sub">${correctAll}/${nAll} · grupos+bracket</div></div>
+      <div class="acc-stat hi" style="border-left:3px solid var(--gold)"><div class="as-lbl">Marcador exacto</div><div class="as-val">${exactScore}</div><div class="as-sub">${n} grupos · ${(exactScore/Math.max(n,1)*100).toFixed(0)}% tasa</div></div>
+      <div class="acc-stat med"><div class="as-lbl">Brier Score</div><div class="as-val">${brier.toFixed(3)}</div><div class="as-sub">Más bajo = mejor</div></div>
+      <div class="acc-stat med"><div class="as-lbl">Log Loss</div><div class="as-val">${ll.toFixed(3)}</div><div class="as-sub">Más bajo = mejor</div></div>
+      <div class="acc-stat"><div class="as-lbl">Partidos</div><div class="as-val">${nAll}</div><div class="as-sub">Grupos:${n} · Bracket:${ko.length}</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div class="cal-section">
+        <div class="cal-title">Accuracy por resultado (grupos) <span>L=${(homeC/Math.max(homeG,1)*100).toFixed(0)}% X=${(drawC/Math.max(drawG,1)*100).toFixed(0)}% V=${(awayC/Math.max(awayG,1)*100).toFixed(0)}%</span></div>
+        <div class="cal-bar-wrap"><div class="cal-lbl">Local</div><div class="cal-bar"><div class="cal-fill cal-fill-g" style="width:${homeC/Math.max(homeG,1)*100}%"><span class="cal-cnt">${homeC}/${homeG}</span></div></div><div class="cal-pct">${(homeC/Math.max(homeG,1)*100).toFixed(0)}%</div></div>
+        <div class="cal-bar-wrap"><div class="cal-lbl">Empate</div><div class="cal-bar"><div class="cal-fill cal-fill-a" style="width:${drawC/Math.max(drawG,1)*100}%"><span class="cal-cnt">${drawC}/${drawG}</span></div></div><div class="cal-pct">${(drawC/Math.max(drawG,1)*100).toFixed(0)}%</div></div>
+        <div class="cal-bar-wrap"><div class="cal-lbl">Visita</div><div class="cal-bar"><div class="cal-fill cal-fill-r" style="width:${awayC/Math.max(awayG,1)*100}%"><span class="cal-cnt">${awayC}/${awayG}</span></div></div><div class="cal-pct">${(awayC/Math.max(awayG,1)*100).toFixed(0)}%</div></div>
+      </div>
+      <div class="cal-section">
+        <div class="cal-title">Calibraci\u00f3n de probabilidades <span style="font-weight:400;font-size:10px;color:var(--ink3)">(grupos)</span></div>
+        <p style="font-size:11px;color:var(--ink3);margin:0 0 10px;line-height:1.5;">
+          <b>\u00bfQu\u00e9 es esto?</b> Cuando el modelo dice &ldquo;40% de probabilidad&rdquo;, \u00bfocurre realmente ~40% de las veces? Cada fila agrupa todos los resultados donde el modelo asign\u00f3 una probabilidad en ese rango, y compara la probabilidad predicha (Pred.) contra la frecuencia real (Real).
+          Un modelo bien calibrado tiene barras casi iguales.
+        </p>
+        ${calRows||'<p style="font-size:11px;color:var(--ink3)">Ingresa m\u00e1s resultados de grupos para ver la calibraci\u00f3n.</p>'}
+        <div class="cal-legend">
+          <span><span class="leg-dot" style="background:var(--g)"></span>Bien calibrado (\u00b18%)</span>
+          <span><span class="leg-dot" style="background:var(--gold)"></span>Subestimado (ocurre m\u00e1s de lo predicho)</span>
+          <span><span class="leg-dot" style="background:var(--red)"></span>Sobreestimado (ocurre menos de lo predicho)</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div class="cal-section">
+        <div class="cal-title">Accuracy fase eliminatoria (bracket) <span>${koCorrect}/${ko.length}</span></div>
+        ${ko.length===0?'<p style="font-size:11px;color:var(--ink3)">Fija ganadores en el Bracket para ver accuracy de eliminatoria.</p>':''}
+        ${ko.length>0?`
+          <div class="cal-bar-wrap"><div class="cal-lbl">Bracket</div><div class="cal-bar"><div class="cal-fill cal-fill-g" style="width:${koCorrect/Math.max(ko.length,1)*100}%"><span class="cal-cnt">${koCorrect}/${ko.length}</span></div></div><div class="cal-pct">${(koCorrect/Math.max(ko.length,1)*100).toFixed(0)}%</div></div>
+        `:''}
+      </div>
+      <div class="cal-section">
+        <div class="cal-title">Marcadores exactos ⭐ <span>${exactScore}/${n} grupos</span></div>
+        ${exactScore===0?'<p style="font-size:11px;color:var(--ink3)">Aún no hay aciertos de marcador exacto.</p>':exactMatchRows}
+      </div>
+    </div>
+    <div class="cal-section">
+      <div class="cal-title">Detalle partido a partido <span>${correctAll} correctos &middot; ${nAll-correctAll} incorrectos</span></div>
+      <div class="match-list">${matchRows}</div>
+    </div>
+  </div>`;
+}
+
+// ── COMO ──
+function renderC(){
+  document.getElementById("app").innerHTML=`<div class="view">
+    <div class="lead"><h2>C\u00f3mo funciona</h2></div>
+    <div class="howcard">
+      <div class="step"><div class="sn">1</div><div><div class="step-t">Probabilidades por fase</div>
+        <div class="step-d">En grupos se usa primero <code>SP_GS</code>, que viene del CSV de quiniela. En eliminatorias se usa primero <code>match_proba_cache</code>, con los cruces posibles del modelo.</div></div></div>
+      <div class="step"><div class="sn">2</div><div><div class="step-t">Marcadores proyectados</div>
+        <div class="step-d">El marcador predicho de grupos viene de <code>PRED_GS</code>: calculado una sola vez desde las &lambda; de ataque/defensa y las probabilidades base del modelo (inmutable, no cambia con ELO). Ahora siempre verás la misma predicción antes y después de ingresar resultados. En cruces del bracket se usa Poisson ajustado.</div></div></div>
+      <div class="step"><div class="sn">3</div><div><div class="step-t">Bracket oficial FIFA 2026</div>
+        <div class="step-d">16 slots exactos del CSV oficial. Los "Best 3rd" siguen el ranking FIFA de terceros. ELO dinámico ajustado por resultados reales.</div></div></div>
+      <div class="step"><div class="sn">4</div><div><div class="step-t">5&thinsp;000 simulaciones Monte Carlo</div>
+        <div class="step-d">Cada simulaci\u00f3n completa el torneo entero. Los resultados reales quedan fijos. El % de clasificar = P(aparecer en un slot de 32avos).</div></div></div>
+      <div class="step"><div class="sn">5</div><div><div class="step-t">Accuracy en tiempo real</div>
+        <div class="step-d">La pesta\u00f1a Accuracy se calcula sola con los resultados que ingresas: aciertos, Brier score, log-loss y calibraci\u00f3n &mdash; tanto de grupos como de los cruces que fijas en el bracket.</div></div></div>
+    </div>
+  </div>`;
+}
+
+let toastT=null;
+function toast(m){const t=document.getElementById("toast");t.innerHTML=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2500);}
+
+document.getElementById("resetBtn").onclick=()=>{
+  if(!confirm("\u00bfBorrar todos los resultados ingresados?"))return;
+  ST={gr:{},ko:{}};elaAdj={};save();recompute();render();toast("\u21BA Todo reiniciado");
+};
+
+load();recompute();render();
+</script>
+</html>
