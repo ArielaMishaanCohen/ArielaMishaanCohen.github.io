@@ -88,7 +88,7 @@ window.PORTFOLIO_I18N.es = {
   },
 
   venture: {
-    kicker: "Emprendimiento · Proyecto en equipo",
+    kicker: "Emprendimiento · Equipo de 4",
     role: "Co-fundadora y líder técnica — desarrollo del producto",
     title: "DAIA",
     subtitle: "Plataforma B2B de business intelligence para empresas en crecimiento.",
@@ -140,7 +140,8 @@ window.PORTFOLIO_I18N.es = {
       alt: "Matriz de confusión del clasificador de sentimiento MiniLM ajustado"
     },
     sophos: {
-      team: "Pasantía",
+      kind: "Pasantía",
+      team: "Equipo de 5",
       title: "Data Science y BI en SOPHOS",
       description:
         "Modelos predictivos de forecasting de demanda, recomendación, optimización de precios y churn, junto con tableros en Streamlit y un metric store centralizado en SQL.",
@@ -243,6 +244,14 @@ window.PORTFOLIO_I18N.es = {
   },
 
   tags: {
+    timeseries: "Pronóstico de series de tiempo (SARIMAX)",
+    montecarlo: "Simulación Monte Carlo",
+    nlp: "NLP",
+    recsys: "Sistemas de recomendación",
+    cv: "Visión por computadora",
+    kpi: "Diseño de KPIs",
+    dashboards: "Tableros interactivos",
+    cleaning: "Limpieza y validación de datos",
     predictive: "Modelado predictivo",
     regression: "Regresión",
     etl: "Pipelines ETL",

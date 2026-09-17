@@ -31,21 +31,21 @@ window.PORTFOLIO_DATA = {
       image: "assets/img/projects/world-cup.webp",
       report: "assets/reports/world-cup-2026-prediction.pdf",
       demo: "demo/world-cup-2026/",
-      repo: null,
+      repo: "https://github.com/ArielaMishaanCohen/Proyecto2",
       tags: ["Python", "scikit-learn", "XGBoost", "Monte Carlo"]
     },
     {
       id: "ecobici",
       image: "assets/img/projects/ecobici.webp",
       report: "assets/reports/ecobici-analysis.pdf",
-      repo: null,
+      repo: "https://github.com/ArielaMishaanCohen/Proyecto1-Aprendizaje",
       tags: ["Python", "PCA", "Clustering", "t-SNE / KDE"]
     },
     {
       id: "llm",
       image: "assets/img/projects/llm-news.webp",
       report: "assets/reports/llm-fine-tuning-news.pdf",
-      repo: null,
+      repo: "https://github.com/ArielaMishaanCohen/Proyecto",
       tags: ["PyTorch", "Hugging Face", "Transformers", "HDBSCAN"]
     },
     {
@@ -71,6 +71,7 @@ window.PORTFOLIO_DATA = {
       id: "taxi",
       image: "assets/img/projects/nyc-taxi.webp",
       report: "assets/reports/nyc-taxi-fare-prediction.pdf",
+      repo: "https://github.com/ArielaMishaanCohen/Proyecto-1",
       tags: ["Feature engineering", "Random Forest"]
     },
     {
@@ -97,8 +98,8 @@ window.PORTFOLIO_DATA = {
 
   skills: {
     tools: ["Python", "R", "SQL", "Java", "LaTeX", "Git"],
-    ml: ["scikit-learn", "PyTorch", "TensorFlow", "Transformers", "PCA / clustering", "regression"],
-    bi: ["Tableau", "Looker Studio", "Power BI", "Streamlit", "etl", "relational"]
+    ml: ["scikit-learn", "XGBoost", "PyTorch", "TensorFlow", "Hugging Face Transformers", "statsmodels", "regression", "PCA / clustering", "timeseries", "montecarlo", "nlp", "recsys", "cv"],
+    bi: ["Tableau", "Power BI", "Looker Studio", "Streamlit", "Plotly", "kpi", "dashboards", "cleaning", "etl", "relational"]
   },
 
   languages: [
@@ -106,6 +107,6 @@ window.PORTFOLIO_DATA = {
     { id: "en", level: "C2", dots: 5 },
     { id: "de", level: "C1", dots: 4 },
     { id: "fr", level: "B2", dots: 3 },
-    { id: "he", level: "B1", dots: 2 }
+    { id: "he", level: "B1+", dots: 2.5 }
   ]
 };

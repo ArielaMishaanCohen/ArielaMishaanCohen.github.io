@@ -88,7 +88,7 @@ window.PORTFOLIO_I18N.en = {
   },
 
   venture: {
-    kicker: "Venture · Team project",
+    kicker: "Venture · Team of 4",
     role: "Co-founder & Technical Lead — product development",
     title: "DAIA",
     subtitle: "A B2B business intelligence platform for growing businesses.",
@@ -140,7 +140,8 @@ window.PORTFOLIO_I18N.en = {
       alt: "Confusion matrix of the fine-tuned MiniLM sentiment classifier"
     },
     sophos: {
-      team: "Internship",
+      kind: "Internship",
+      team: "Team of 5",
       title: "Data Science & BI at SOPHOS",
       description:
         "Predictive models for demand forecasting, recommendations, price optimization and churn, together with Streamlit dashboards and a centralized SQL metric store.",
@@ -243,6 +244,14 @@ window.PORTFOLIO_I18N.en = {
   },
 
   tags: {
+    timeseries: "Time-series forecasting (SARIMAX)",
+    montecarlo: "Monte Carlo simulation",
+    nlp: "NLP",
+    recsys: "Recommender systems",
+    cv: "Computer vision",
+    kpi: "KPI design",
+    dashboards: "Interactive dashboards",
+    cleaning: "Data cleaning & validation",
     predictive: "Predictive modeling",
     regression: "Regression",
     etl: "ETL pipelines",

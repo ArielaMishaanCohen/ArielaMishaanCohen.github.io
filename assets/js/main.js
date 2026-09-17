@@ -100,11 +100,11 @@
     }).join("") + "</ul>";
   }
 
-  function thumbHtml(p, text) {
+  function thumbHtml(p, text, eager) {
     var cls = p.fit === "cover" ? "is-cover" : "is-contain";
     return (
       '<div class="thumb ' + cls + '"' + (p.focus ? ' style="--focus:' + esc(p.focus) + '"' : "") + ">" +
-      '<img src="' + esc(p.image) + '" alt="' + esc(text.alt) + '" loading="lazy" decoding="async">' +
+      '<img src="' + esc(p.image) + '" alt="' + esc(text.alt) + '" loading="' + (eager ? "eager" : "lazy") + '" decoding="async">' +
       "</div>"
     );
   }
@@ -157,9 +157,12 @@
       var stats = text.stats || [];
       return (
         '<li class="card" aria-roledescription="slide" aria-label="' + (i + 1) + " / " + total + '">' +
-          thumbHtml(p, text) +
+          thumbHtml(p, text, true) +
           '<div class="card-body">' +
-            '<div class="card-meta"><span class="pill">' + ICONS.users + esc(text.team) + '</span><span class="card-index">' + pad(i + 1) + "</span></div>" +
+            '<div class="card-meta"><span class="pills">' +
+              (text.kind ? '<span class="pill pill-solid">' + esc(text.kind) + "</span>" : "") +
+              '<span class="pill">' + ICONS.users + esc(text.team) + "</span>" +
+            '</span><span class="card-index">' + pad(i + 1) + "</span></div>" +
             '<h4 class="card-title">' + esc(text.title) + "</h4>" +
             '<p class="card-desc">' + esc(text.description) + "</p>" +
             (stats.length
@@ -248,7 +251,7 @@
         '<ul class="lang-list">' + DATA.languages.map(function (l) {
           var level = lg.levels[l.level] || l.level;
           var dots = "";
-          for (var i = 0; i < 5; i++) dots += '<i class="' + (i < l.dots ? "on" : "") + '"></i>';
+          for (var i = 0; i < 5; i++) dots += '<i class="' + (i + 1 <= l.dots ? "on" : i < l.dots ? "half" : "") + '"></i>';
           return '<li><span class="lang-name">' + esc(lg.names[l.id]) + '</span><span class="lang-level"><span class="lang-dots" aria-hidden="true">' + dots + "</span>" + esc(level) + "</span></li>";
         }).join("") + "</ul>" +
       "</div>";
