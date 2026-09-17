@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Cup 2026 Predictor · Ariela Mishaan</title>
+<title>Quiniela Mundial 2026 v9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -521,12 +521,17 @@ function matchThirds(availGroups){
 }
 
 const FIXTURES=Object.keys(SP_GS).map(k=>{const[a,b]=k.split("|");return{k,a,b,g:TG[a]}}).filter(f=>f.g);
-// Predicciones BASE: goles exactos del CSV del modelo (goles_A, goles_B). Inmutables.
+// Predicciones BASE inmutables (lambda Poisson + probs base). Nunca cambian con ELO.
 const PRED_GS={};
-RESULTS_REF.forEach(r=>{
-  PRED_GS[`${r.a}|${r.b}`]=[r.ga,r.gb];
-  PRED_GS[`${r.b}|${r.a}`]=[r.gb,r.ga];
-});
+(()=>{for(const fx of FIXTURES){
+  const[la,lb]=goalLambdas(fx.a,fx.b);
+  let ga=Math.max(0,Math.round(la)),gb=Math.max(0,Math.round(lb));
+  const[pa,pd,pb]=getProbBase(fx.a,fx.b,false);
+  if(pa>pb&&pa>=pd&&ga<=gb)ga=gb+1;
+  else if(pb>pa&&pb>=pd&&gb<=ga)gb=ga+1;
+  else if(pd>=pa&&pd>=pb){const m=Math.max(ga,gb,1);ga=gb=m;}
+  PRED_GS[fx.k]=[ga,gb];PRED_GS[`${fx.b}|${fx.a}`]=[gb,ga];
+}})();
 
 let ST={gr:{},ko:{}};
 let mc=null,proj=null,elaAdj={};
@@ -614,14 +619,7 @@ function predScore(a,b,isKO=false){
   if(!isKO&&groupScore(a,b)&&!pinfo.dAdj)return[ga,gb];
   if(pa>pb&&pa>=pd&&ga<=gb)ga=gb+1;
   else if(pb>pa&&pb>=pd&&gb<=ga)gb=ga+1;
-  else if(pd>=pa&&pd>=pb){
-    if(isKO){// En KO no puede haber empate: gana el que tiene mayor prob 1X2
-      if(pa>=pb){const m=Math.max(ga,gb,0);ga=m+1;gb=m;}
-      else{const m=Math.max(ga,gb,0);gb=m+1;ga=m;}
-    }else{const m=Math.max(ga,gb,1);ga=gb=m;}
-  }
-  // Seguridad extra para KO: asegurar ga !== gb
-  if(isKO&&ga===gb){if(pa>=pb)ga++;else gb++;}
+  else if(pd>=pa&&pd>=pb){const m=Math.max(ga,gb,1);ga=gb=m;}
   return[ga,gb];
 }
 function applyElo(a,b,ga,gb){
@@ -917,26 +915,21 @@ function renderB(){
         ${o&&o!=="TBD"?`<span class="bwp">${p0(wp)}</span>`:""}</div>`;
     }
     let sc="vs";
-    if(both){const[ga,gb]=predScore(ta,tb,true);sc=`${ga}&ndash;${gb} pred`;}
+    if(both){const[ga,gb]=predGoals(ta,tb,true);sc=`${ga}&ndash;${gb} pred`;}
     return`<div class="tie">${slot(ta,tb,pa)}${slot(tb,ta,pb)}<div class="bsc ${both?"has":""}">${sc}</div></div>`;
   }
   const col=(title,ids,extra="")=>`<div class="bcol ${extra}"><div class="brh">${title}</div>${ids.map(tieHTML).join("")}</div>`;
-  // Campe\u00f3n: usar el l\u00EDder del MC (mayor prob. de campeonato) cuando est\u00E9 disponible
-  const mcLeader=mc?Object.entries(mc).filter(([t])=>t!=="TBD"&&mc[t].ch>0).sort((a,b)=>b[1].ch-a[1].ch)[0]:null;
-  const ch=mcLeader?mcLeader[0]:p.champion;
-  const chMc=mcLeader?p1(mcLeader[1].ch):(mc&&mc[p.champion]?p1(mc[p.champion].ch):"");
-  const brackChamp=p.champion;
+  const ch=p.champion,chMc=mc&&mc[ch]&&ch!=="TBD"?p1(mc[ch].ch):"";
   let html=`<div class="bracket">`;
   html+=col("32avos",R32_ORDER);
   html+=col("16avos",R16_ORDER,"sfcol");
   html+=col("Cuartos",QF_ORDER,"sfcol");
   html+=col("Semis",SF_ORDER,"sfcol");
   html+=`<div class="bcol champcol"><div class="brh">Campe\u00f3n</div>
-    <div class="trophy"><div class="tk">&#x2605; Favorito MC</div>
+    <div class="trophy"><div class="tk">&#x2605; Proyecci\u00f3n</div>
     <div class="tfl">${ch!=="TBD"?fl(ch):"\uD83C\uDFC6"}</div>
     <div class="tnm">${ch!=="TBD"?es(ch):"Por definir"}</div>
-    ${chMc?`<div class="tpc">${chMc} prob. MC</div>`:""}
-    ${brackChamp&&brackChamp!=="TBD"&&brackChamp!==ch?`<div style="font-size:9px;color:var(--ink3);margin-top:6px;">Por bracket: ${es(brackChamp)}</div>`:""}
+    ${chMc?`<div class="tpc">${chMc} prob.</div>`:""}
     </div></div>`;
   html+=`</div>`;
   document.getElementById("app").innerHTML=`<div class="view">
@@ -1010,9 +1003,7 @@ function renderA(){
     const yH=outcome==="home"?1:0,yD=outcome==="draw"?1:0,yA=outcome==="away"?1:0;
     const brier=(pa-yH)**2+(pd-yD)**2+(pb-yA)**2;
     const pAct=outcome==="home"?pa:(outcome==="draw"?pd:pb);
-    // "correct" se basa en el marcador predicho (goles_A/goles_B del CSV), no en la columna resultado
-    const predOutcome=predGa!=null?(predGa>predGb?"home":predGa<predGb?"away":"draw"):pred;
-    return{phase:"G",a:fx.a,b:fx.b,ga,gb,predGa,predGb,pa,pd,pb,outcome,pred,correct:predOutcome===outcome,brier,ll:-Math.log(Math.max(pAct,1e-9))};
+    return{phase:"G",a:fx.a,b:fx.b,ga,gb,predGa,predGb,pa,pd,pb,outcome,pred,correct:pred===outcome,brier,ll:-Math.log(Math.max(pAct,1e-9))};
   });
   // Bracket: cada cruce fijado es binario (sin empate)
   const ko=Object.keys(ST.ko).map(k=>{
