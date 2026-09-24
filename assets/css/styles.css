@@ -468,6 +468,7 @@ svg path, svg circle, svg rect { vector-effect: non-scaling-stroke; }
 
 /* ---------- Sections ---------- */
 .section { padding: clamp(72px, 10vw, 136px) 0 0; }
+.hero + .section { padding-top: clamp(40px, 5vw, 72px); }
 
 .section-head {
   display: grid;
