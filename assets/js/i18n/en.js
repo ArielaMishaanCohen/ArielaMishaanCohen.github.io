@@ -107,7 +107,7 @@ window.PORTFOLIO_I18N.en = {
   projects: {
     factored: {
       kind: "Hackathon",
-      team: "Team DAIA",
+      team: "Team of 4",
       title: "AI Banking Dispute Assistant",
       description:
         "A Spanish and Portuguese assistant for bank dispute intake (Factored AI & Data Hackathon 2026). The LLM understands and writes; versioned rules decide and act. I owned the ML: an intent classifier with an abstention threshold, a Gemini cascade and evaluation against baselines.",

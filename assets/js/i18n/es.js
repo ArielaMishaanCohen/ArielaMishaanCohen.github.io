@@ -107,7 +107,7 @@ window.PORTFOLIO_I18N.es = {
   projects: {
     factored: {
       kind: "Hackathon",
-      team: "Equipo DAIA",
+      team: "Equipo de 4",
       title: "Asistente de IA para disputas bancarias",
       description:
         "Asistente en español y portugués para el intake de disputas bancarias (Factored AI & Data Hackathon 2026). El LLM entiende y redacta; reglas versionadas deciden y actúan. Estuve a cargo del ML: clasificador de intención con umbral de abstención, cascada con Gemini y evaluación contra baselines.",
