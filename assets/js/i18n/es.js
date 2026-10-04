@@ -105,6 +105,21 @@ window.PORTFOLIO_I18N.es = {
   },
 
   projects: {
+    factored: {
+      kind: "Hackathon",
+      team: "Equipo DAIA",
+      title: "Asistente de IA para disputas bancarias",
+      description:
+        "Asistente en español y portugués para el intake de disputas bancarias (Factored AI & Data Hackathon 2026). El LLM entiende y redacta; reglas versionadas deciden y actúan. Estuve a cargo del ML: clasificador de intención con umbral de abstención, cascada con Gemini y evaluación contra baselines.",
+      stats: [
+        { value: "48.5%", label: "resolución automática segura (techo: 60.9%)" },
+        { value: "4/68", label: "escalamientos omitidos (baseline: 17)" },
+        { value: "189", label: "casos held-out (sintéticos)" }
+      ],
+      demoLabel: "App en vivo",
+      videoTitle: "Demo del asistente de disputas bancarias",
+      alt: "La IA identifica un cargo no reconocido y la regla R7 bloquea la tarjeta y pasa el caso a fraude"
+    },
     worldcup: {
       team: "Equipo de 2",
       title: "Predicción del Mundial 2026",

@@ -105,6 +105,21 @@ window.PORTFOLIO_I18N.en = {
   },
 
   projects: {
+    factored: {
+      kind: "Hackathon",
+      team: "Team DAIA",
+      title: "AI Banking Dispute Assistant",
+      description:
+        "A Spanish and Portuguese assistant for bank dispute intake (Factored AI & Data Hackathon 2026). The LLM understands and writes; versioned rules decide and act. I owned the ML: an intent classifier with an abstention threshold, a Gemini cascade and evaluation against baselines.",
+      stats: [
+        { value: "48.5%", label: "safe auto-resolution (ceiling: 60.9%)" },
+        { value: "4/68", label: "missed escalations (baseline: 17)" },
+        { value: "189", label: "held-out cases (synthetic)" }
+      ],
+      demoLabel: "Live app",
+      videoTitle: "AI banking dispute assistant demo",
+      alt: "The AI flags an unrecognized charge and rule R7 blocks the card and passes the case to fraud"
+    },
     worldcup: {
       team: "Team of 2",
       title: "World Cup 2026 Prediction",

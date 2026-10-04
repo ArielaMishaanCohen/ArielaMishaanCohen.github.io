@@ -27,6 +27,16 @@ window.PORTFOLIO_DATA = {
 
   featured: [
     {
+      id: "factored",
+      image: "assets/img/projects/factored-hackathon.webp",
+      fit: "cover",
+      video: "assets/video/factored-hackathon-demo.mp4",
+      poster: "assets/video/factored-hackathon-demo-poster.jpg",
+      demo: "https://factored-hackathon-2026-daia.onrender.com",
+      repo: "https://github.com/ArielaMishaanCohen/factored-hackathon-2026-daia",
+      tags: ["Python", "scikit-learn", "Gemini API", "FastAPI"]
+    },
+    {
       id: "worldcup",
       image: "assets/img/projects/world-cup.webp",
       report: "assets/reports/world-cup-2026-prediction.pdf",

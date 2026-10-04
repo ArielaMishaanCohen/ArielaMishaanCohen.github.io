@@ -86,9 +86,18 @@
     );
   }
 
-  function projectLinks(p) {
+  function videoButton(p, text) {
+    return (
+      '<button class="link" type="button" data-video="' + esc(p.video) + '" data-poster="' + esc(p.poster || "") + '"' +
+      (text.videoTitle ? ' data-video-title="' + esc(text.videoTitle) + '"' : "") + ">" +
+      ICONS.play + "<span>" + esc(t("ui.links.watchDemo")) + "</span></button>"
+    );
+  }
+
+  function projectLinks(p, text) {
     var out = [];
-    if (p.demo) out.push(linkHtml(p.demo, t("ui.links.demo"), "live", "new"));
+    if (p.video) out.push(videoButton(p, text));
+    if (p.demo) out.push(linkHtml(p.demo, text.demoLabel || t("ui.links.demo"), "live", "new"));
     if (p.report) out.push(linkHtml(p.report, t("ui.links.report"), "doc", "pdf"));
     if (p.repo) out.push(linkHtml(p.repo, t("ui.links.repo"), "code", "new"));
     return out.join("");
@@ -174,7 +183,7 @@
               tagsHtml(p.tags) +
               (p.nda
                 ? '<span class="nda-badge">' + ICONS.lock + esc(t("ui.links.nda")) + "</span>"
-                : '<div class="links">' + projectLinks(p) + "</div>") +
+                : '<div class="links">' + projectLinks(p, text) + "</div>") +
             "</div>" +
           "</div>" +
         "</li>"
@@ -192,7 +201,7 @@
             '<p class="team">' + esc(text.team) + "</p>" +
             '<h3 class="card-title">' + esc(text.title) + "</h3>" +
             '<p class="card-desc">' + esc(text.description) + "</p>" +
-            '<div class="card-foot"><div class="links">' + projectLinks(p) + "</div></div>" +
+            '<div class="card-foot"><div class="links">' + projectLinks(p, text) + "</div></div>" +
           "</div>" +
         "</article></li>"
       );
@@ -565,12 +574,14 @@
       var video = d.querySelector("video");
       var close = d.querySelector(".video-close");
       close.setAttribute("aria-label", t("ui.links.close"));
-      d.setAttribute("aria-label", t("ui.links.videoTitle"));
+      var title = trigger.dataset.videoTitle || t("ui.links.videoTitle");
+      d.setAttribute("aria-label", title);
       if (video.getAttribute("src") !== trigger.dataset.video) {
         video.setAttribute("src", trigger.dataset.video);
         if (trigger.dataset.poster) video.setAttribute("poster", trigger.dataset.poster);
+        else video.removeAttribute("poster");
       }
-      video.setAttribute("aria-label", t("ui.links.videoTitle"));
+      video.setAttribute("aria-label", title);
       d.showModal();
       var playing = video.play();
       if (playing && playing.catch) playing.catch(function () {});
