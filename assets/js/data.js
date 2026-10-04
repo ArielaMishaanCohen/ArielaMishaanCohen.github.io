@@ -29,7 +29,6 @@ window.PORTFOLIO_DATA = {
     {
       id: "factored",
       image: "assets/img/projects/factored-hackathon.webp",
-      fit: "cover",
       video: "assets/video/factored-hackathon-demo.mp4",
       poster: "assets/video/factored-hackathon-demo-poster.jpg",
       demo: "https://factored-hackathon-2026-daia.onrender.com",
