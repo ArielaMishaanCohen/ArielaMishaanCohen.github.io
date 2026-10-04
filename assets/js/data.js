@@ -60,8 +60,6 @@ window.PORTFOLIO_DATA = {
     {
       id: "sophos",
       image: "assets/img/projects/sophos-forecast.webp",
-      fit: "cover",
-      focus: "left top",
       nda: true,
       tags: ["Python", "SQL", "Streamlit", "predictive"]
     }
