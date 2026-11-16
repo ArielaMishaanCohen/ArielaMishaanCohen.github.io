@@ -120,6 +120,21 @@ window.PORTFOLIO_I18N.en = {
       videoTitle: "AI banking dispute assistant demo",
       alt: "The AI flags an unrecognized charge and rule R7 blocks the card and passes the case to fraud"
     },
+    gasolina: {
+      kind: "MLOps",
+      team: "Team of 6",
+      title: "Gasolina GT: OCR Fuel Prices & Forecast",
+      description:
+        "Reads fuel prices from photos of Guatemalan gas pumps with OCR and predicts whether they will go up, down or stay flat next week. A medallion pipeline on Databricks orchestrated by a weekly Job with alerts, MLflow experiment tracking and CI/CD with GitHub Actions. I coordinated the team and owned data extraction and the SSH connection to the server.",
+      stats: [
+        { value: "91.8%", label: "prices read correctly by OCR (78/85)" },
+        { value: "38", label: "real pump photos" },
+        { value: "60%", label: "weekly accuracy (baseline: 50%)" }
+      ],
+      demoLabel: "Live app",
+      videoTitle: "Gasolina GT demo",
+      alt: "A gas pump photo with the prices detected by OCR and next week's prediction"
+    },
     worldcup: {
       team: "Team of 2",
       title: "World Cup 2026 Prediction",

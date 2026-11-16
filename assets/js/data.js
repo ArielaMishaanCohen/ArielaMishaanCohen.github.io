@@ -36,6 +36,15 @@ window.PORTFOLIO_DATA = {
       tags: ["Python", "scikit-learn", "Gemini API", "FastAPI"]
     },
     {
+      id: "gasolina",
+      image: "assets/img/projects/gasolina-gt.webp",
+      video: "assets/video/gasolina-gt-demo.mp4",
+      poster: "assets/video/gasolina-gt-demo-poster.jpg",
+      demo: "https://gasolina-gt.onrender.com",
+      repo: "https://github.com/ArielaMishaanCohen/equipo-06-gasolina-gt",
+      tags: ["OCR", "Databricks", "MLflow", "FastAPI"]
+    },
+    {
       id: "worldcup",
       image: "assets/img/projects/world-cup.webp",
       report: "assets/reports/world-cup-2026-prediction.pdf",

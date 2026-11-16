@@ -120,6 +120,21 @@ window.PORTFOLIO_I18N.es = {
       videoTitle: "Demo del asistente de disputas bancarias",
       alt: "La IA identifica un cargo no reconocido y la regla R7 bloquea la tarjeta y pasa el caso a fraude"
     },
+    gasolina: {
+      kind: "MLOps",
+      team: "Equipo de 6",
+      title: "Gasolina GT: precios con OCR y predicción",
+      description:
+        "Lee precios de fotos de gasolineras en Guatemala con OCR y predice si subirán, bajarán o se mantendrán la semana siguiente. Pipeline medallón en Databricks orquestado por un Job semanal con alertas, experimentos en MLflow y CI/CD con GitHub Actions. Coordiné al equipo y me encargué de la extracción de datos y la conexión SSH al servidor.",
+      stats: [
+        { value: "91.8%", label: "precios leídos bien por OCR (78/85)" },
+        { value: "38", label: "fotos reales de rótulos" },
+        { value: "60%", label: "accuracy semanal (baseline: 50%)" }
+      ],
+      demoLabel: "App en vivo",
+      videoTitle: "Demo de Gasolina GT",
+      alt: "Foto de un surtidor con los precios detectados por OCR y la predicción de la semana siguiente"
+    },
     worldcup: {
       team: "Equipo de 2",
       title: "Predicción del Mundial 2026",
