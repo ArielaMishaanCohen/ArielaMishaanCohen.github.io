@@ -27,6 +27,17 @@ window.PORTFOLIO_DATA = {
 
   featured: [
     {
+      id: "ojoqr",
+      image: "assets/img/projects/ojo-qr.webp",
+      demo: "https://qr-shield-bay.vercel.app",
+      report: {
+        es: "assets/reports/ojo-qr-reporte-tecnico.pdf",
+        en: "assets/reports/ojo-qr-technical-report.pdf"
+      },
+      codeOnRequest: true,
+      tags: ["LightGBM", "TreeSHAP", "Conformal prediction", "TypeScript"]
+    },
+    {
       id: "factored",
       image: "assets/img/projects/factored-hackathon.webp",
       video: "assets/video/factored-hackathon-demo.mp4",
@@ -53,28 +64,21 @@ window.PORTFOLIO_DATA = {
       tags: ["Python", "scikit-learn", "XGBoost", "Monte Carlo"]
     },
     {
-      id: "ecobici",
-      image: "assets/img/projects/ecobici.webp",
-      report: "assets/reports/ecobici-analysis.pdf",
-      repo: "https://github.com/ArielaMishaanCohen/Proyecto1-Aprendizaje",
-      tags: ["Python", "PCA", "Clustering", "t-SNE / KDE"]
-    },
-    {
       id: "llm",
       image: "assets/img/projects/llm-news.webp",
       report: "assets/reports/llm-fine-tuning-news.pdf",
       repo: "https://github.com/ArielaMishaanCohen/Proyecto",
       tags: ["PyTorch", "Hugging Face", "Transformers", "HDBSCAN"]
-    },
+    }
+  ],
+
+  more: [
     {
       id: "sophos",
       image: "assets/img/projects/sophos-forecast.webp",
       nda: true,
       tags: ["Python", "SQL", "Streamlit", "predictive"]
-    }
-  ],
-
-  more: [
+    },
     {
       id: "vision",
       image: "assets/img/projects/football-vision.webp",
@@ -82,6 +86,13 @@ window.PORTFOLIO_DATA = {
       repo: "https://github.com/ArielaMishaanCohen/ProyectoVC",
       report: "assets/reports/football-event-detection.pdf",
       tags: ["Transfer learning", "EfficientNetB0", "Conv1D"]
+    },
+    {
+      id: "ecobici",
+      image: "assets/img/projects/ecobici.webp",
+      report: "assets/reports/ecobici-analysis.pdf",
+      repo: "https://github.com/ArielaMishaanCohen/Proyecto1-Aprendizaje",
+      tags: ["Python", "PCA", "Clustering", "t-SNE / KDE"]
     },
     {
       id: "taxi",

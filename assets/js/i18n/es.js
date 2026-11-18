@@ -27,10 +27,15 @@ window.PORTFOLIO_I18N.es = {
       demo: "Dashboard en vivo",
       site: "Visitar daia.com.gt",
       privateRepo: "Repositorio privado",
+      codeOnRequest: "Código privado · disponible bajo solicitud",
       watchDemo: "Ver demo",
       close: "Cerrar video",
       videoTitle: "Demo del producto DAIA",
       nda: "Bajo NDA · sin código público"
+    },
+    moreToggle: {
+      show: "Ver {n} proyectos más",
+      hide: "Ver menos"
     },
     carousel: {
       label: "Proyectos destacados",
@@ -65,13 +70,13 @@ window.PORTFOLIO_I18N.es = {
       index: "01",
       eyebrow: "Proyectos destacados",
       title: "Proyectos que van de datos crudos a decisiones reales.",
-      lede: "Aprendizaje estadístico, NLP y ML aplicado — y el producto que estoy construyendo."
+      lede: "ML en producción, NLP y aprendizaje estadístico — y el producto que estoy construyendo."
     },
     more: {
       index: "02",
       eyebrow: "Más proyectos",
-      title: "Algoritmos, visión y búsqueda.",
-      lede: "Proyectos de curso, cada uno con su reporte completo."
+      title: "Análisis, visión y algoritmos.",
+      lede: "Proyectos de curso y de mi pasantía, con su reporte completo cuando lo tienen."
     },
     experience: {
       index: "03",
@@ -105,6 +110,20 @@ window.PORTFOLIO_I18N.es = {
   },
 
   projects: {
+    ojoqr: {
+      kind: "Producto",
+      team: "Equipo de 2",
+      title: "Ojo QR: phishing en códigos QR",
+      description:
+        "Web app que escanea un código QR y explica en lenguaje sencillo si tiene señales de riesgo antes de abrirlo. Combina un motor de 44 reglas explicables con un modelo LightGBM que corre en el teléfono (TreeSHAP propio en TypeScript), predicción conformal por grupo para abstenerse cuando no puede decidir, evaluación adversarial y monitoreo semanal de drift. Diseñé e implementé todo el sistema, del dataset a producción.",
+      stats: [
+        { value: "0.87%", label: "falsos positivos en sitios populares nunca vistos" },
+        { value: "95.4%", label: "imitaciones de marca detectadas (2,496 sintéticas)" },
+        { value: "717", label: "features calculadas en el teléfono" }
+      ],
+      demoLabel: "App en vivo",
+      alt: "Ojo QR marca como sospechoso un enlace que imita a Banco Industrial y explica por qué"
+    },
     factored: {
       kind: "Hackathon",
       team: "Equipo de 4",
@@ -234,7 +253,7 @@ window.PORTFOLIO_I18N.es = {
       org: "SOPHOS",
       dates: "May 2025 — Ene 2026",
       summary: "Modelos predictivos, tableros y un metric store en SQL.",
-      link: "Ver el proyecto destacado"
+      link: "Ver el proyecto"
     },
     uvg: {
       role: "Auxiliar de cátedra",
@@ -288,7 +307,8 @@ window.PORTFOLIO_I18N.es = {
     relational: "Bases de datos relacionales",
     "Feature engineering": "Feature engineering",
     "Spectral graph theory": "Teoría espectral de grafos",
-    "Fiedler vector": "Vector de Fiedler"
+    "Fiedler vector": "Vector de Fiedler",
+    "Conformal prediction": "Predicción conformal"
   },
 
   contact: {

@@ -27,10 +27,15 @@ window.PORTFOLIO_I18N.en = {
       demo: "Live dashboard",
       site: "Visit daia.com.gt",
       privateRepo: "Private repository",
+      codeOnRequest: "Private code · available on request",
       watchDemo: "Watch demo",
       close: "Close video",
       videoTitle: "DAIA product demo",
       nda: "Under NDA · no public code"
+    },
+    moreToggle: {
+      show: "Show {n} more projects",
+      hide: "Show fewer"
     },
     carousel: {
       label: "Featured projects",
@@ -65,13 +70,13 @@ window.PORTFOLIO_I18N.en = {
       index: "01",
       eyebrow: "Selected work",
       title: "Projects that go from raw data to real decisions.",
-      lede: "Statistical learning, NLP and applied ML — plus the product I'm building."
+      lede: "Production ML, NLP and statistical learning — plus the product I'm building."
     },
     more: {
       index: "02",
       eyebrow: "More projects",
-      title: "Algorithms, vision and search.",
-      lede: "Coursework projects, each with its full written report."
+      title: "Analysis, vision and algorithms.",
+      lede: "Coursework and internship projects, with the full written report where there is one."
     },
     experience: {
       index: "03",
@@ -105,6 +110,20 @@ window.PORTFOLIO_I18N.en = {
   },
 
   projects: {
+    ojoqr: {
+      kind: "Product",
+      team: "Team of 2",
+      title: "Ojo QR: Phishing Detection for QR Codes",
+      description:
+        "Web app that scans a QR code and explains in plain language whether it shows risk signals before you open it. It combines an engine of 44 explainable rules with a LightGBM model that runs on the phone (custom TreeSHAP in TypeScript), group-conditional conformal prediction to abstain when it can't decide, adversarial evaluation and weekly drift monitoring. I designed and built the whole system, from dataset to production.",
+      stats: [
+        { value: "0.87%", label: "false positives on unseen popular sites" },
+        { value: "95.4%", label: "brand impersonations caught (2,496 synthetic)" },
+        { value: "717", label: "features computed on the phone" }
+      ],
+      demoLabel: "Live app",
+      alt: "Ojo QR flags a link that imitates Banco Industrial as suspicious and explains why"
+    },
     factored: {
       kind: "Hackathon",
       team: "Team of 4",
@@ -234,7 +253,7 @@ window.PORTFOLIO_I18N.en = {
       org: "SOPHOS",
       dates: "May 2025 — Jan 2026",
       summary: "Predictive models, dashboards and a SQL metric store.",
-      link: "See the featured project"
+      link: "See the project"
     },
     uvg: {
       role: "Teaching Assistant",

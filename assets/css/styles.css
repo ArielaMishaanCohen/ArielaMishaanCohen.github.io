@@ -891,11 +891,21 @@ svg path, svg circle, svg rect { vector-effect: non-scaling-stroke; }
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 20px;
 }
+/* First row of three; the rest go two to a row, wider (3 + 2 + 2 for seven). */
 .mini-grid > li { grid-column: span 2; }
-.mini-grid > li:nth-child(4),
-.mini-grid > li:nth-child(5) { grid-column: span 3; }
-.mini-grid > li:nth-child(4) .thumb,
-.mini-grid > li:nth-child(5) .thumb { aspect-ratio: 16 / 8; }
+.mini-grid > li:nth-child(n+4) { grid-column: span 3; }
+.mini-grid > li:nth-child(n+4) .thumb { aspect-ratio: 16 / 8; }
+/* A lone last card on a two-up row spans the full width. */
+.mini-grid > li:nth-child(n+4):last-child:nth-child(even) { grid-column: 1 / -1; }
+.mini-grid.is-collapsed > li:nth-child(n+4) { display: none; }
+
+.mini .stats { padding: 12px 0; gap: 14px; }
+.mini .stat-value { font-size: 1.1rem; }
+
+.more-toggle-wrap { display: flex; justify-content: center; margin-top: 28px; }
+.more-toggle svg { transition: transform 0.3s var(--ease); }
+.more-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.more-toggle[hidden] { display: none; }
 
 .mini {
   height: 100%;
@@ -909,11 +919,12 @@ svg path, svg circle, svg rect { vector-effect: non-scaling-stroke; }
 @media (max-width: 960px) {
   .mini-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mini-grid > li,
-  .mini-grid > li:nth-child(4),
-  .mini-grid > li:nth-child(5) { grid-column: span 1; }
-  .mini-grid > li:nth-child(4) .thumb,
-  .mini-grid > li:nth-child(5) .thumb { aspect-ratio: 16 / 10; }
-  .mini-grid > li:nth-child(5) { grid-column: 1 / -1; }
+  .mini-grid > li:nth-child(n+4),
+  .mini-grid > li:nth-child(n+4):last-child:nth-child(even) { grid-column: span 1; }
+  .mini-grid > li:nth-child(n+4) .thumb { aspect-ratio: 16 / 10; }
+  /* Two columns: an odd card left alone at the end (the 3rd when collapsed, the 7th when open) spans both. */
+  .mini-grid.is-collapsed > li:nth-child(3),
+  .mini-grid > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 @media (max-width: 620px) {
   .mini-grid { grid-template-columns: 1fr; }

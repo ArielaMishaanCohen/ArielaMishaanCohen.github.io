@@ -59,6 +59,7 @@
 
   var ICONS = {
     arrow: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>',
+    chevron: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>',
     doc: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
     code: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>',
     live: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>',
@@ -98,8 +99,11 @@
     var out = [];
     if (p.video) out.push(videoButton(p, text));
     if (p.demo) out.push(linkHtml(p.demo, text.demoLabel || t("ui.links.demo"), "live", "new"));
-    if (p.report) out.push(linkHtml(p.report, t("ui.links.report"), "doc", "pdf"));
+    // `report` is a path, or { es, en } when there is one PDF per language.
+    var report = p.report && typeof p.report === "object" ? p.report[lang] || p.report[DEFAULT_LANG] : p.report;
+    if (report) out.push(linkHtml(report, t("ui.links.report"), "doc", "pdf"));
     if (p.repo) out.push(linkHtml(p.repo, t("ui.links.repo"), "code", "new"));
+    if (p.codeOnRequest) out.push('<span class="link is-muted">' + ICONS.lock + "<span>" + esc(t("ui.links.codeOnRequest")) + "</span></span>");
     return out.join("");
   }
 
@@ -159,11 +163,24 @@
     );
   }
 
+  function statsHtml(stats) {
+    return stats && stats.length
+      ? '<dl class="stats">' + stats.map(function (s) {
+          return '<div class="stat"><dt class="sr-only">' + esc(s.label) + '</dt><dd class="stat-value" style="margin:0">' + esc(s.value) + '</dd><dd class="stat-label" style="margin:0" aria-hidden="true">' + esc(s.label) + "</dd></div>";
+        }).join("") + "</dl>"
+      : "";
+  }
+
+  function footLinks(p, text) {
+    return p.nda
+      ? '<span class="nda-badge">' + ICONS.lock + esc(t("ui.links.nda")) + "</span>"
+      : '<div class="links">' + projectLinks(p, text) + "</div>";
+  }
+
   function renderFeatured() {
     var total = DATA.featured.length;
     return DATA.featured.map(function (p, i) {
       var text = t("projects." + p.id);
-      var stats = text.stats || [];
       return (
         '<li class="card" aria-roledescription="slide" aria-label="' + (i + 1) + " / " + total + '">' +
           thumbHtml(p, text, true) +
@@ -174,16 +191,10 @@
             '</span><span class="card-index">' + pad(i + 1) + "</span></div>" +
             '<h4 class="card-title">' + esc(text.title) + "</h4>" +
             '<p class="card-desc">' + esc(text.description) + "</p>" +
-            (stats.length
-              ? '<dl class="stats">' + stats.map(function (s) {
-                  return '<div class="stat"><dt class="sr-only">' + esc(s.label) + '</dt><dd class="stat-value" style="margin:0">' + esc(s.value) + '</dd><dd class="stat-label" style="margin:0" aria-hidden="true">' + esc(s.label) + "</dd></div>";
-                }).join("") + "</dl>"
-              : "") +
+            statsHtml(text.stats) +
             '<div class="card-foot">' +
               tagsHtml(p.tags) +
-              (p.nda
-                ? '<span class="nda-badge">' + ICONS.lock + esc(t("ui.links.nda")) + "</span>"
-                : '<div class="links">' + projectLinks(p, text) + "</div>") +
+              footLinks(p, text) +
             "</div>" +
           "</div>" +
         "</li>"
@@ -198,10 +209,11 @@
         '<li data-reveal style="--d:' + (i % 3) + '"><article class="card mini">' +
           thumbHtml(p, text) +
           '<div class="card-body">' +
-            '<p class="team">' + esc(text.team) + "</p>" +
+            '<p class="team">' + (text.kind ? esc(text.kind) + " · " : "") + esc(text.team) + "</p>" +
             '<h3 class="card-title">' + esc(text.title) + "</h3>" +
             '<p class="card-desc">' + esc(text.description) + "</p>" +
-            '<div class="card-foot"><div class="links">' + projectLinks(p, text) + "</div></div>" +
+            statsHtml(text.stats) +
+            '<div class="card-foot">' + footLinks(p, text) + "</div>" +
           "</div>" +
         "</article></li>"
       );
@@ -219,7 +231,7 @@
             '<p class="xp-org">' + esc(x.org) + "</p>" +
           "</div>" +
           '<div class="xp-summary"><p>' + esc(x.summary) + "</p>" +
-            (x.link ? '<a class="link" href="#work">' + ICONS.arrow + "<span>" + esc(x.link) + "</span></a>" : "") +
+            (x.link ? '<a class="link" href="#more">' + ICONS.arrow + "<span>" + esc(x.link) + "</span></a>" : "") +
           "</div>" +
         "</li>"
       );
@@ -325,6 +337,7 @@
       b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
     });
 
+    moreToggle.refresh();
     observeReveals();
     carousel.refresh();
   }
@@ -431,6 +444,44 @@
     }
 
     return { init: init, refresh: function () { if (track) update(); } };
+  })();
+
+  /* ---------------- "More projects": show the first row, expand on demand ---------------- */
+
+  var moreToggle = (function () {
+    var VISIBLE = 3;
+    var grid = document.querySelector(".mini-grid");
+    var btn = document.querySelector(".more-toggle");
+
+    function hidden() { return Math.max(DATA.more.length - VISIBLE, 0); }
+    function expanded() { return !grid.classList.contains("is-collapsed"); }
+
+    function refresh() {
+      if (!btn) return;
+      btn.hidden = hidden() === 0;
+      btn.setAttribute("aria-expanded", String(expanded()));
+      btn.querySelector("span").textContent = expanded()
+        ? t("ui.moreToggle.hide")
+        : t("ui.moreToggle.show").replace("{n}", hidden());
+    }
+
+    function init() {
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        var open = !expanded();
+        grid.classList.toggle("is-collapsed", !open);
+        refresh();
+        if (open) {
+          var first = grid.children[VISIBLE];
+          var focusable = first && first.querySelector("a, button");
+          if (focusable) focusable.focus({ preventScroll: true });
+        } else {
+          btn.scrollIntoView({ block: "nearest", behavior: reduceMotion.matches ? "auto" : "smooth" });
+        }
+      });
+    }
+
+    return { init: init, refresh: refresh };
   })();
 
   /* ---------------- Reveal on scroll ---------------- */
@@ -598,6 +649,7 @@
   initTheme();
   initHeader();
   carousel.init();
+  moreToggle.init();
   applyLanguage(lang);
   initCopyEmail();
   initVideo();
