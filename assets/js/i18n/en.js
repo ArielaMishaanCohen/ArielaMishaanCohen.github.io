@@ -27,7 +27,6 @@ window.PORTFOLIO_I18N.en = {
       demo: "Live dashboard",
       site: "Visit daia.com.gt",
       privateRepo: "Private repository",
-      codeOnRequest: "Private code · available on request",
       watchDemo: "Watch demo",
       close: "Close video",
       videoTitle: "DAIA product demo",
@@ -122,6 +121,7 @@ window.PORTFOLIO_I18N.en = {
         { value: "717", label: "features computed on the phone" }
       ],
       demoLabel: "Live app",
+      videoTitle: "Ojo QR demo",
       alt: "Ojo QR flags a link that imitates Banco Industrial as suspicious and explains why"
     },
     factored: {

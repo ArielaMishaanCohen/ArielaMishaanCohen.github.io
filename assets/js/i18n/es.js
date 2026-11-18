@@ -27,7 +27,6 @@ window.PORTFOLIO_I18N.es = {
       demo: "Dashboard en vivo",
       site: "Visitar daia.com.gt",
       privateRepo: "Repositorio privado",
-      codeOnRequest: "Código privado · disponible bajo solicitud",
       watchDemo: "Ver demo",
       close: "Cerrar video",
       videoTitle: "Demo del producto DAIA",
@@ -122,6 +121,7 @@ window.PORTFOLIO_I18N.es = {
         { value: "717", label: "features calculadas en el teléfono" }
       ],
       demoLabel: "App en vivo",
+      videoTitle: "Demo de Ojo QR",
       alt: "Ojo QR marca como sospechoso un enlace que imita a Banco Industrial y explica por qué"
     },
     factored: {

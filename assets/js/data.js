@@ -29,12 +29,14 @@ window.PORTFOLIO_DATA = {
     {
       id: "ojoqr",
       image: "assets/img/projects/ojo-qr.webp",
+      video: "assets/video/ojo-qr-demo.mp4",
+      poster: "assets/video/ojo-qr-demo-poster.jpg",
       demo: "https://qr-shield-bay.vercel.app",
       report: {
         es: "assets/reports/ojo-qr-reporte-tecnico.pdf",
         en: "assets/reports/ojo-qr-technical-report.pdf"
       },
-      codeOnRequest: true,
+      privateRepo: true,
       tags: ["LightGBM", "TreeSHAP", "Conformal prediction", "TypeScript"]
     },
     {

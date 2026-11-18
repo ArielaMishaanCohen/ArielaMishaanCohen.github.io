@@ -103,7 +103,7 @@
     var report = p.report && typeof p.report === "object" ? p.report[lang] || p.report[DEFAULT_LANG] : p.report;
     if (report) out.push(linkHtml(report, t("ui.links.report"), "doc", "pdf"));
     if (p.repo) out.push(linkHtml(p.repo, t("ui.links.repo"), "code", "new"));
-    if (p.codeOnRequest) out.push('<span class="link is-muted">' + ICONS.lock + "<span>" + esc(t("ui.links.codeOnRequest")) + "</span></span>");
+    if (p.privateRepo) out.push('<span class="link is-muted">' + ICONS.lock + "<span>" + esc(t("ui.links.privateRepo")) + "</span></span>");
     return out.join("");
   }
 
