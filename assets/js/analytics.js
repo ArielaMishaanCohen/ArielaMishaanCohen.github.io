@@ -7,7 +7,7 @@
  *   detail  how / where       (link type, video progress, page area)
  *
  *   project_click   target=<project id>   detail=video | demo | report | repo | site
- *   video_progress  target=<project id>   detail=start | 25 | 50 | 75 | 100
+ *   video_milestone  target=<project id>   detail=start | 25 | 50 | 75 | 100
  *   contact_click   target=email | copy_email | linkedin | github | daia | cv   detail=<section>
  *   section_view    target=<section>      (once per visit and section)
  *   language_change target=<new language>
@@ -108,7 +108,7 @@
       var key = id + ":" + mark;
       if (reached[key]) return;
       reached[key] = true;
-      send("video_progress", id, mark);
+      send("video_milestone", id, mark);
     }
     // Media events do not bubble, but they do pass through document in the capture phase.
     document.addEventListener("play", function (e) {
